@@ -64,7 +64,7 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   Text(
-                    "Grid & Charger Matcher",
+                    "Smart Charging",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
@@ -74,7 +74,7 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
                   ),
                   SizedBox(height: 2),
                   Text(
-                    "Clean energy coordination & XGBoost dispatch",
+                    "Real-time grid match & queue predictions",
                     style: TextStyle(fontSize: 11, color: AppleLiquidColors.textCaption),
                   ),
                 ],
@@ -82,10 +82,10 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: isUrgent ? const Color(0xFFFEE2E2) : AppleLiquidColors.mintContainer,
+                  color: isUrgent ? const Color(0xFFFEE2E2) : AppleLiquidColors.skyAura,
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: isUrgent ? const Color(0xFFFCA5A5) : AppleLiquidColors.natureMint,
+                    color: isUrgent ? const Color(0xFFFCA5A5) : const Color(0x4D0284C7),
                     width: 0.5,
                   ),
                 ),
@@ -94,14 +94,14 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w800,
-                    color: isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.natureEmerald,
+                    color: isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.skyVibrant,
                   ),
                 ),
               ),
             ],
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 14),
 
           // 1. HIGH-IMPACT STAT: SUBSTATION GRID HEALTH
           LiquidGlassCard(
@@ -109,7 +109,7 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  "LOCAL SUBSTATION HEALTH",
+                  "LOCAL GRID CAPACITY",
                   style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppleLiquidColors.textCaption, letterSpacing: 0.6),
                 ),
                 const SizedBox(height: 6),
@@ -119,11 +119,11 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
                     Text(
                       "98.4%",
                       style: TextStyle(
-                        fontSize: 34,
+                        fontSize: 32,
                         fontWeight: FontWeight.w800,
                         letterSpacing: -1,
                         fontFamily: 'monospace',
-                        color: isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.natureEmerald,
+                        color: isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.skyVibrant,
                       ),
                     ),
                     Container(
@@ -139,14 +139,8 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text("Feeder: BESCOM 11kV Corridor", style: TextStyle(fontSize: 11, color: AppleLiquidColors.textSub)),
-                    Text("Spike Risk: 0.08 (Minimal)", style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppleLiquidColors.natureEmerald)),
-                  ],
-                ),
+                const SizedBox(height: 8),
+                const Text("Substation Node: BESCOM 11kV • Minimal Spike Risk", style: TextStyle(fontSize: 11, color: AppleLiquidColors.textSub)),
               ],
             ),
           ),
