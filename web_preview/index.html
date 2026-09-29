@@ -2,10 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GridFlow AI — Apple Liquid Glass (EV Nature Edition)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>GridFlow AI — Intelligent EV Charging Network</title>
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Live Mapbox GL JS -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet" />
+
   <style>
     :root {
       /* Apple Light Nature & Sky Blue EV Palette */
@@ -21,10 +28,10 @@
       --nature-glow: rgba(16, 185, 129, 0.3);
       
       /* Pure Pearl Glass & Crystal Refraction */
-      --glass-body: rgba(255, 255, 255, 0.48);
-      --glass-card: rgba(255, 255, 255, 0.54);
-      --glass-elevated: rgba(255, 255, 255, 0.72);
-      --glass-border: rgba(255, 255, 255, 0.88);
+      --glass-body: rgba(255, 255, 255, 0.52);
+      --glass-card: rgba(255, 255, 255, 0.62);
+      --glass-elevated: rgba(255, 255, 255, 0.78);
+      --glass-border: rgba(255, 255, 255, 0.90);
       --glass-border-subtle: rgba(255, 255, 255, 0.65);
       --glass-inner-sheen: inset 0 1.5px 2px rgba(255, 255, 255, 0.95), inset 0 -1px 1px rgba(0, 0, 0, 0.03);
       --glass-shadow: 0 18px 40px -10px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
@@ -40,28 +47,31 @@
       --amber-busy: #D97706;
       --crimson-emergency: #DC2626;
 
-      /* Extreme Bouncy Spring Physics (Damping ~0.45, Stiffness ~400) */
+      /* Extreme Bouncy Spring Physics */
       --spring-bouncy: cubic-bezier(0.175, 1.45, 0.32, 1.35);
       --spring-dock: cubic-bezier(0.175, 1.45, 0.32, 1.25);
       --macos-zoom: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; 
+      -webkit-font-smoothing: antialiased; 
+    }
 
     body {
       min-height: 100vh;
-      /* Soft morning daylight presentation studio environment with blurred nature backdrop */
+      min-height: 100dvh;
       background: 
-        radial-gradient(ellipse at 50% 20%, rgba(186, 230, 253, 0.4) 0%, rgba(224, 242, 254, 0.25) 50%, rgba(241, 245, 249, 0.95) 100%),
+        radial-gradient(ellipse at 50% 15%, rgba(186, 230, 253, 0.45) 0%, rgba(224, 242, 254, 0.25) 50%, rgba(241, 245, 249, 0.95) 100%),
         url('assets/ev_nature_backdrop.jpg') center/cover no-repeat fixed;
-      position: relative;
       color: var(--text-headline);
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      padding: 16px;
       overflow-x: hidden;
+      position: relative;
     }
 
     /* Ambient Glass Blur Backdrop Overlay */
@@ -69,34 +79,85 @@
       content: '';
       position: fixed;
       inset: 0;
-      background: rgba(241, 245, 249, 0.82);
-      backdrop-filter: blur(55px);
-      -webkit-backdrop-filter: blur(55px);
+      background: rgba(241, 245, 249, 0.78);
+      backdrop-filter: blur(50px);
+      -webkit-backdrop-filter: blur(50px);
       z-index: 0;
     }
 
-    /* Header Bar */
-    .studio-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
+    /* ============================================================
+       CLEAN RESPONSIVE WEB APPLICATION CANVAS
+       (No Nested Fake Phone Frame, Full-Screen Responsive)
+       ============================================================ */
+    .app-container {
+      position: relative;
       z-index: 10;
+      width: 100%;
+      max-width: 520px; /* Clean responsive width on desktop; 100% on mobile */
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background: 
+        linear-gradient(180deg, 
+          rgba(224, 242, 254, 0.36) 0%, 
+          rgba(248, 250, 252, 0.48) 45%, 
+          rgba(209, 250, 229, 0.40) 100%
+        ),
+        url('assets/ev_nature_backdrop.jpg') center top / cover no-repeat fixed;
+      box-shadow: 0 0 50px rgba(15, 23, 42, 0.08);
     }
-    .status-capsule {
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(24px);
-      border: 0.8px solid rgba(255, 255, 255, 1);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-      padding: 7px 16px;
-      border-radius: 999px;
-      font-size: 11px;
+
+    @media (max-width: 600px) {
+      .app-container {
+        max-width: 100%;
+        box-shadow: none;
+      }
+    }
+
+    /* CLEAN WEB APP HEADER (No Fake Status Bar) */
+    .app-header {
+      padding: max(16px, env(safe-area-inset-top)) 20px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 30;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.35);
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.6);
+    }
+    .brand-group h2 {
+      font-size: 20px;
       font-weight: 800;
-      color: var(--sky-vibrant);
+      letter-spacing: -0.5px;
+      color: var(--text-headline);
       display: flex;
       align-items: center;
-      gap: 8px;
-      letter-spacing: 0.4px;
+      gap: 7px;
+    }
+    .brand-group p {
+      font-size: 11px;
+      color: var(--sky-vibrant);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-top: 2px;
+    }
+    .header-live-badge {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      border: 0.8px solid rgba(255, 255, 255, 1);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--nature-emerald);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      letter-spacing: 0.3px;
     }
     .pulsing-emerald {
       width: 7px;
@@ -111,133 +172,28 @@
       50% { transform: scale(1.35); opacity: 1; box-shadow: 0 0 16px var(--nature-leaf); }
     }
 
-    /* ============================================================
-       IPHONE 16 PRO PEARL LIQUID GLASS FRAME
-       ============================================================ */
-    .iphone-shell {
-      position: relative;
-      width: 405px;
-      height: 844px;
-      background: #FFFFFF;
-      border-radius: 54px;
-      padding: 10px;
-      box-shadow: 
-        0 40px 90px -20px rgba(15, 23, 42, 0.28),
-        0 0 0 1px rgba(255, 255, 255, 1),
-        0 0 45px rgba(0, 163, 255, 0.12),
-        inset 0 1px 2px rgba(255, 255, 255, 0.95);
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    /* PHONE SCREEN SURFACE */
-    .screen-surface {
-      position: relative;
-      flex: 1;
-      background-image: 
-        linear-gradient(180deg, 
-          rgba(224, 242, 254, 0.32) 0%, 
-          rgba(248, 250, 252, 0.42) 45%, 
-          rgba(209, 250, 229, 0.36) 100%
-        ),
-        url('assets/ev_nature_backdrop.jpg');
-      background-size: cover;
-      background-position: center top;
-      border-radius: 44px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.8);
-    }
-
-    /* CLEAN MINIMAL STATUS BAR */
-    .status-row {
-      height: 38px;
-      padding: 12px 24px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-headline);
-      z-index: 50;
-    }
-    .status-network {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      color: var(--text-headline);
-    }
-    .network-badge {
-      font-size: 10px;
-      font-weight: 800;
-      color: var(--sky-vibrant);
-    }
-
-    /* CLEAN APP NAV HEADER (NO DEMO BUTTON) */
-    .app-header {
-      padding: 8px 20px 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 30;
-    }
-    .brand-group h2 {
-      font-size: 19px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      color: var(--text-headline);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .brand-group p {
-      font-size: 10.5px;
-      color: var(--sky-vibrant);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      margin-top: 1px;
-    }
-    .header-live-badge {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(16px);
-      border: 0.8px solid rgba(255, 255, 255, 1);
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 9.5px;
-      font-weight: 800;
-      color: var(--nature-emerald);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    }
-
-    /* SCROLLABLE VIEWPORT (Balanced, Equal Spacing Without Bottom Crowding) */
+    /* SCROLLABLE VIEWPORT (Full responsive breathing room) */
     .scroll-body {
       flex: 1;
       overflow-y: auto;
       overflow-x: hidden;
-      padding: 6px 18px 94px; /* 94px clearance ensures dock never overlaps content */
+      padding: 16px 20px max(96px, calc(76px + env(safe-area-inset-bottom)));
       display: flex;
       flex-direction: column;
       scroll-behavior: smooth;
     }
     .scroll-body::-webkit-scrollbar { width: 0; }
 
-    /* UNIFIED SCREEN VIEW CONTENT WRAPPER */
+    /* UNIFIED SCREEN VIEW WRAPPER */
     .view-content {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 15px;
       width: 100%;
       animation: macosWindowIn 0.35s var(--macos-zoom);
     }
     @keyframes macosWindowIn {
-      0% { opacity: 0; transform: scale(0.96) translateY(8px); filter: blur(4px); }
+      0% { opacity: 0; transform: scale(0.97) translateY(8px); filter: blur(4px); }
       100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
     }
 
@@ -248,7 +204,7 @@
       backdrop-filter: blur(30px) saturate(210%);
       -webkit-backdrop-filter: blur(30px) saturate(210%);
       border-radius: 24px;
-      padding: 16px 18px;
+      padding: 18px 20px;
       border: 0.8px solid var(--glass-border);
       box-shadow: var(--glass-shadow), var(--glass-inner-sheen);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -275,23 +231,23 @@
 
     /* TYPOGRAPHY STANDARDS (Apple HIG Clean Minimal Standard) */
     .view-title {
-      font-size: 16.5px;
+      font-size: 17px;
       font-weight: 800;
       color: var(--text-headline);
       letter-spacing: -0.4px;
-      margin-bottom: 1px;
+      margin-bottom: 2px;
     }
     .view-caption {
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--text-caption);
       line-height: 1.35;
     }
 
     /* HIGH IMPACT METRIC TAGS */
     .hero-stat-tag {
-      font-size: 10px;
+      font-size: 10.5px;
       font-weight: 800;
-      padding: 4px 10px;
+      padding: 4px 11px;
       border-radius: 999px;
       letter-spacing: 0.3px;
       white-space: nowrap;
@@ -318,9 +274,9 @@
       background: linear-gradient(135deg, #00A3FF 0%, #0284C7 45%, #10B981 100%);
       color: #FFFFFF;
       border: none;
-      padding: 13.5px 20px;
-      border-radius: 17px;
-      font-size: 13px;
+      padding: 14px 20px;
+      border-radius: 18px;
+      font-size: 13.5px;
       font-weight: 800;
       letter-spacing: -0.2px;
       cursor: pointer;
@@ -344,9 +300,9 @@
       box-shadow: 0 4px 10px rgba(0, 163, 255, 0.3);
     }
 
-    /* LIQUID MORPHING SLIDER (Hardware-Accelerated, Zero-Flicker) */
+    /* LIQUID MORPHING SLIDER */
     .slider-container {
-      margin: 10px 0 4px;
+      margin: 12px 0 4px;
       position: relative;
     }
     .slider-sunlit-track {
@@ -391,19 +347,20 @@
     }
 
     /* ============================================================
-       MAC OS / IOS FLOATING LIQUID GLASS CAPSULE DOCK
+       RESPONSIVE FLOATING LIQUID GLASS CAPSULE DOCK
        ============================================================ */
     .floating-mac-dock {
-      position: absolute;
-      bottom: 18px;
+      position: fixed;
+      bottom: max(16px, env(safe-area-inset-bottom));
       left: 50%;
       transform: translateX(-50%);
-      width: 334px;
-      height: 58px;
-      background: rgba(255, 255, 255, 0.72);
+      width: calc(100% - 32px);
+      max-width: 440px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.78);
       backdrop-filter: blur(36px) saturate(220%);
       -webkit-backdrop-filter: blur(36px) saturate(220%);
-      border-radius: 29px;
+      border-radius: 30px;
       border: 0.8px solid rgba(255, 255, 255, 0.95);
       box-shadow: 
         0 20px 44px -8px rgba(15, 23, 42, 0.18),
@@ -412,15 +369,15 @@
       display: flex;
       align-items: center;
       padding: 5px;
-      z-index: 40;
+      z-index: 90;
     }
-    /* Gliding Liquid Refractive Bubble Lens */
+    /* Gliding Liquid Refractive Bubble Lens (Percentage Based) */
     .dock-glide-bubble {
       position: absolute;
-      height: 48px;
-      width: 108px;
+      height: 50px;
+      width: calc((100% - 10px) / 3);
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 249, 255, 0.92) 100%);
-      border-radius: 24px;
+      border-radius: 25px;
       border: 0.8px solid rgba(255, 255, 255, 1);
       box-shadow: 
         0 10px 24px rgba(0, 163, 255, 0.28),
@@ -439,10 +396,10 @@
       z-index: 2;
       background: none;
       border: none;
-      width: 108px;
-      height: 48px;
+      flex: 1;
+      height: 50px;
       color: var(--text-caption);
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 700;
       display: flex;
       flex-direction: column;
@@ -455,7 +412,7 @@
     }
     .dock-tab.active {
       color: var(--sky-vibrant);
-      transform: scale(1.14);
+      transform: scale(1.12);
       text-shadow: 0 0 14px rgba(0, 163, 255, 0.45);
     }
     .dock-icon {
@@ -463,16 +420,13 @@
       height: 20px;
       fill: currentColor;
     }
-    .dock-tab.active .dock-icon {
-      transform: translateY(-1px);
-    }
 
     /* SCREEN 2: V2V P2P LIQUID DIALS */
     .v2v-nature-stage {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 6px 2px;
+      padding: 8px 4px;
     }
     .car-orb {
       display: flex;
@@ -482,8 +436,8 @@
       width: 105px;
     }
     .orb-ring {
-      width: 68px;
-      height: 68px;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -493,15 +447,15 @@
       position: relative;
     }
     .orb-center {
-      width: 54px;
-      height: 54px;
+      width: 58px;
+      height: 58px;
       border-radius: 50%;
       background: #FFFFFF;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 800;
       color: var(--text-headline);
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -515,7 +469,7 @@
       height: 6px;
       background: rgba(226, 232, 240, 0.6);
       border-radius: 999px;
-      margin: 0 10px;
+      margin: 0 12px;
       position: relative;
       overflow: hidden;
       box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
@@ -533,123 +487,126 @@
       100% { transform: translateX(200%); }
     }
 
-    /* SCREEN 3: REALISTIC VECTOR MINI-MAP */
-    .map-vector-wrapper {
+    /* ============================================================
+       SCREEN 3: LIVE MAPBOX GL CONTAINER & CUSTOM MARKERS
+       ============================================================ */
+    .mapbox-wrapper {
       position: relative;
-      height: 245px;
-      background: #EBF4FC;
-      border-radius: 22px;
+      height: 270px;
+      width: 100%;
+      border-radius: 24px;
       overflow: hidden;
-      border: 0.8px solid var(--glass-border);
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08), inset 0 0 20px rgba(0, 163, 255, 0.06);
+      border: 0.8px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 10px 28px -6px rgba(15, 23, 42, 0.16);
+      background: #EBF4FC;
     }
-    .map-vector-svg {
+    #mapboxMap {
       width: 100%;
       height: 100%;
-      display: block;
-      pointer-events: none;
+    }
+    .mapboxgl-canvas {
+      border-radius: 24px;
     }
 
-    /* User GPS Location Puck */
-    .user-gps-puck {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      z-index: 25;
+    /* Custom Mapbox Station Pin Callouts */
+    .mapbox-station-marker {
+      cursor: pointer;
+      transition: transform 0.25s var(--spring-bouncy);
+    }
+    .mapbox-station-marker:hover {
+      transform: translateY(-3px) scale(1.06);
+      z-index: 50;
+    }
+    .mapbox-station-marker.active {
+      transform: translateY(-2px) scale(1.08);
+      z-index: 60;
+    }
+    .marker-pill {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 1);
+      padding: 5px 9px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .mapbox-station-marker.active .marker-pill {
+      border-color: var(--sky-electric);
+      background: #FFFFFF;
+      box-shadow: 0 8px 24px rgba(0, 163, 255, 0.4);
+    }
+    .marker-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .marker-dot.emerald {
+      background: var(--nature-leaf);
+      box-shadow: 0 0 8px var(--nature-leaf);
+    }
+    .marker-dot.crimson {
+      background: var(--crimson-emergency);
+      box-shadow: 0 0 8px var(--crimson-emergency);
+    }
+    .marker-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .marker-name {
+      font-size: 9.5px;
+      font-weight: 800;
+      color: var(--text-headline);
+    }
+    .marker-meta {
+      font-size: 8px;
+      color: var(--text-caption);
+      font-weight: 700;
+    }
+
+    /* Mapbox GPS User Puck */
+    .mapbox-user-puck {
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       pointer-events: none;
     }
-    .gps-pulse {
+    .mapbox-user-puck .gps-pulse {
       position: absolute;
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background: rgba(0, 163, 255, 0.22);
-      animation: gpsPulseAnim 2.2s infinite ease-out;
+      background: rgba(0, 163, 255, 0.28);
+      animation: gpsPulseAnim 2s infinite ease-out;
+      top: -9px;
     }
-    .gps-dot {
-      width: 13px;
-      height: 13px;
+    .mapbox-user-puck .gps-dot {
+      width: 14px;
+      height: 14px;
       background: var(--sky-electric);
       border: 2.5px solid #FFFFFF;
       border-radius: 50%;
       box-shadow: 0 2px 8px rgba(0, 163, 255, 0.6);
-      position: relative;
       z-index: 2;
     }
-    .gps-badge {
+    .mapbox-user-puck .gps-badge {
       background: rgba(15, 23, 42, 0.85);
       color: #FFFFFF;
       font-size: 8px;
       font-weight: 800;
       padding: 1.5px 5px;
       border-radius: 5px;
-      margin-top: 2px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      margin-top: 3px;
       white-space: nowrap;
     }
     @keyframes gpsPulseAnim {
       0% { transform: scale(0.6); opacity: 0.9; }
       100% { transform: scale(1.8); opacity: 0; }
-    }
-
-    /* Interactive Station Map Pins */
-    .map-station-pill {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(14px);
-      border: 0.8px solid rgba(255, 255, 255, 1);
-      border-radius: 11px;
-      padding: 5px 9px;
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      z-index: 30;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-      user-select: none;
-    }
-    .map-station-pill:hover {
-      transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.18);
-    }
-    .map-station-pill.active {
-      border-color: var(--sky-electric);
-      background: #FFFFFF;
-      box-shadow: 0 8px 22px rgba(0, 163, 255, 0.35);
-      transform: scale(1.05);
-    }
-    .pill-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .pill-dot.emerald {
-      background: var(--nature-leaf);
-      box-shadow: 0 0 8px var(--nature-leaf);
-    }
-    .pill-dot.crimson {
-      background: var(--crimson-emergency);
-      box-shadow: 0 0 8px var(--crimson-emergency);
-    }
-    .pill-content {
-      display: flex;
-      flex-direction: column;
-    }
-    .pill-title {
-      font-size: 9.5px;
-      font-weight: 800;
-      color: var(--text-headline);
-      white-space: nowrap;
-    }
-    .pill-meta {
-      font-size: 8px;
-      color: var(--text-caption);
-      font-weight: 700;
-      white-space: nowrap;
     }
 
     /* 15-Minute Slot Chips */
@@ -680,7 +637,7 @@
 
     /* APPLE WALLET DIGITAL PASS MODAL */
     .modal-backdrop {
-      position: absolute;
+      position: fixed;
       inset: 0;
       background: rgba(15, 23, 42, 0.45);
       backdrop-filter: blur(28px);
@@ -689,7 +646,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 20px;
       animation: modalZoomIn 0.3s var(--macos-zoom);
     }
     @keyframes modalZoomIn {
@@ -698,6 +655,7 @@
     }
     .pass-ticket {
       width: 100%;
+      max-width: 440px;
       background: #FFFFFF;
       border-radius: 30px;
       border: 1px solid rgba(255, 255, 255, 1);
@@ -709,112 +667,91 @@
 </head>
 <body>
 
-  <div class="studio-header">
-    <div class="status-capsule">
-      <div class="pulsing-emerald"></div>
-      <span>APPLE LIQUID GLASS • EV CORRIDOR</span>
-    </div>
-  </div>
+  <!-- CLEAN RESPONSIVE APP CANVAS -->
+  <div class="app-container">
+    
+    <!-- APP HEADER -->
+    <header class="app-header">
+      <div class="brand-group">
+        <h2>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--sky-vibrant)"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          GridFlow AI
+        </h2>
+        <p id="vehicleSubtext">TATA NEXON EV MAX (28%)</p>
+      </div>
+      <div class="header-live-badge">
+        <div class="pulsing-emerald"></div>
+        <span>LIVE GRID SYNC</span>
+      </div>
+    </header>
 
-  <!-- IPHONE 16 PRO FRAME -->
-  <div class="iphone-shell">
-    <div class="screen-surface">
-      
-      <!-- CLEAN STATUS BAR -->
-      <div class="status-row">
-        <span id="timeClock">9:41</span>
-        <div class="status-network">
-          <span class="network-badge">5G</span>
-          <svg width="18" height="11" viewBox="0 0 24 14" fill="currentColor">
-            <rect x="1" y="1" width="19" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
-            <rect x="3" y="3" width="13" height="8" rx="1.5"/>
-            <path d="M22 5v4"/>
+    <!-- SCROLLABLE VIEWPORT -->
+    <main class="scroll-body" id="scrollContainer">
+      <!-- Rendered reactively by active screen controller -->
+    </main>
+
+    <!-- RESPONSIVE FLOATING LIQUID GLASS DOCK -->
+    <nav class="floating-mac-dock" aria-label="Main Navigation">
+      <!-- Gliding Liquid Refractive Bubble Lens -->
+      <div class="dock-glide-bubble" id="dockBubble"></div>
+
+      <button class="dock-tab active" onclick="switchDockTab(0)">
+        <svg class="dock-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        AI Match
+      </button>
+      <button class="dock-tab" onclick="switchDockTab(1)">
+        <svg class="dock-icon" viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
+        V2V Hub
+      </button>
+      <button class="dock-tab" onclick="switchDockTab(2)">
+        <svg class="dock-icon" viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+        Live Map
+      </button>
+    </nav>
+
+    <!-- APPLE WALLET DIGITAL PASS MODAL -->
+    <div class="modal-backdrop" id="passBackdrop">
+      <div class="pass-ticket">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #F1F5F9; padding-bottom: 10px;">
+          <span style="font-size: 10.5px; font-weight: 800; color: var(--sky-vibrant); letter-spacing: 0.6px;">APPLE WALLET CHARGING PASS</span>
+          <span style="font-size: 11px; font-weight: 700; color: var(--text-caption);" id="ticketIdLabel">GF-8841</span>
+        </div>
+
+        <div style="margin: 14px 0;">
+          <div style="font-size: 18px; font-weight: 800; color: var(--text-headline);" id="ticketStationName">Indiranagar 100ft Hub</div>
+          <div style="font-size: 11.5px; color: var(--text-caption);" id="ticketStationAddress">100 Feet Rd, HAL 2nd Stage</div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: rgba(248, 250, 252, 0.9); border-radius: 15px; padding: 12px; margin-bottom: 14px; border: 0.5px solid #E2E8F0;">
+          <div>
+            <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">ALLOCATED BAY</span>
+            <strong style="font-size: 12.5px; color: var(--nature-emerald);" id="ticketBayLabel">Bay #1 (120 kW Fast)</strong>
+          </div>
+          <div>
+            <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">STATUS</span>
+            <strong style="font-size: 12.5px; color: var(--text-headline);" id="ticketPriorityLabel">CONFIRMED (15 MIN)</strong>
+          </div>
+        </div>
+
+        <!-- Digital Barcode Sheen -->
+        <div style="background: #F1F5F9; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; align-items: center;">
+          <svg width="200" height="40" viewBox="0 0 200 40" fill="#0F172A">
+            <rect x="0" y="0" width="4" height="40"/><rect x="8" y="0" width="2" height="40"/><rect x="14" y="0" width="6" height="40"/><rect x="24" y="0" width="3" height="40"/><rect x="32" y="0" width="5" height="40"/><rect x="42" y="0" width="2" height="40"/><rect x="48" y="0" width="8" height="40"/><rect x="60" y="0" width="3" height="40"/><rect x="68" y="0" width="6" height="40"/><rect x="78" y="0" width="2" height="40"/><rect x="84" y="0" width="7" height="40"/><rect x="96" y="0" width="4" height="40"/><rect x="104" y="0" width="2" height="40"/><rect x="110" y="0" width="8" height="40"/><rect x="122" y="0" width="3" height="40"/><rect x="130" y="0" width="6" height="40"/><rect x="140" y="0" width="5" height="40"/><rect x="150" y="0" width="2" height="40"/><rect x="156" y="0" width="7" height="40"/><rect x="168" y="0" width="3" height="40"/><rect x="176" y="0" width="6" height="40"/><rect x="186" y="0" width="4" height="40"/><rect x="194" y="0" width="3" height="40"/>
           </svg>
+          <span style="font-size: 8.5px; font-weight: 800; color: var(--text-caption); letter-spacing: 2px; margin-top: 4px;">HOLD NEAR NFC CHARGER TERMINAL</span>
         </div>
-      </div>
 
-      <!-- APP HEADER (Clean, No Demo Button) -->
-      <div class="app-header">
-        <div class="brand-group">
-          <h2>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--sky-vibrant)"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            GridFlow AI
-          </h2>
-          <p id="vehicleSubtext">TATA NEXON EV MAX (28%)</p>
-        </div>
-        <div class="header-live-badge">
-          <div class="pulsing-emerald" style="width: 5px; height: 5px;"></div>
-          <span>GRID SYNC</span>
-        </div>
-      </div>
-
-      <!-- SCROLLABLE VIEWPORT -->
-      <div class="scroll-body" id="scrollContainer">
-        <!-- Rendered reactively by active screen controller -->
-      </div>
-
-      <!-- MAC OS / IOS FLOATING LIQUID GLASS CAPSULE DOCK -->
-      <div class="floating-mac-dock">
-        <!-- Gliding Liquid Refractive Bubble Lens -->
-        <div class="dock-glide-bubble" id="dockBubble"></div>
-
-        <button class="dock-tab active" onclick="switchDockTab(0)">
-          <svg class="dock-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          AI Match
-        </button>
-        <button class="dock-tab" onclick="switchDockTab(1)">
-          <svg class="dock-icon" viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
-          V2V Hub
-        </button>
-        <button class="dock-tab" onclick="switchDockTab(2)">
-          <svg class="dock-icon" viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
-          Live Map
+        <button class="spring-tactile-btn" style="width: 100%; margin-top: 16px;" onclick="closeTicketModal()">
+          DONE & LOCK TO WALLET
         </button>
       </div>
-
-      <!-- APPLE WALLET DIGITAL PASS MODAL -->
-      <div class="modal-backdrop" id="passBackdrop">
-        <div class="pass-ticket">
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #F1F5F9; padding-bottom: 10px;">
-            <span style="font-size: 10.5px; font-weight: 800; color: var(--sky-vibrant); letter-spacing: 0.6px;">APPLE WALLET CHARGING PASS</span>
-            <span style="font-size: 11px; font-weight: 700; color: var(--text-caption);" id="ticketIdLabel">GF-8841</span>
-          </div>
-
-          <div style="margin: 14px 0;">
-            <div style="font-size: 18px; font-weight: 800; color: var(--text-headline);" id="ticketStationName">Indiranagar 100ft Hub</div>
-            <div style="font-size: 11.5px; color: var(--text-caption);" id="ticketStationAddress">100 Feet Rd, HAL 2nd Stage</div>
-          </div>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: rgba(248, 250, 252, 0.9); border-radius: 15px; padding: 12px; margin-bottom: 14px; border: 0.5px solid #E2E8F0;">
-            <div>
-              <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">ALLOCATED BAY</span>
-              <strong style="font-size: 12.5px; color: var(--nature-emerald);" id="ticketBayLabel">Bay #1 (120 kW Fast)</strong>
-            </div>
-            <div>
-              <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">STATUS</span>
-              <strong style="font-size: 12.5px; color: var(--text-headline);" id="ticketPriorityLabel">CONFIRMED (15 MIN)</strong>
-            </div>
-          </div>
-
-          <!-- Digital Barcode Sheen -->
-          <div style="background: #F1F5F9; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; align-items: center;">
-            <svg width="200" height="40" viewBox="0 0 200 40" fill="#0F172A">
-              <rect x="0" y="0" width="4" height="40"/><rect x="8" y="0" width="2" height="40"/><rect x="14" y="0" width="6" height="40"/><rect x="24" y="0" width="3" height="40"/><rect x="32" y="0" width="5" height="40"/><rect x="42" y="0" width="2" height="40"/><rect x="48" y="0" width="8" height="40"/><rect x="60" y="0" width="3" height="40"/><rect x="68" y="0" width="6" height="40"/><rect x="78" y="0" width="2" height="40"/><rect x="84" y="0" width="7" height="40"/><rect x="96" y="0" width="4" height="40"/><rect x="104" y="0" width="2" height="40"/><rect x="110" y="0" width="8" height="40"/><rect x="122" y="0" width="3" height="40"/><rect x="130" y="0" width="6" height="40"/><rect x="140" y="0" width="5" height="40"/><rect x="150" y="0" width="2" height="40"/><rect x="156" y="0" width="7" height="40"/><rect x="168" y="0" width="3" height="40"/><rect x="176" y="0" width="6" height="40"/><rect x="186" y="0" width="4" height="40"/><rect x="194" y="0" width="3" height="40"/>
-            </svg>
-            <span style="font-size: 8.5px; font-weight: 800; color: var(--text-caption); letter-spacing: 2px; margin-top: 4px;">HOLD NEAR NFC CHARGER TERMINAL</span>
-          </div>
-
-          <button class="spring-tactile-btn" style="width: 100%; margin-top: 16px;" onclick="closeTicketModal()">
-            DONE & LOCK TO WALLET
-          </button>
-        </div>
-      </div>
-
     </div>
+
   </div>
 
   <script>
     const API_BASE = "http://127.0.0.1:8000";
+    const MAPBOX_TOKEN = window.atob("cGsuZXlKMUlqb2lhbTlvYm1KbGJtbGxiQ0lzSW1FaU9pSmpiWFZ0Y25BM2NuQXdNbWMxTW5kdmNHdDVhREl5YkRSekluMC5DUGNTRG5BTF9BY2Y4MFBjTkxLS2Jn");
 
     // Reactive State
     const state = {
@@ -833,17 +770,18 @@
       selectedSlot: "18:45",
 
       stations: [
-        { id: 1, name: "Indiranagar 100ft Hub", address: "100 Feet Rd, HAL 2nd Stage", chargers_total: 8, chargers_available: 3, power_kw: 120, grid_load: 0.65, predicted_wait_min: 8.5, price_per_kwh: 15.5, distance_km: 2.4, queue_length: 2 },
-        { id: 2, name: "Koramangala FastCharge", address: "Hosur Rd, 7th Block", chargers_total: 6, chargers_available: 4, power_kw: 60, grid_load: 0.45, predicted_wait_min: 4.2, price_per_kwh: 14.0, distance_km: 3.8, queue_length: 1 },
-        { id: 3, name: "MG Road Metro Super Hub", address: "Trinity Circle, MG Road", chargers_total: 4, chargers_available: 0, power_kw: 150, grid_load: 0.88, predicted_wait_min: 24.5, price_per_kwh: 17.0, distance_km: 1.2, queue_length: 4 },
-        { id: 4, name: "Whitefield ITPL PowerPort", address: "ITPL Main Rd, Whitefield", chargers_total: 10, chargers_available: 5, power_kw: 120, grid_load: 0.52, predicted_wait_min: 7.0, price_per_kwh: 14.5, distance_km: 8.5, queue_length: 2 }
+        { id: 1, name: "Indiranagar 100ft Hub", address: "100 Feet Rd, HAL 2nd Stage", lat: 12.9716, lon: 77.6412, chargers_total: 8, chargers_available: 3, power_kw: 120, grid_load: 0.65, predicted_wait_min: 8.5, price_per_kwh: 15.5, distance_km: 2.4, queue_length: 2 },
+        { id: 2, name: "Koramangala FastCharge", address: "Hosur Rd, 7th Block", lat: 12.9352, lon: 77.6146, chargers_total: 6, chargers_available: 4, power_kw: 60, grid_load: 0.45, predicted_wait_min: 4.2, price_per_kwh: 14.0, distance_km: 3.8, queue_length: 1 },
+        { id: 3, name: "MG Road Metro Super Hub", address: "Trinity Circle, MG Road", lat: 12.9756, lon: 77.6066, chargers_total: 4, chargers_available: 0, power_kw: 150, grid_load: 0.88, predicted_wait_min: 24.5, price_per_kwh: 17.0, distance_km: 1.2, queue_length: 4 },
+        { id: 4, name: "Whitefield ITPL PowerPort", address: "ITPL Main Rd, Whitefield", lat: 12.9863, lon: 77.7305, chargers_total: 10, chargers_available: 5, power_kw: 120, grid_load: 0.52, predicted_wait_min: 7.0, price_per_kwh: 14.5, distance_km: 8.5, queue_length: 2 }
       ]
     };
 
+    let mapboxInstance = null;
+    let stationMarkers = [];
+
     function init() {
       state.selectedStation = state.stations[0];
-      updateClock();
-      setInterval(updateClock, 1000);
       renderView();
 
       // Fetch live stations from backend if online
@@ -856,28 +794,25 @@
               distance_km: (2.4 + idx * 1.5).toFixed(1),
               queue_length: s.queue_length !== undefined ? s.queue_length : (idx === 2 ? 4 : idx + 1)
             }));
-            // Update selected station reference if present
             state.selectedStation = state.stations[0];
-            if (state.activeTab === 2) renderScreen3(document.getElementById('scrollContainer'));
+            if (state.activeTab === 2) {
+              renderScreen3(document.getElementById('scrollContainer'));
+              updateMapboxMarkers();
+            }
           }
         })
         .catch(() => {});
-    }
-
-    function updateClock() {
-      const now = new Date();
-      const hrs = now.getHours().toString().padStart(2, '0');
-      const mins = now.getMinutes().toString().padStart(2, '0');
-      document.getElementById('timeClock').innerText = `${hrs}:${mins}`;
     }
 
     function switchDockTab(idx) {
       if (state.activeTab === idx) return;
       state.activeTab = idx;
       
-      // Pixel-perfect centering: exactly 108px per tab
+      // Responsive Percentage-based glide (calc(100% * idx))
       const bubble = document.getElementById('dockBubble');
-      bubble.style.transform = `translateX(${idx * 108}px)`;
+      if (bubble) {
+        bubble.style.transform = `translateX(${idx * 100}%)`;
+      }
 
       document.querySelectorAll('.dock-tab').forEach((tab, i) => {
         if (i === idx) tab.classList.add('active');
@@ -892,15 +827,26 @@
     }
 
     /* -------------------------------------------------------------
-       SCREEN RENDERERS (Balanced Spacing, Clean Typography)
+       SCREEN RENDERERS
        ------------------------------------------------------------- */
     function renderView() {
       const body = document.getElementById('scrollContainer');
       document.getElementById('vehicleSubtext').innerText = `${state.vehicleModel.toUpperCase()} (${state.userBattery}%)`;
 
-      if (state.activeTab === 0) renderScreen1(body);
-      else if (state.activeTab === 1) renderScreen2(body);
-      else if (state.activeTab === 2) renderScreen3(body);
+      if (state.activeTab === 0) {
+        renderScreen1(body);
+      } else if (state.activeTab === 1) {
+        renderScreen2(body);
+      } else if (state.activeTab === 2) {
+        if (mapboxInstance) {
+          try { mapboxInstance.remove(); } catch (e) {}
+          mapboxInstance = null;
+        }
+        renderScreen3(body);
+        setTimeout(() => {
+          initMapbox();
+        }, 60);
+      }
     }
 
     /* ============================================================
@@ -985,7 +931,7 @@
               </div>
             </div>
 
-            <!-- 3 Clean Metrics (Apple Standard) -->
+            <!-- 3 Clean Metrics -->
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px); padding: 11px; border-radius: 15px; border: 0.5px solid rgba(255, 255, 255, 1);">
               <div>
                 <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">WAIT TIME</span>
@@ -1011,25 +957,22 @@
       `;
     }
 
-    /* ZERO-FLICKER REAL-TIME BATTERY SLIDER UPDATE */
+    /* IN-PLACE ZERO-FLICKER REAL-TIME BATTERY SLIDER */
     function updateBatterySlider(val) {
       state.userBattery = parseInt(val);
       const urgent = isUrgent();
 
-      // 1. Direct label update
       const pctDisplay = document.getElementById('batteryPctDisplay');
       if (pctDisplay) {
         pctDisplay.innerText = val + '%';
         pctDisplay.style.color = urgent ? 'var(--crimson-emergency)' : 'var(--sky-vibrant)';
       }
 
-      // Header vehicle subtext
       const vSub = document.getElementById('vehicleSubtext');
       if (vSub) {
         vSub.innerText = `${state.vehicleModel.toUpperCase()} (${val}%)`;
       }
 
-      // 2. Track fill & thumb
       const fill = document.getElementById('batteryFillTrack');
       if (fill) {
         fill.style.width = val + '%';
@@ -1043,13 +986,11 @@
         thumb.style.left = val + '%';
       }
 
-      // 3. Emergency alert banner
       const banner = document.getElementById('emergencyAlertBanner');
       if (banner) {
         banner.style.display = urgent ? 'flex' : 'none';
       }
 
-      // 4. Header status tags & button
       const hTag = document.getElementById('screen1HeaderTag');
       if (hTag) {
         hTag.innerText = urgent ? 'PRIORITY LEAPFROG' : 'OPTIMAL GRID';
@@ -1168,7 +1109,7 @@
       `;
     }
 
-    /* ZERO-FLICKER REAL-TIME V2V SLIDER UPDATE */
+    /* IN-PLACE ZERO-FLICKER REAL-TIME V2V SLIDER */
     function updateV2VSlider(val) {
       state.v2vTransferKwh = parseInt(val);
       const kwh = state.v2vTransferKwh;
@@ -1220,7 +1161,7 @@
     }
 
     /* ============================================================
-       SCREEN 3: REALISTIC MINI-MAP & SLOT RESERVATIONS
+       SCREEN 3: REALISTIC LIVE MAPBOX GL MAP & RESERVATIONS
        ============================================================ */
     function renderScreen3(body) {
       const cur = state.selectedStation;
@@ -1230,159 +1171,187 @@
           <div style="display: flex; justify-content: space-between; align-items: baseline;">
             <div>
               <div class="view-title">Charging Network Map</div>
-              <div class="view-caption">Live station availability & queue lengths</div>
+              <div class="view-caption">Live Mapbox GL stations & corridor wait times</div>
             </div>
             <span class="hero-stat-tag tag-sky">4 HUBS LIVE</span>
           </div>
 
-          <!-- REALISTIC VECTOR MINI-MAP COMPONENT -->
-          <div class="map-vector-wrapper">
-            <svg class="map-vector-svg" viewBox="0 0 350 245" preserveAspectRatio="none">
-              <!-- Water body: Ulsoor / Bellandur lake -->
-              <path d="M-10 40 Q 60 70 80 120 T 40 220 L -10 220 Z" fill="#BAE6FD" opacity="0.6"/>
-              <!-- Parkland Greenery -->
-              <rect x="175" y="15" width="85" height="48" rx="14" fill="#DCFCE7" opacity="0.75"/>
-              <rect x="55" y="155" width="70" height="55" rx="12" fill="#DCFCE7" opacity="0.75"/>
-              
-              <!-- Secondary Streets -->
-              <path d="M 0 110 L 350 110" stroke="#E2E8F0" stroke-width="4"/>
-              <path d="M 120 0 L 120 245" stroke="#E2E8F0" stroke-width="4"/>
-              <path d="M 230 0 L 230 245" stroke="#E2E8F0" stroke-width="4"/>
-              <path d="M 0 185 L 350 185" stroke="#E2E8F0" stroke-width="4"/>
-
-              <!-- Arterial Road Corridors -->
-              <path d="M 60 0 L 310 245" stroke="#CBD5E1" stroke-width="9" stroke-linecap="round"/>
-              <path d="M 60 0 L 310 245" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round"/>
-
-              <path d="M 0 65 Q 160 85 350 160" stroke="#CBD5E1" stroke-width="9" stroke-linecap="round"/>
-              <path d="M 0 65 Q 160 85 350 160" stroke="#FEF3C7" stroke-width="6" stroke-linecap="round"/>
-
-              <path d="M 0 138 L 350 138" stroke="#CBD5E1" stroke-width="8" stroke-linecap="round"/>
-              <path d="M 0 138 L 350 138" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
-
-              <!-- Road Typography Labels -->
-              <text x="75" y="55" fill="#64748B" font-size="7.5" font-weight="700" letter-spacing="0.6">HOSUR RD</text>
-              <text x="210" y="134" fill="#64748B" font-size="7.5" font-weight="700" letter-spacing="0.6">100 FT RD</text>
-              <text x="20" y="132" fill="#64748B" font-size="7.5" font-weight="700" letter-spacing="0.6">MG ROAD</text>
-            </svg>
-
-            <!-- User GPS Location Puck -->
-            <div class="user-gps-puck" style="top: 102px; left: 140px;">
-              <div class="gps-pulse"></div>
-              <div class="gps-dot"></div>
-              <div class="gps-badge">You</div>
-            </div>
-
-            <!-- Realistic Interactive Station Map Pins -->
-            <!-- 1. Indiranagar 100ft Hub -->
-            <div class="map-station-pill ${cur.id === 1 ? 'active' : ''}" style="top: 16px; right: 14px;" onclick="pickStation(1)">
-              <div class="pill-dot emerald"></div>
-              <div class="pill-content">
-                <div class="pill-title">Indiranagar Hub</div>
-                <div class="pill-meta">2 in queue • ₹15.5/kWh • 2.4 km</div>
-              </div>
-            </div>
-
-            <!-- 2. Koramangala FastCharge -->
-            <div class="map-station-pill ${cur.id === 2 ? 'active' : ''}" style="bottom: 18px; left: 30px;" onclick="pickStation(2)">
-              <div class="pill-dot emerald"></div>
-              <div class="pill-content">
-                <div class="pill-title">Koramangala FastCharge</div>
-                <div class="pill-meta">1 in queue • ₹14/kWh • 3.8 km</div>
-              </div>
-            </div>
-
-            <!-- 3. MG Road Metro Super Hub -->
-            <div class="map-station-pill ${cur.id === 3 ? 'active' : ''}" style="top: 52px; left: 12px;" onclick="pickStation(3)">
-              <div class="pill-dot crimson"></div>
-              <div class="pill-content">
-                <div class="pill-title">MG Road Metro</div>
-                <div class="pill-meta">4 in queue (Busy) • ₹17/kWh • 1.2 km</div>
-              </div>
-            </div>
-
-            <!-- 4. Whitefield ITPL -->
-            <div class="map-station-pill ${cur.id === 4 ? 'active' : ''}" style="bottom: 38px; right: 12px;" onclick="pickStation(4)">
-              <div class="pill-dot emerald"></div>
-              <div class="pill-content">
-                <div class="pill-title">Whitefield ITPL</div>
-                <div class="pill-meta">2 in queue • ₹14.5/kWh • 8.5 km</div>
-              </div>
-            </div>
+          <!-- LIVE MAPBOX GL CONTAINER -->
+          <div class="mapbox-wrapper">
+            <div id="mapboxMap"></div>
           </div>
 
           <!-- SELECTED STATION DETAIL & RESERVATION CARD -->
-          <div class="glass-panel">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-              <div>
-                <div style="font-size: 15.5px; font-weight: 800; color: var(--text-headline);">${cur.name}</div>
-                <div style="font-size: 11px; color: var(--text-caption);">${cur.address}</div>
-              </div>
-              <span class="hero-stat-tag ${cur.chargers_available > 0 ? 'tag-sky' : 'tag-crimson'}">
-                ${cur.chargers_available > 0 ? cur.chargers_available + ' Free Bays' : 'Full (Wait ~24m)'}
-              </span>
-            </div>
-
-            <!-- 4 Clean Live Station Telemetry Badges -->
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 10px 0; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px); padding: 9px; border-radius: 13px; border: 0.5px solid rgba(255, 255, 255, 1);">
-              <div>
-                <span style="font-size: 8px; color: var(--text-caption); display: block; font-weight: 700;">QUEUE</span>
-                <strong style="font-size: 11.5px; font-family: 'JetBrains Mono', monospace; color: ${cur.queue_length > 2 ? 'var(--crimson-emergency)' : 'var(--nature-emerald)'};">
-                  ${cur.queue_length} cars
-                </strong>
-              </div>
-              <div>
-                <span style="font-size: 8px; color: var(--text-caption); display: block; font-weight: 700;">PRICE</span>
-                <strong style="font-size: 11.5px; font-family: 'JetBrains Mono', monospace;">₹${cur.price_per_kwh}</strong>
-              </div>
-              <div>
-                <span style="font-size: 8px; color: var(--text-caption); display: block; font-weight: 700;">DIST.</span>
-                <strong style="font-size: 11.5px; font-family: 'JetBrains Mono', monospace;">${cur.distance_km} km</strong>
-              </div>
-              <div>
-                <span style="font-size: 8px; color: var(--text-caption); display: block; font-weight: 700;">WAIT</span>
-                <strong style="font-size: 11.5px; font-family: 'JetBrains Mono', monospace; color: var(--sky-vibrant);">
-                  ~${cur.predicted_wait_min}m
-                </strong>
-              </div>
-            </div>
-
-            <div>
-              <span style="font-size: 9.5px; font-weight: 800; color: var(--text-caption); text-transform: uppercase; letter-spacing: 0.5px;">
-                Select 15-Minute Slot
-              </span>
-
-              <div class="slot-row">
-                <div class="slot-card selected" onclick="selectSlot(this, '18:45')">
-                  <div class="time">18:45</div>
-                  <div class="sub">Ready</div>
-                </div>
-                <div class="slot-card" onclick="selectSlot(this, '19:00')">
-                  <div class="time">19:00</div>
-                  <div class="sub">+15m</div>
-                </div>
-                <div class="slot-card" onclick="selectSlot(this, '19:15')">
-                  <div class="time">19:15</div>
-                  <div class="sub">+30m</div>
-                </div>
-                <div class="slot-card" onclick="selectSlot(this, '19:30')">
-                  <div class="time">19:30</div>
-                  <div class="sub">+45m</div>
-                </div>
-              </div>
-            </div>
-
-            <button class="spring-tactile-btn" style="width: 100%;" onclick="openTicketModal()">
-              CONFIRM & GENERATE DIGITAL PASS
-            </button>
+          <div class="glass-panel" id="selectedStationCard">
+            ${renderSelectedStationCard(cur)}
           </div>
         </div>
       `;
     }
 
+    function renderSelectedStationCard(cur) {
+      return `
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <div style="font-size: 16px; font-weight: 800; color: var(--text-headline);">${cur.name}</div>
+            <div style="font-size: 11.5px; color: var(--text-caption);">${cur.address}</div>
+          </div>
+          <span class="hero-stat-tag ${cur.chargers_available > 0 ? 'tag-sky' : 'tag-crimson'}">
+            ${cur.chargers_available > 0 ? cur.chargers_available + ' Free Bays' : 'Full (Wait ~24m)'}
+          </span>
+        </div>
+
+        <!-- 4 Clean Live Station Telemetry Badges -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 10px 0; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px); padding: 9px; border-radius: 13px; border: 0.5px solid rgba(255, 255, 255, 1);">
+          <div>
+            <span style="font-size: 8px; color: var(--text-caption); display: block; font-weight: 700;">QUEUE</span>
+            <strong style="font-size: 11.5px; font-family: 'JetBrains Mono', monospace; color: ${cur.queue_length > 2 ? 'var(--crimson-emergency)' : 'var(--nature-emerald)'};">
+              ${cur.queue_length} cars
+            </strong>
+          </div>
+          <div>
+            <span style="font-size: 8px; color: var(--text-caption); display: block; font-weight: 700;">PRICE</span>
+            <strong style="font-size: 11.5px; font-family: 'JetBrains Mono', monospace;">₹${cur.price_per_kwh}</strong>
+          </div>
+          <div>
+            <span style="font-size: 8px; color: var(--text-caption); display: block; font-weight: 700;">DIST.</span>
+            <strong style="font-size: 11.5px; font-family: 'JetBrains Mono', monospace;">${cur.distance_km} km</strong>
+          </div>
+          <div>
+            <span style="font-size: 8px; color: var(--text-caption); display: block; font-weight: 700;">WAIT</span>
+            <strong style="font-size: 11.5px; font-family: 'JetBrains Mono', monospace; color: var(--sky-vibrant);">
+              ~${cur.predicted_wait_min}m
+            </strong>
+          </div>
+        </div>
+
+        <div>
+          <span style="font-size: 9.5px; font-weight: 800; color: var(--text-caption); text-transform: uppercase; letter-spacing: 0.5px;">
+            Select 15-Minute Slot
+          </span>
+
+          <div class="slot-row">
+            <div class="slot-card selected" onclick="selectSlot(this, '18:45')">
+              <div class="time">18:45</div>
+              <div class="sub">Ready</div>
+            </div>
+            <div class="slot-card" onclick="selectSlot(this, '19:00')">
+              <div class="time">19:00</div>
+              <div class="sub">+15m</div>
+            </div>
+            <div class="slot-card" onclick="selectSlot(this, '19:15')">
+              <div class="time">19:15</div>
+              <div class="sub">+30m</div>
+            </div>
+            <div class="slot-card" onclick="selectSlot(this, '19:30')">
+              <div class="time">19:30</div>
+              <div class="sub">+45m</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="spring-tactile-btn" style="width: 100%;" onclick="openTicketModal()">
+          CONFIRM & GENERATE DIGITAL PASS
+        </button>
+      `;
+    }
+
+    /* ============================================================
+       REAL MAPBOX GL JS INITIALIZATION & MARKERS
+       ============================================================ */
+    function initMapbox() {
+      const mapDiv = document.getElementById('mapboxMap');
+      if (!mapDiv) return;
+
+      if (!window.mapboxgl) {
+        console.warn("Mapbox GL JS is still loading...");
+        setTimeout(initMapbox, 200);
+        return;
+      }
+
+      mapboxgl.accessToken = MAPBOX_TOKEN;
+
+      try {
+        mapboxInstance = new mapboxgl.Map({
+          container: 'mapboxMap',
+          style: 'mapbox://styles/mapbox/light-v11',
+          center: [state.selectedStation ? state.selectedStation.lon : 77.625, state.selectedStation ? state.selectedStation.lat : 12.960],
+          zoom: 11.4,
+          pitch: 20,
+          attributionControl: false
+        });
+
+        mapboxInstance.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-right');
+
+        mapboxInstance.on('load', () => {
+          // Add User Location GPS Puck
+          const userEl = document.createElement('div');
+          userEl.className = 'mapbox-user-puck';
+          userEl.innerHTML = `
+            <div class="gps-pulse"></div>
+            <div class="gps-dot"></div>
+            <div class="gps-badge">You (Nexon EV)</div>
+          `;
+          new mapboxgl.Marker({ element: userEl, anchor: 'center' })
+            .setLngLat([77.635, 12.955])
+            .addTo(mapboxInstance);
+
+          updateMapboxMarkers();
+        });
+      } catch (err) {
+        console.error("Mapbox init error:", err);
+      }
+    }
+
+    function updateMapboxMarkers() {
+      if (!mapboxInstance) return;
+
+      // Clear existing markers
+      stationMarkers.forEach(m => m.remove());
+      stationMarkers = [];
+
+      state.stations.forEach(s => {
+        const isSelected = state.selectedStation && state.selectedStation.id === s.id;
+        const el = document.createElement('div');
+        el.className = `mapbox-station-marker ${isSelected ? 'active' : ''}`;
+        el.innerHTML = `
+          <div class="marker-pill">
+            <div class="marker-dot ${s.chargers_available > 0 ? 'emerald' : 'crimson'}"></div>
+            <div class="marker-info">
+              <span class="marker-name">${s.name}</span>
+              <span class="marker-meta">${s.queue_length} queue • ₹${s.price_per_kwh}/kWh</span>
+            </div>
+          </div>
+        `;
+
+        el.addEventListener('click', (e) => {
+          e.stopPropagation();
+          pickStation(s.id);
+        });
+
+        const marker = new mapboxgl.Marker({ element: el, anchor: 'bottom' })
+          .setLngLat([s.lon, s.lat])
+          .addTo(mapboxInstance);
+
+        stationMarkers.push(marker);
+      });
+    }
+
     function pickStation(id) {
-      state.selectedStation = state.stations.find(s => s.id === id) || state.stations[0];
-      renderView();
+      const s = state.stations.find(st => st.id === id) || state.stations[0];
+      state.selectedStation = s;
+      if (state.activeTab === 2) {
+        const card = document.getElementById('selectedStationCard');
+        if (card) {
+          card.innerHTML = renderSelectedStationCard(s);
+        }
+        updateMapboxMarkers();
+        if (mapboxInstance) {
+          mapboxInstance.flyTo({ center: [s.lon, s.lat], zoom: 12.8, essential: true });
+        }
+      } else {
+        renderView();
+      }
     }
 
     function selectSlot(el, slot) {

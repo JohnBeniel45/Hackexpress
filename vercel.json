@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/", "destination": "/web_preview/index.html" },
+    { "source": "/assets/(.*)", "destination": "/web_preview/assets/$1" },
+    { "source": "/(.*)", "destination": "/web_preview/$1" }
+  ]
+}
