@@ -101,48 +101,8 @@ class _AppleRootScreenState extends State<AppleRootScreen> {
             ),
           ],
         ),
-        actions: [
-          // DEMO MODE TOGGLE PILL
-          GestureDetector(
-            onTap: _toggleDemoMode,
-            child: Container(
-              margin: const EdgeInsets.only(right: 16),
-              padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
-              decoration: BoxDecoration(
-                color: _demoMode ? Colors.white : const Color(0xFFE2E8F0),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: _demoMode ? AppleLiquidColors.natureLeaf : const Color(0xFFCBD5E1),
-                  width: 0.5,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: _demoMode ? const Color(0x2610B981) : Colors.transparent,
-                    blurRadius: 10,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.speed,
-                    size: 14,
-                    color: _demoMode ? AppleLiquidColors.natureEmerald : AppleLiquidColors.textCaption,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    _demoMode ? "DEMO MODE" : "LIVE MODE",
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w800,
-                      color: _demoMode ? AppleLiquidColors.natureEmerald : AppleLiquidColors.textCaption,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+        actions: const [
+          SizedBox(width: 16),
         ],
       ),
       body: Stack(

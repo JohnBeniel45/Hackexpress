@@ -60,7 +60,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
       overflow-x: hidden;
     }
 
@@ -80,7 +80,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       z-index: 10;
     }
     .status-capsule {
@@ -131,7 +131,7 @@
       flex-direction: column;
     }
     
-    /* PHONE SCREEN SURFACE (Rich EV Nature & Sky Blue Atmospheric Backdrop) */
+    /* PHONE SCREEN SURFACE */
     .screen-surface {
       position: relative;
       flex: 1;
@@ -152,10 +152,10 @@
       box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.8);
     }
 
-    /* CLEAN MINIMAL STATUS BAR (NO DYNAMIC ISLAND / NOTCH) */
+    /* CLEAN MINIMAL STATUS BAR */
     .status-row {
-      height: 40px;
-      padding: 12px 26px 0;
+      height: 38px;
+      padding: 12px 24px 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -176,9 +176,9 @@
       color: var(--sky-vibrant);
     }
 
-    /* App Nav Header */
+    /* CLEAN APP NAV HEADER (NO DEMO BUTTON) */
     .app-header {
-      padding: 10px 22px 6px;
+      padding: 8px 20px 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -194,50 +194,52 @@
       gap: 6px;
     }
     .brand-group p {
-      font-size: 10px;
+      font-size: 10.5px;
       color: var(--sky-vibrant);
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.6px;
+      margin-top: 1px;
     }
-
-    /* DEMO MODE SWITCH PILL */
-    .demo-pill-btn {
-      background: rgba(255, 255, 255, 0.92);
-      border: 0.8px solid var(--sky-soft);
-      padding: 5px 12px;
+    .header-live-badge {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      border: 0.8px solid rgba(255, 255, 255, 1);
+      padding: 4px 10px;
       border-radius: 999px;
-      color: var(--sky-vibrant);
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 800;
-      cursor: pointer;
+      color: var(--nature-emerald);
       display: flex;
       align-items: center;
       gap: 5px;
-      box-shadow: 0 4px 14px rgba(0, 163, 255, 0.18);
-      transition: all 0.4s var(--spring-bouncy);
-    }
-    .demo-pill-btn:hover {
-      transform: scale(1.08);
-      background: #FFFFFF;
-      box-shadow: 0 6px 20px rgba(0, 163, 255, 0.3);
-    }
-    .demo-pill-btn:active {
-      transform: scale(0.88);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
 
-    /* SCROLLABLE VIEWPORT */
+    /* SCROLLABLE VIEWPORT (Balanced, Equal Spacing Without Bottom Crowding) */
     .scroll-body {
       flex: 1;
       overflow-y: auto;
       overflow-x: hidden;
-      padding: 6px 18px 88px; /* clearance for perfectly centered floating dock */
+      padding: 6px 18px 94px; /* 94px clearance ensures dock never overlaps content */
       display: flex;
       flex-direction: column;
-      gap: 14px;
       scroll-behavior: smooth;
     }
     .scroll-body::-webkit-scrollbar { width: 0; }
+
+    /* UNIFIED SCREEN VIEW CONTENT WRAPPER */
+    .view-content {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+      animation: macosWindowIn 0.35s var(--macos-zoom);
+    }
+    @keyframes macosWindowIn {
+      0% { opacity: 0; transform: scale(0.96) translateY(8px); filter: blur(4px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+    }
 
     /* AUTHENTIC APPLE LIQUID GLASS FLOATING PANELS */
     .glass-panel {
@@ -245,18 +247,19 @@
       background: var(--glass-card);
       backdrop-filter: blur(30px) saturate(210%);
       -webkit-backdrop-filter: blur(30px) saturate(210%);
-      border-radius: 26px;
-      padding: 18px;
+      border-radius: 24px;
+      padding: 16px 18px;
       border: 0.8px solid var(--glass-border);
       box-shadow: var(--glass-shadow), var(--glass-inner-sheen);
-      transition: transform 0.45s var(--spring-bouncy), box-shadow 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       overflow: hidden;
+      width: 100%;
     }
     .glass-panel:hover {
-      transform: translateY(-2px) scale(1.01);
+      transform: translateY(-2px);
       background: var(--glass-elevated);
       border-color: #FFFFFF;
-      box-shadow: 0 22px 50px -10px rgba(15, 23, 42, 0.16), var(--glass-inner-sheen);
+      box-shadow: 0 20px 48px -10px rgba(15, 23, 42, 0.15), var(--glass-inner-sheen);
     }
     /* Sunlight Specular Refraction Sheen */
     .glass-panel::before {
@@ -266,53 +269,32 @@
       height: 45%;
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.12) 60%, transparent 100%);
       pointer-events: none;
-      border-top-left-radius: 26px;
-      border-top-right-radius: 26px;
-    }
-
-    /* SCREEN ANIMATION WRAPPER */
-    .view-content {
-      animation: macosWindowIn 0.35s var(--macos-zoom);
-    }
-    @keyframes macosWindowIn {
-      0% { opacity: 0; transform: scale(0.95) translateY(10px); filter: blur(5px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
     }
 
     /* TYPOGRAPHY STANDARDS (Apple HIG Clean Minimal Standard) */
     .view-title {
-      font-size: 17px;
+      font-size: 16.5px;
       font-weight: 800;
       color: var(--text-headline);
       letter-spacing: -0.4px;
-      margin-bottom: 2px;
+      margin-bottom: 1px;
     }
     .view-caption {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--text-caption);
       line-height: 1.35;
     }
 
-    /* HIGH IMPACT METRIC ROW */
-    .hero-stat-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin: 8px 0 12px;
-    }
-    .hero-stat-large {
-      font-size: 32px;
-      font-weight: 800;
-      color: var(--text-headline);
-      letter-spacing: -1px;
-      font-family: 'JetBrains Mono', monospace;
-    }
+    /* HIGH IMPACT METRIC TAGS */
     .hero-stat-tag {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
       padding: 4px 10px;
       border-radius: 999px;
       letter-spacing: 0.3px;
+      white-space: nowrap;
     }
     .tag-sky {
       background: var(--sky-aura);
@@ -330,15 +312,15 @@
       border: 0.5px solid rgba(239, 68, 68, 0.3);
     }
 
-    /* EXTREME BOUNCY SPRING BUTTONS (Apple Damped Harmonic Physics: Damping ~0.45, Stiffness ~400) */
+    /* TACTILE SPRING BUTTONS */
     .spring-tactile-btn {
       position: relative;
       background: linear-gradient(135deg, #00A3FF 0%, #0284C7 45%, #10B981 100%);
       color: #FFFFFF;
       border: none;
-      padding: 14px 20px;
-      border-radius: 18px;
-      font-size: 13.5px;
+      padding: 13.5px 20px;
+      border-radius: 17px;
+      font-size: 13px;
       font-weight: 800;
       letter-spacing: -0.2px;
       cursor: pointer;
@@ -347,42 +329,29 @@
       justify-content: center;
       gap: 8px;
       box-shadow: 
-        0 12px 28px -4px rgba(0, 163, 255, 0.45),
-        0 0 16px rgba(16, 185, 129, 0.25),
+        0 10px 25px -4px rgba(0, 163, 255, 0.45),
+        0 0 14px rgba(16, 185, 129, 0.25),
         inset 0 1.5px 2px rgba(255, 255, 255, 0.6);
-      transition: transform 0.45s var(--spring-bouncy), box-shadow 0.3s ease;
+      transition: transform 0.35s var(--spring-bouncy), box-shadow 0.25s ease;
       user-select: none;
     }
     .spring-tactile-btn:hover {
       transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 16px 36px -4px rgba(0, 163, 255, 0.6), 0 0 22px rgba(16, 185, 129, 0.35);
+      box-shadow: 0 14px 32px -4px rgba(0, 163, 255, 0.6), 0 0 20px rgba(16, 185, 129, 0.35);
     }
     .spring-tactile-btn:active {
-      transform: translateY(2px) scale(0.88); /* Deep tactile snap */
-      box-shadow: 0 4px 12px rgba(0, 163, 255, 0.3);
+      transform: translateY(2px) scale(0.92);
+      box-shadow: 0 4px 10px rgba(0, 163, 255, 0.3);
     }
 
-    /* RUBBER-BAND SNAP ANIMATION ON CLICK */
-    @keyframes extremeRubberBand {
-      0% { transform: scale(1); }
-      22% { transform: scale(0.86); }
-      52% { transform: scale(1.18); }
-      72% { transform: scale(0.96); }
-      86% { transform: scale(1.03); }
-      100% { transform: scale(1); }
-    }
-    .rubberband-trigger {
-      animation: extremeRubberBand 0.42s var(--spring-bouncy) forwards;
-    }
-
-    /* LIQUID MORPHING SLIDER */
+    /* LIQUID MORPHING SLIDER (Hardware-Accelerated, Zero-Flicker) */
     .slider-container {
-      margin: 12px 0 4px;
+      margin: 10px 0 4px;
       position: relative;
     }
     .slider-sunlit-track {
       width: 100%;
-      height: 12px;
+      height: 10px;
       background: rgba(226, 232, 240, 0.7);
       border-radius: 999px;
       position: relative;
@@ -395,12 +364,12 @@
       left: 0; top: 0; bottom: 0;
       background: linear-gradient(90deg, #0284C7 0%, #00A3FF 60%, #10B981 100%);
       border-radius: 999px;
-      box-shadow: 0 0 14px rgba(0, 163, 255, 0.4);
-      transition: width 0.08s linear;
+      box-shadow: 0 0 12px rgba(0, 163, 255, 0.4);
+      transition: width 0.04s linear;
     }
     .slider-input-overlay {
       position: absolute;
-      top: -6px; left: 0;
+      top: -7px; left: 0;
       width: 100%;
       height: 24px;
       opacity: 0;
@@ -411,23 +380,18 @@
       position: absolute;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       background: #FFFFFF;
       border-radius: 50%;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18), 0 0 18px var(--sky-electric);
+      box-shadow: 0 3px 12px rgba(15, 23, 42, 0.18), 0 0 14px var(--sky-electric);
       pointer-events: none;
-      transition: left 0.08s linear, transform 0.3s var(--spring-bouncy);
+      transition: left 0.04s linear, transform 0.2s ease;
       border: 1px solid rgba(255, 255, 255, 0.95);
-    }
-    .slider-lens-thumb.dragging {
-      transform: translate(-50%, -50%) scale(1.35);
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25), 0 0 28px var(--sky-electric);
     }
 
     /* ============================================================
        MAC OS / IOS FLOATING LIQUID GLASS CAPSULE DOCK
-       (Strictly Center-Aligned & Mathematically Snapped Capsule)
        ============================================================ */
     .floating-mac-dock {
       position: absolute;
@@ -450,7 +414,7 @@
       padding: 5px;
       z-index: 40;
     }
-    /* Gliding Liquid Refractive Bubble Lens (108px width matches 108px tabs exactly) */
+    /* Gliding Liquid Refractive Bubble Lens */
     .dock-glide-bubble {
       position: absolute;
       height: 48px;
@@ -460,10 +424,10 @@
       border: 0.8px solid rgba(255, 255, 255, 1);
       box-shadow: 
         0 10px 24px rgba(0, 163, 255, 0.28),
-        inset 2.5px 0 5px rgba(0, 163, 255, 0.5),    /* Refractive Cyan/Blue rim */
-        inset -2.5px 0 5px rgba(16, 185, 129, 0.5),  /* Refractive Emerald rim */
+        inset 2.5px 0 5px rgba(0, 163, 255, 0.5),
+        inset -2.5px 0 5px rgba(16, 185, 129, 0.5),
         inset 0 2px 4px rgba(255, 255, 255, 1),
-        inset 0 -2px 4px rgba(251, 191, 36, 0.25);  /* Refractive Amber rim */
+        inset 0 -2px 4px rgba(251, 191, 36, 0.25);
       top: 5px;
       left: 5px;
       pointer-events: none;
@@ -486,19 +450,18 @@
       justify-content: center;
       gap: 2px;
       cursor: pointer;
-      transition: transform 0.4s var(--spring-bouncy), color 0.25s ease;
+      transition: transform 0.35s var(--spring-bouncy), color 0.2s ease;
       user-select: none;
     }
     .dock-tab.active {
       color: var(--sky-vibrant);
-      transform: scale(1.16);
+      transform: scale(1.14);
       text-shadow: 0 0 14px rgba(0, 163, 255, 0.45);
     }
     .dock-icon {
       width: 20px;
       height: 20px;
       fill: currentColor;
-      transition: transform 0.4s var(--spring-bouncy);
     }
     .dock-tab.active .dock-icon {
       transform: translateY(-1px);
@@ -509,7 +472,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 4px;
+      padding: 6px 2px;
     }
     .car-orb {
       display: flex;
@@ -519,32 +482,32 @@
       width: 105px;
     }
     .orb-ring {
-      width: 70px;
-      height: 70px;
+      width: 68px;
+      height: 68px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 8px;
-      box-shadow: 0 10px 24px rgba(0, 163, 255, 0.15);
+      margin-bottom: 6px;
+      box-shadow: 0 10px 22px rgba(0, 163, 255, 0.15);
       position: relative;
     }
     .orb-center {
-      width: 56px;
-      height: 56px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
       background: #FFFFFF;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
       color: var(--text-headline);
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
     .orb-model { font-size: 12px; font-weight: 800; color: var(--text-headline); }
-    .orb-sub { font-size: 10px; color: var(--text-caption); margin-top: 2px; }
+    .orb-sub { font-size: 10px; color: var(--text-caption); margin-top: 1px; }
 
     /* Animated Nature Energy Beam */
     .beam-sunlit-conduit {
@@ -570,14 +533,12 @@
       100% { transform: translateX(200%); }
     }
 
-    /* ============================================================
-       SCREEN 3: REALISTIC VECTOR MINI-MAP COMPONENT
-       ============================================================ */
+    /* SCREEN 3: REALISTIC VECTOR MINI-MAP */
     .map-vector-wrapper {
       position: relative;
-      height: 255px;
+      height: 245px;
       background: #EBF4FC;
-      border-radius: 24px;
+      border-radius: 22px;
       overflow: hidden;
       border: 0.8px solid var(--glass-border);
       box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08), inset 0 0 20px rgba(0, 163, 255, 0.06);
@@ -608,8 +569,8 @@
       animation: gpsPulseAnim 2.2s infinite ease-out;
     }
     .gps-dot {
-      width: 14px;
-      height: 14px;
+      width: 13px;
+      height: 13px;
       background: var(--sky-electric);
       border: 2.5px solid #FFFFFF;
       border-radius: 50%;
@@ -620,11 +581,11 @@
     .gps-badge {
       background: rgba(15, 23, 42, 0.85);
       color: #FFFFFF;
-      font-size: 8.5px;
+      font-size: 8px;
       font-weight: 800;
-      padding: 2px 6px;
-      border-radius: 6px;
-      margin-top: 3px;
+      padding: 1.5px 5px;
+      border-radius: 5px;
+      margin-top: 2px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
       white-space: nowrap;
     }
@@ -633,36 +594,36 @@
       100% { transform: scale(1.8); opacity: 0; }
     }
 
-    /* Realistic Interactive Station Map Pins */
+    /* Interactive Station Map Pins */
     .map-station-pill {
       position: absolute;
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(14px);
       border: 0.8px solid rgba(255, 255, 255, 1);
-      border-radius: 12px;
-      padding: 6px 10px;
+      border-radius: 11px;
+      padding: 5px 9px;
       box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       z-index: 30;
-      transition: all 0.35s var(--spring-bouncy);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       user-select: none;
     }
     .map-station-pill:hover {
-      transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.18);
     }
     .map-station-pill.active {
       border-color: var(--sky-electric);
       background: #FFFFFF;
       box-shadow: 0 8px 22px rgba(0, 163, 255, 0.35);
-      transform: scale(1.06);
+      transform: scale(1.05);
     }
     .pill-dot {
-      width: 9px;
-      height: 9px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       flex-shrink: 0;
     }
@@ -679,13 +640,13 @@
       flex-direction: column;
     }
     .pill-title {
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 800;
       color: var(--text-headline);
       white-space: nowrap;
     }
     .pill-meta {
-      font-size: 8.5px;
+      font-size: 8px;
       color: var(--text-caption);
       font-weight: 700;
       white-space: nowrap;
@@ -695,27 +656,27 @@
     .slot-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin: 10px 0 14px;
+      gap: 7px;
+      margin: 8px 0 12px;
     }
     .slot-card {
       background: rgba(255, 255, 255, 0.72);
       border: 0.8px solid rgba(255, 255, 255, 1);
-      border-radius: 14px;
-      padding: 9px 4px;
+      border-radius: 13px;
+      padding: 8px 4px;
       text-align: center;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-      transition: all 0.35s var(--spring-bouncy);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      transition: transform 0.2s ease, background 0.2s ease;
     }
     .slot-card.selected {
       background: linear-gradient(135deg, #00A3FF 0%, #10B981 100%);
       color: #FFF;
-      box-shadow: 0 8px 22px rgba(0, 163, 255, 0.4);
-      transform: scale(1.06);
+      box-shadow: 0 6px 18px rgba(0, 163, 255, 0.4);
+      transform: scale(1.04);
     }
-    .slot-card .time { font-size: 13px; font-weight: 800; }
-    .slot-card .sub { font-size: 9px; opacity: 0.85; margin-top: 1px; }
+    .slot-card .time { font-size: 12.5px; font-weight: 800; }
+    .slot-card .sub { font-size: 8.5px; opacity: 0.85; margin-top: 1px; }
 
     /* APPLE WALLET DIGITAL PASS MODAL */
     .modal-backdrop {
@@ -729,19 +690,19 @@
       align-items: center;
       justify-content: center;
       padding: 24px;
-      animation: modalZoomIn 0.32s var(--macos-zoom);
+      animation: modalZoomIn 0.3s var(--macos-zoom);
     }
     @keyframes modalZoomIn {
-      from { opacity: 0; transform: scale(0.90); }
+      from { opacity: 0; transform: scale(0.92); }
       to { opacity: 1; transform: scale(1); }
     }
     .pass-ticket {
       width: 100%;
       background: #FFFFFF;
-      border-radius: 32px;
+      border-radius: 30px;
       border: 1px solid rgba(255, 255, 255, 1);
       box-shadow: 0 35px 70px -15px rgba(15, 23, 42, 0.28);
-      padding: 24px;
+      padding: 22px;
       position: relative;
     }
   </style>
@@ -755,11 +716,11 @@
     </div>
   </div>
 
-  <!-- IPHONE 16 PRO PEARL LIQUID GLASS FRAME -->
+  <!-- IPHONE 16 PRO FRAME -->
   <div class="iphone-shell">
     <div class="screen-surface">
       
-      <!-- CLEAN MINIMAL STATUS BAR (NO DYNAMIC ISLAND NOTCH) -->
+      <!-- CLEAN STATUS BAR -->
       <div class="status-row">
         <span id="timeClock">9:41</span>
         <div class="status-network">
@@ -772,7 +733,7 @@
         </div>
       </div>
 
-      <!-- APP HEADER -->
+      <!-- APP HEADER (Clean, No Demo Button) -->
       <div class="app-header">
         <div class="brand-group">
           <h2>
@@ -781,19 +742,18 @@
           </h2>
           <p id="vehicleSubtext">TATA NEXON EV MAX (28%)</p>
         </div>
-
-        <!-- DEMO MODE PILL SHORTCUT -->
-        <button class="demo-pill-btn" onclick="toggleDemoSeed()" id="demoPillBtn">
-          <span>⚡ DEMO MODE</span>
-        </button>
+        <div class="header-live-badge">
+          <div class="pulsing-emerald" style="width: 5px; height: 5px;"></div>
+          <span>GRID SYNC</span>
+        </div>
       </div>
 
-      <!-- SCROLLABLE CONTENT VIEWPORT -->
+      <!-- SCROLLABLE VIEWPORT -->
       <div class="scroll-body" id="scrollContainer">
         <!-- Rendered reactively by active screen controller -->
       </div>
 
-      <!-- MAC OS / IOS FLOATING LIQUID GLASS CAPSULE DOCK (Strictly Center-Aligned) -->
+      <!-- MAC OS / IOS FLOATING LIQUID GLASS CAPSULE DOCK -->
       <div class="floating-mac-dock">
         <!-- Gliding Liquid Refractive Bubble Lens -->
         <div class="dock-glide-bubble" id="dockBubble"></div>
@@ -815,36 +775,36 @@
       <!-- APPLE WALLET DIGITAL PASS MODAL -->
       <div class="modal-backdrop" id="passBackdrop">
         <div class="pass-ticket">
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #F1F5F9; padding-bottom: 12px;">
-            <span style="font-size: 11px; font-weight: 800; color: var(--sky-vibrant); letter-spacing: 0.6px;">APPLE WALLET CHARGING PASS</span>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #F1F5F9; padding-bottom: 10px;">
+            <span style="font-size: 10.5px; font-weight: 800; color: var(--sky-vibrant); letter-spacing: 0.6px;">APPLE WALLET CHARGING PASS</span>
             <span style="font-size: 11px; font-weight: 700; color: var(--text-caption);" id="ticketIdLabel">GF-8841</span>
           </div>
 
-          <div style="margin: 16px 0;">
-            <div style="font-size: 19px; font-weight: 800; color: var(--text-headline);" id="ticketStationName">Koramangala Nexus FastCharge</div>
-            <div style="font-size: 12px; color: var(--text-caption);" id="ticketStationAddress">Hosur Rd, 7th Block</div>
+          <div style="margin: 14px 0;">
+            <div style="font-size: 18px; font-weight: 800; color: var(--text-headline);" id="ticketStationName">Indiranagar 100ft Hub</div>
+            <div style="font-size: 11.5px; color: var(--text-caption);" id="ticketStationAddress">100 Feet Rd, HAL 2nd Stage</div>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: rgba(248, 250, 252, 0.9); border-radius: 16px; padding: 12px; margin-bottom: 16px; border: 0.5px solid #E2E8F0;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: rgba(248, 250, 252, 0.9); border-radius: 15px; padding: 12px; margin-bottom: 14px; border: 0.5px solid #E2E8F0;">
             <div>
-              <span style="font-size: 9px; color: var(--text-caption); display: block;">ALLOCATED BAY</span>
-              <strong style="font-size: 13px; color: var(--nature-emerald);" id="ticketBayLabel">Bay #1 (60 kW DC)</strong>
+              <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">ALLOCATED BAY</span>
+              <strong style="font-size: 12.5px; color: var(--nature-emerald);" id="ticketBayLabel">Bay #1 (120 kW Fast)</strong>
             </div>
             <div>
-              <span style="font-size: 9px; color: var(--text-caption); display: block;">STATUS</span>
-              <strong style="font-size: 13px; color: var(--text-headline);" id="ticketPriorityLabel">CONFIRMED (15 MIN)</strong>
+              <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">STATUS</span>
+              <strong style="font-size: 12.5px; color: var(--text-headline);" id="ticketPriorityLabel">CONFIRMED (15 MIN)</strong>
             </div>
           </div>
 
           <!-- Digital Barcode Sheen -->
-          <div style="background: #F1F5F9; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; align-items: center;">
-            <svg width="200" height="44" viewBox="0 0 200 44" fill="#0F172A">
-              <rect x="0" y="0" width="4" height="44"/><rect x="8" y="0" width="2" height="44"/><rect x="14" y="0" width="6" height="44"/><rect x="24" y="0" width="3" height="44"/><rect x="32" y="0" width="5" height="44"/><rect x="42" y="0" width="2" height="44"/><rect x="48" y="0" width="8" height="44"/><rect x="60" y="0" width="3" height="44"/><rect x="68" y="0" width="6" height="44"/><rect x="78" y="0" width="2" height="44"/><rect x="84" y="0" width="7" height="44"/><rect x="96" y="0" width="4" height="44"/><rect x="104" y="0" width="2" height="44"/><rect x="110" y="0" width="8" height="44"/><rect x="122" y="0" width="3" height="44"/><rect x="130" y="0" width="6" height="44"/><rect x="140" y="0" width="5" height="44"/><rect x="150" y="0" width="2" height="44"/><rect x="156" y="0" width="7" height="44"/><rect x="168" y="0" width="3" height="44"/><rect x="176" y="0" width="6" height="44"/><rect x="186" y="0" width="4" height="44"/><rect x="194" y="0" width="3" height="44"/>
+          <div style="background: #F1F5F9; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; align-items: center;">
+            <svg width="200" height="40" viewBox="0 0 200 40" fill="#0F172A">
+              <rect x="0" y="0" width="4" height="40"/><rect x="8" y="0" width="2" height="40"/><rect x="14" y="0" width="6" height="40"/><rect x="24" y="0" width="3" height="40"/><rect x="32" y="0" width="5" height="40"/><rect x="42" y="0" width="2" height="40"/><rect x="48" y="0" width="8" height="40"/><rect x="60" y="0" width="3" height="40"/><rect x="68" y="0" width="6" height="40"/><rect x="78" y="0" width="2" height="40"/><rect x="84" y="0" width="7" height="40"/><rect x="96" y="0" width="4" height="40"/><rect x="104" y="0" width="2" height="40"/><rect x="110" y="0" width="8" height="40"/><rect x="122" y="0" width="3" height="40"/><rect x="130" y="0" width="6" height="40"/><rect x="140" y="0" width="5" height="40"/><rect x="150" y="0" width="2" height="40"/><rect x="156" y="0" width="7" height="40"/><rect x="168" y="0" width="3" height="40"/><rect x="176" y="0" width="6" height="40"/><rect x="186" y="0" width="4" height="40"/><rect x="194" y="0" width="3" height="40"/>
             </svg>
-            <span style="font-size: 9px; font-weight: 800; color: var(--text-caption); letter-spacing: 2px; margin-top: 4px;">HOLD NEAR NFC CHARGER TERMINAL</span>
+            <span style="font-size: 8.5px; font-weight: 800; color: var(--text-caption); letter-spacing: 2px; margin-top: 4px;">HOLD NEAR NFC CHARGER TERMINAL</span>
           </div>
 
-          <button class="spring-tactile-btn" style="width: 100%; margin-top: 18px;" onclick="closeTicketModal()">
+          <button class="spring-tactile-btn" style="width: 100%; margin-top: 16px;" onclick="closeTicketModal()">
             DONE & LOCK TO WALLET
           </button>
         </div>
@@ -856,29 +816,25 @@
   <script>
     const API_BASE = "http://127.0.0.1:8000";
 
-    // Reactive State with Optimistic 0ms Latency Updates
+    // Reactive State
     const state = {
       activeTab: 0,
-      demoMode: true,
       userBattery: 28,
       vehicleModel: "Tata Nexon EV Max",
       vehicleType: "Sedan",
       v2vTransferKwh: 10,
 
-      // Live Demo Seed
       donorModel: "Hyundai Ioniq 5",
       donorBattery: 92,
       donorDistanceKm: 0.4,
 
-      // High-Impact Clean Stats
       gridCapacity: 98,
-      
       selectedStation: null,
       selectedSlot: "18:45",
 
       stations: [
-        { id: 2, name: "Koramangala FastCharge", address: "Hosur Rd, 7th Block", chargers_total: 6, chargers_available: 4, power_kw: 60, grid_load: 0.45, predicted_wait_min: 4.2, price_per_kwh: 14.0, distance_km: 3.8, queue_length: 1 },
         { id: 1, name: "Indiranagar 100ft Hub", address: "100 Feet Rd, HAL 2nd Stage", chargers_total: 8, chargers_available: 3, power_kw: 120, grid_load: 0.65, predicted_wait_min: 8.5, price_per_kwh: 15.5, distance_km: 2.4, queue_length: 2 },
+        { id: 2, name: "Koramangala FastCharge", address: "Hosur Rd, 7th Block", chargers_total: 6, chargers_available: 4, power_kw: 60, grid_load: 0.45, predicted_wait_min: 4.2, price_per_kwh: 14.0, distance_km: 3.8, queue_length: 1 },
         { id: 3, name: "MG Road Metro Super Hub", address: "Trinity Circle, MG Road", chargers_total: 4, chargers_available: 0, power_kw: 150, grid_load: 0.88, predicted_wait_min: 24.5, price_per_kwh: 17.0, distance_km: 1.2, queue_length: 4 },
         { id: 4, name: "Whitefield ITPL PowerPort", address: "ITPL Main Rd, Whitefield", chargers_total: 10, chargers_available: 5, power_kw: 120, grid_load: 0.52, predicted_wait_min: 7.0, price_per_kwh: 14.5, distance_km: 8.5, queue_length: 2 }
       ]
@@ -900,7 +856,9 @@
               distance_km: (2.4 + idx * 1.5).toFixed(1),
               queue_length: s.queue_length !== undefined ? s.queue_length : (idx === 2 ? 4 : idx + 1)
             }));
-            renderView();
+            // Update selected station reference if present
+            state.selectedStation = state.stations[0];
+            if (state.activeTab === 2) renderScreen3(document.getElementById('scrollContainer'));
           }
         })
         .catch(() => {});
@@ -913,42 +871,17 @@
       document.getElementById('timeClock').innerText = `${hrs}:${mins}`;
     }
 
-    function toggleDemoSeed() {
-      state.demoMode = !state.demoMode;
-      const btn = document.getElementById('demoPillBtn');
-      btn.classList.add('rubberband-trigger');
-      setTimeout(() => btn.classList.remove('rubberband-trigger'), 450);
-
-      if (state.demoMode) {
-        state.userBattery = 28;
-        state.donorBattery = 92;
-        state.donorDistanceKm = 0.4;
-        btn.innerHTML = `<span>⚡ DEMO MODE</span>`;
-        btn.style.borderColor = 'var(--sky-soft)';
-        btn.style.color = 'var(--sky-vibrant)';
-      } else {
-        btn.innerHTML = `<span>LIVE MODE</span>`;
-        btn.style.borderColor = '#CBD5E1';
-        btn.style.color = 'var(--text-caption)';
-      }
-      renderView();
-    }
-
     function switchDockTab(idx) {
+      if (state.activeTab === idx) return;
       state.activeTab = idx;
       
-      // Pixel-perfect centering: 108px per tab
+      // Pixel-perfect centering: exactly 108px per tab
       const bubble = document.getElementById('dockBubble');
       bubble.style.transform = `translateX(${idx * 108}px)`;
 
       document.querySelectorAll('.dock-tab').forEach((tab, i) => {
-        if (i === idx) {
-          tab.classList.add('active');
-          tab.classList.add('rubberband-trigger');
-          setTimeout(() => tab.classList.remove('rubberband-trigger'), 450);
-        } else {
-          tab.classList.remove('active');
-        }
+        if (i === idx) tab.classList.add('active');
+        else tab.classList.remove('active');
       });
 
       renderView();
@@ -959,7 +892,7 @@
     }
 
     /* -------------------------------------------------------------
-       SCREEN RENDERERS (Clean, Uncluttered Apple HIG Standard)
+       SCREEN RENDERERS (Balanced Spacing, Clean Typography)
        ------------------------------------------------------------- */
     function renderView() {
       const body = document.getElementById('scrollContainer');
@@ -970,7 +903,9 @@
       else if (state.activeTab === 2) renderScreen3(body);
     }
 
-    /* SCREEN 1: SMART CHARGING & AI GRID MATCHER */
+    /* ============================================================
+       SCREEN 1: AI GRID & CHARGER MATCHER
+       ============================================================ */
     function renderScreen1(body) {
       const urgent = isUrgent();
       const topMatch = state.stations[0];
@@ -978,12 +913,12 @@
       body.innerHTML = `
         <div class="view-content">
           <!-- TITLE -->
-          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
             <div>
               <div class="view-title">Smart Charging</div>
               <div class="view-caption">Real-time grid match & queue predictions</div>
             </div>
-            <span class="hero-stat-tag ${urgent ? 'tag-crimson' : 'tag-sky'}">
+            <span id="screen1HeaderTag" class="hero-stat-tag ${urgent ? 'tag-crimson' : 'tag-sky'}">
               ${urgent ? 'PRIORITY LEAPFROG' : 'OPTIMAL GRID'}
             </span>
           </div>
@@ -992,10 +927,10 @@
           <div class="glass-panel">
             <div style="display: flex; justify-content: space-between; align-items: baseline;">
               <div>
-                <span style="font-size: 11px; font-weight: 800; color: var(--text-caption); text-transform: uppercase; letter-spacing: 0.5px;">
+                <span style="font-size: 10.5px; font-weight: 800; color: var(--text-caption); text-transform: uppercase; letter-spacing: 0.5px;">
                   Grid Capacity
                 </span>
-                <div style="font-size: 28px; font-weight: 800; color: var(--sky-vibrant); font-family: 'JetBrains Mono', monospace; margin-top: 4px;">
+                <div style="font-size: 28px; font-weight: 800; color: var(--sky-vibrant); font-family: 'JetBrains Mono', monospace; margin-top: 3px;">
                   ${state.gridCapacity}%
                 </div>
               </div>
@@ -1011,88 +946,152 @@
           <div class="glass-panel">
             <div style="display: flex; justify-content: space-between; align-items: baseline;">
               <div>
-                <div style="font-size: 14px; font-weight: 800; color: var(--text-headline);">Vehicle Battery</div>
-                <div style="font-size: 11px; color: var(--text-caption);">Slide to adjust state of charge</div>
+                <div style="font-size: 13.5px; font-weight: 800; color: var(--text-headline);">Vehicle Battery</div>
+                <div style="font-size: 11px; color: var(--text-caption);">Slide to simulate critical battery preemption</div>
               </div>
-              <span style="font-size: 22px; font-weight: 800; color: ${urgent ? 'var(--crimson-emergency)' : 'var(--sky-vibrant)'}; font-family: 'JetBrains Mono', monospace;">
+              <span id="batteryPctDisplay" style="font-size: 22px; font-weight: 800; color: ${urgent ? 'var(--crimson-emergency)' : 'var(--sky-vibrant)'}; font-family: 'JetBrains Mono', monospace;">
                 ${state.userBattery}%
               </span>
             </div>
 
             <div class="slider-container">
               <div class="slider-sunlit-track">
-                <div class="slider-fluid-fill" style="width: ${state.userBattery}%; background: ${urgent ? 'linear-gradient(90deg, #DC2626, #EF4444)' : 'linear-gradient(90deg, #0284C7 0%, #00A3FF 60%, #10B981 100%)'};"></div>
+                <div id="batteryFillTrack" class="slider-fluid-fill" style="width: ${state.userBattery}%; background: ${urgent ? 'linear-gradient(90deg, #DC2626, #EF4444)' : 'linear-gradient(90deg, #0284C7 0%, #00A3FF 60%, #10B981 100%)'};"></div>
               </div>
               <input type="range" min="4" max="100" value="${state.userBattery}" class="slider-input-overlay" oninput="updateBatterySlider(this.value)">
               <div class="slider-lens-thumb" id="batteryThumb" style="left: ${state.userBattery}%;"></div>
             </div>
 
-            ${urgent ? `
-              <div style="background: rgba(254, 226, 226, 0.9); border-radius: 12px; padding: 9px 12px; margin-top: 10px; display: flex; gap: 8px; align-items: center; border: 0.5px solid #FCA5A5;">
-                <span style="font-size: 14px;">🚨</span>
-                <span style="font-size: 11px; font-weight: 800; color: #991B1B;">
-                  Critical battery (&le;10%). Leapfrog preemption applied for Bay #1.
-                </span>
-              </div>
-            ` : ''}
+            <div id="emergencyAlertBanner" style="display: ${urgent ? 'flex' : 'none'}; background: rgba(254, 226, 226, 0.95); border-radius: 12px; padding: 9px 12px; margin-top: 10px; gap: 8px; align-items: center; border: 0.5px solid #FCA5A5;">
+              <span style="font-size: 14px;">🚨</span>
+              <span style="font-size: 11px; font-weight: 800; color: #991B1B;">
+                Critical battery (&le;10%). Leapfrog preemption applied for Bay #1.
+              </span>
+            </div>
           </div>
 
           <!-- CARD 3: RECOMMENDED CHARGER -->
           <div class="glass-panel" style="background: linear-gradient(175deg, rgba(255,255,255,0.78) 0%, rgba(224,242,254,0.65) 100%); border-color: rgba(0,163,255,0.45);">
             <div style="display: flex; justify-content: space-between; align-items: flex-start;">
               <div>
-                <span class="hero-stat-tag ${urgent ? 'tag-crimson' : 'tag-sky'}" style="font-size: 9px;">
+                <span id="recommendMatchTag" class="hero-stat-tag ${urgent ? 'tag-crimson' : 'tag-sky'}" style="font-size: 9px;">
                   ${urgent ? '🚨 EMERGENCY DISPATCH' : '✨ OPTIMAL MATCH'}
                 </span>
                 <div style="font-size: 17px; font-weight: 800; color: var(--text-headline); margin-top: 5px;">${topMatch.name}</div>
-                <div style="font-size: 12px; color: var(--text-caption);">${topMatch.address}</div>
+                <div style="font-size: 11.5px; color: var(--text-caption);">${topMatch.address}</div>
               </div>
-              <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800; color: var(--sky-vibrant); background: var(--sky-aura); padding: 4px 8px; border-radius: 8px; border: 0.5px solid rgba(2, 132, 199, 0.25);">
+              <div id="recScoreBadge" style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800; color: var(--sky-vibrant); background: var(--sky-aura); padding: 4px 8px; border-radius: 8px; border: 0.5px solid rgba(2, 132, 199, 0.25);">
                 ${urgent ? '99/100' : '96/100'}
               </div>
             </div>
 
             <!-- 3 Clean Metrics (Apple Standard) -->
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 14px 0; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px); padding: 12px; border-radius: 16px; border: 0.5px solid rgba(255, 255, 255, 1);">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px); padding: 11px; border-radius: 15px; border: 0.5px solid rgba(255, 255, 255, 1);">
               <div>
-                <span style="font-size: 9px; color: var(--text-caption); display: block; font-weight: 700;">WAIT TIME</span>
-                <strong style="font-size: 13.5px; color: var(--sky-vibrant); font-family: 'JetBrains Mono', monospace;">~${urgent ? '0' : topMatch.predicted_wait_min} min</strong>
+                <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">WAIT TIME</span>
+                <strong id="recWaitTimeVal" style="font-size: 13.5px; color: ${urgent ? 'var(--crimson-emergency)' : 'var(--sky-vibrant)'}; font-family: 'JetBrains Mono', monospace;">
+                  ~${urgent ? '0' : topMatch.predicted_wait_min} min
+                </strong>
               </div>
               <div>
-                <span style="font-size: 9px; color: var(--text-caption); display: block; font-weight: 700;">DISTANCE</span>
+                <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">DISTANCE</span>
                 <strong style="font-size: 13.5px; font-family: 'JetBrains Mono', monospace;">${topMatch.distance_km} km</strong>
               </div>
               <div>
-                <span style="font-size: 9px; color: var(--text-caption); display: block; font-weight: 700;">RATE</span>
+                <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">PRICE</span>
                 <strong style="font-size: 13.5px; font-family: 'JetBrains Mono', monospace;">₹${topMatch.price_per_kwh}/kWh</strong>
               </div>
             </div>
 
-            <button class="spring-tactile-btn" style="width: 100%;" onclick="openReservationModal(${topMatch.id})">
-              ${urgent ? 'DISPATCH EMERGENCY BAY' : 'RESERVE 15-MIN BAY'}
+            <button id="recActionBtn" class="spring-tactile-btn" style="width: 100%;" onclick="openReservationModal(${topMatch.id})">
+              ${urgent ? 'DISPATCH EMERGENCY BAY #1' : 'RESERVE 15-MIN BAY'}
             </button>
           </div>
         </div>
       `;
     }
 
+    /* ZERO-FLICKER REAL-TIME BATTERY SLIDER UPDATE */
     function updateBatterySlider(val) {
       state.userBattery = parseInt(val);
-      document.getElementById('batteryThumb').style.left = val + '%';
-      renderView();
+      const urgent = isUrgent();
+
+      // 1. Direct label update
+      const pctDisplay = document.getElementById('batteryPctDisplay');
+      if (pctDisplay) {
+        pctDisplay.innerText = val + '%';
+        pctDisplay.style.color = urgent ? 'var(--crimson-emergency)' : 'var(--sky-vibrant)';
+      }
+
+      // Header vehicle subtext
+      const vSub = document.getElementById('vehicleSubtext');
+      if (vSub) {
+        vSub.innerText = `${state.vehicleModel.toUpperCase()} (${val}%)`;
+      }
+
+      // 2. Track fill & thumb
+      const fill = document.getElementById('batteryFillTrack');
+      if (fill) {
+        fill.style.width = val + '%';
+        fill.style.background = urgent 
+          ? 'linear-gradient(90deg, #DC2626, #EF4444)' 
+          : 'linear-gradient(90deg, #0284C7 0%, #00A3FF 60%, #10B981 100%)';
+      }
+
+      const thumb = document.getElementById('batteryThumb');
+      if (thumb) {
+        thumb.style.left = val + '%';
+      }
+
+      // 3. Emergency alert banner
+      const banner = document.getElementById('emergencyAlertBanner');
+      if (banner) {
+        banner.style.display = urgent ? 'flex' : 'none';
+      }
+
+      // 4. Header status tags & button
+      const hTag = document.getElementById('screen1HeaderTag');
+      if (hTag) {
+        hTag.innerText = urgent ? 'PRIORITY LEAPFROG' : 'OPTIMAL GRID';
+        hTag.className = `hero-stat-tag ${urgent ? 'tag-crimson' : 'tag-sky'}`;
+      }
+
+      const mTag = document.getElementById('recommendMatchTag');
+      if (mTag) {
+        mTag.innerText = urgent ? '🚨 EMERGENCY DISPATCH' : '✨ OPTIMAL MATCH';
+        mTag.className = `hero-stat-tag ${urgent ? 'tag-crimson' : 'tag-sky'}`;
+      }
+
+      const waitEl = document.getElementById('recWaitTimeVal');
+      if (waitEl) {
+        waitEl.innerText = urgent ? '~0 min' : `~${state.stations[0].predicted_wait_min} min`;
+        waitEl.style.color = urgent ? 'var(--crimson-emergency)' : 'var(--sky-vibrant)';
+      }
+
+      const scoreEl = document.getElementById('recScoreBadge');
+      if (scoreEl) {
+        scoreEl.innerText = urgent ? '99/100' : '96/100';
+      }
+
+      const btn = document.getElementById('recActionBtn');
+      if (btn) {
+        btn.innerText = urgent ? 'DISPATCH EMERGENCY BAY #1' : 'RESERVE 15-MIN BAY';
+      }
     }
 
-    /* SCREEN 2: V2V P2P ENERGY SHARING HUB */
+    /* ============================================================
+       SCREEN 2: V2V P2P ENERGY SHARING HUB
+       ============================================================ */
     function renderScreen2(body) {
       const kwh = state.v2vTransferKwh;
-      const donorSoc = Math.max(15, (state.donorBattery - (kwh / 72.6 * 100)).toFixed(0));
-      const receiverSoc = Math.min(100, (state.userBattery + (kwh / 40.5 * 100)).toFixed(0));
-      const durationMin = ((kwh / 22.0) * 60).toFixed(0);
+      const donorSoc = Math.max(15, Math.round(state.donorBattery - (kwh / 72.6 * 100)));
+      const receiverSoc = Math.min(100, Math.round(state.userBattery + (kwh / 40.5 * 100)));
+      const durationMin = Math.round((kwh / 22.0) * 60);
       const ecoCredits = kwh * 15;
 
       body.innerHTML = `
         <div class="view-content">
-          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
             <div>
               <div class="view-title">V2V Energy Sharing</div>
               <div class="view-caption">Peer-to-peer mobile power transfer</div>
@@ -1106,7 +1105,7 @@
               <!-- DONOR -->
               <div class="car-orb">
                 <div class="orb-ring" style="background: conic-gradient(var(--sky-vibrant) ${donorSoc}%, #E2E8F0 0);">
-                  <div class="orb-center">${donorSoc}%</div>
+                  <div class="orb-center" id="donorSocVal">${donorSoc}%</div>
                 </div>
                 <div class="orb-model">Ioniq 5</div>
                 <div class="orb-sub">Peer Donor</div>
@@ -1120,14 +1119,14 @@
               <!-- RECEIVER -->
               <div class="car-orb">
                 <div class="orb-ring" style="background: conic-gradient(#10B981 ${receiverSoc}%, #E2E8F0 0);">
-                  <div class="orb-center" style="color: var(--nature-emerald);">${receiverSoc}%</div>
+                  <div class="orb-center" id="receiverSocVal" style="color: var(--nature-emerald);">${receiverSoc}%</div>
                 </div>
                 <div class="orb-model">Nexon EV</div>
                 <div class="orb-sub">Your Car</div>
               </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-sub); border-top: 1px solid rgba(241, 245, 249, 0.8); padding-top: 10px; margin-top: 4px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-sub); border-top: 1px solid rgba(241, 245, 249, 0.8); padding-top: 10px; margin-top: 4px;">
               <span>Distance: <strong style="color: var(--text-headline);">${state.donorDistanceKm} km away</strong></span>
               <span>Rate: <strong style="color: var(--sky-vibrant);">22 kW DC Fast</strong></span>
             </div>
@@ -1136,7 +1135,7 @@
           <!-- KWH SLIDER PANEL -->
           <div class="glass-panel">
             <div style="display: flex; justify-content: space-between; align-items: baseline;">
-              <span style="font-size: 14px; font-weight: 800;">Transfer Energy</span>
+              <span style="font-size: 13.5px; font-weight: 800;">Transfer Energy</span>
               <span style="font-size: 22px; font-weight: 800; color: var(--sky-vibrant); font-family: 'JetBrains Mono', monospace;" id="kwhLabel">
                 ${kwh} kWh
               </span>
@@ -1152,12 +1151,12 @@
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0 14px;">
               <div style="background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); padding: 10px; border-radius: 14px; border: 0.5px solid rgba(255,255,255,1);">
-                <span style="font-size: 9px; color: var(--text-caption); display: block; font-weight: 700;">DURATION</span>
-                <strong style="font-size: 14px; font-family: 'JetBrains Mono', monospace;">~${durationMin} min</strong>
+                <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">DURATION</span>
+                <strong id="v2vDurationVal" style="font-size: 13.5px; font-family: 'JetBrains Mono', monospace;">~${durationMin} min</strong>
               </div>
               <div style="background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); padding: 10px; border-radius: 14px; border: 0.5px solid rgba(255,255,255,1);">
-                <span style="font-size: 9px; color: var(--text-caption); display: block; font-weight: 700;">ECOREWARD</span>
-                <strong style="font-size: 14px; color: var(--nature-emerald); font-family: 'JetBrains Mono', monospace;">+${ecoCredits} Pts</strong>
+                <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">ECOREWARD</span>
+                <strong id="v2vEcoVal" style="font-size: 13.5px; color: var(--nature-emerald); font-family: 'JetBrains Mono', monospace;">+${ecoCredits} Pts</strong>
               </div>
             </div>
 
@@ -1169,18 +1168,36 @@
       `;
     }
 
+    /* ZERO-FLICKER REAL-TIME V2V SLIDER UPDATE */
     function updateV2VSlider(val) {
       state.v2vTransferKwh = parseInt(val);
-      const pct = (val / 25) * 100;
-      document.getElementById('kwhLabel').innerText = `${val} kWh`;
-      document.getElementById('v2vFill').style.width = pct + '%';
-      document.getElementById('v2vThumb').style.left = pct + '%';
-
       const kwh = state.v2vTransferKwh;
-      const donorSoc = Math.max(15, (state.donorBattery - (kwh / 72.6 * 100)).toFixed(0));
-      const receiverSoc = Math.min(100, (state.userBattery + (kwh / 40.5 * 100)).toFixed(0));
-      document.querySelectorAll('.orb-center')[0].innerText = donorSoc + '%';
-      document.querySelectorAll('.orb-center')[1].innerText = receiverSoc + '%';
+      const donorSoc = Math.max(15, Math.round(state.donorBattery - (kwh / 72.6 * 100)));
+      const receiverSoc = Math.min(100, Math.round(state.userBattery + (kwh / 40.5 * 100)));
+      const durationMin = Math.round((kwh / 22.0) * 60);
+      const ecoCredits = kwh * 15;
+      const pct = (val / 25) * 100;
+
+      const kwhLbl = document.getElementById('kwhLabel');
+      if (kwhLbl) kwhLbl.innerText = `${val} kWh`;
+
+      const fill = document.getElementById('v2vFill');
+      if (fill) fill.style.width = pct + '%';
+
+      const thumb = document.getElementById('v2vThumb');
+      if (thumb) thumb.style.left = pct + '%';
+
+      const donorEl = document.getElementById('donorSocVal');
+      if (donorEl) donorEl.innerText = donorSoc + '%';
+
+      const receiverEl = document.getElementById('receiverSocVal');
+      if (receiverEl) receiverEl.innerText = receiverSoc + '%';
+
+      const durEl = document.getElementById('v2vDurationVal');
+      if (durEl) durEl.innerText = `~${durationMin} min`;
+
+      const ecoEl = document.getElementById('v2vEcoVal');
+      if (ecoEl) ecoEl.innerText = `+${ecoCredits} Pts`;
     }
 
     function executeV2VTransfer() {
@@ -1210,7 +1227,7 @@
 
       body.innerHTML = `
         <div class="view-content">
-          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
             <div>
               <div class="view-title">Charging Network Map</div>
               <div class="view-caption">Live station availability & queue lengths</div>
@@ -1220,7 +1237,7 @@
 
           <!-- REALISTIC VECTOR MINI-MAP COMPONENT -->
           <div class="map-vector-wrapper">
-            <svg class="map-vector-svg" viewBox="0 0 350 250" preserveAspectRatio="none">
+            <svg class="map-vector-svg" viewBox="0 0 350 245" preserveAspectRatio="none">
               <!-- Water body: Ulsoor / Bellandur lake -->
               <path d="M-10 40 Q 60 70 80 120 T 40 220 L -10 220 Z" fill="#BAE6FD" opacity="0.6"/>
               <!-- Parkland Greenery -->
@@ -1229,48 +1246,36 @@
               
               <!-- Secondary Streets -->
               <path d="M 0 110 L 350 110" stroke="#E2E8F0" stroke-width="4"/>
-              <path d="M 120 0 L 120 250" stroke="#E2E8F0" stroke-width="4"/>
-              <path d="M 230 0 L 230 250" stroke="#E2E8F0" stroke-width="4"/>
-              <path d="M 0 190 L 350 190" stroke="#E2E8F0" stroke-width="4"/>
+              <path d="M 120 0 L 120 245" stroke="#E2E8F0" stroke-width="4"/>
+              <path d="M 230 0 L 230 245" stroke="#E2E8F0" stroke-width="4"/>
+              <path d="M 0 185 L 350 185" stroke="#E2E8F0" stroke-width="4"/>
 
-              <!-- Arterial Road Corridors (Casing + Surface) -->
-              <!-- 100 Feet Rd (Diagonal Corridor) -->
-              <path d="M 60 0 L 310 250" stroke="#CBD5E1" stroke-width="9" stroke-linecap="round"/>
-              <path d="M 60 0 L 310 250" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round"/>
+              <!-- Arterial Road Corridors -->
+              <path d="M 60 0 L 310 245" stroke="#CBD5E1" stroke-width="9" stroke-linecap="round"/>
+              <path d="M 60 0 L 310 245" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round"/>
 
-              <!-- Hosur Road / Inner Ring Rd -->
               <path d="M 0 65 Q 160 85 350 160" stroke="#CBD5E1" stroke-width="9" stroke-linecap="round"/>
               <path d="M 0 65 Q 160 85 350 160" stroke="#FEF3C7" stroke-width="6" stroke-linecap="round"/>
 
-              <!-- MG Road East-West -->
-              <path d="M 0 140 L 350 140" stroke="#CBD5E1" stroke-width="8" stroke-linecap="round"/>
-              <path d="M 0 140 L 350 140" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+              <path d="M 0 138 L 350 138" stroke="#CBD5E1" stroke-width="8" stroke-linecap="round"/>
+              <path d="M 0 138 L 350 138" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
 
               <!-- Road Typography Labels -->
               <text x="75" y="55" fill="#64748B" font-size="7.5" font-weight="700" letter-spacing="0.6">HOSUR RD</text>
-              <text x="210" y="136" fill="#64748B" font-size="7.5" font-weight="700" letter-spacing="0.6">100 FT RD</text>
-              <text x="20" y="134" fill="#64748B" font-size="7.5" font-weight="700" letter-spacing="0.6">MG ROAD</text>
+              <text x="210" y="134" fill="#64748B" font-size="7.5" font-weight="700" letter-spacing="0.6">100 FT RD</text>
+              <text x="20" y="132" fill="#64748B" font-size="7.5" font-weight="700" letter-spacing="0.6">MG ROAD</text>
             </svg>
 
             <!-- User GPS Location Puck -->
-            <div class="user-gps-puck" style="top: 105px; left: 140px;">
+            <div class="user-gps-puck" style="top: 102px; left: 140px;">
               <div class="gps-pulse"></div>
               <div class="gps-dot"></div>
               <div class="gps-badge">You</div>
             </div>
 
             <!-- Realistic Interactive Station Map Pins -->
-            <!-- 1. Koramangala Nexus FastCharge -->
-            <div class="map-station-pill ${cur.id === 2 ? 'active' : ''}" style="bottom: 22px; left: 35px;" onclick="pickStation(2)">
-              <div class="pill-dot emerald"></div>
-              <div class="pill-content">
-                <div class="pill-title">Koramangala FastCharge</div>
-                <div class="pill-meta">1 in queue • ₹14/kWh • 3.8 km</div>
-              </div>
-            </div>
-
-            <!-- 2. Indiranagar 100ft Hub -->
-            <div class="map-station-pill ${cur.id === 1 ? 'active' : ''}" style="top: 18px; right: 16px;" onclick="pickStation(1)">
+            <!-- 1. Indiranagar 100ft Hub -->
+            <div class="map-station-pill ${cur.id === 1 ? 'active' : ''}" style="top: 16px; right: 14px;" onclick="pickStation(1)">
               <div class="pill-dot emerald"></div>
               <div class="pill-content">
                 <div class="pill-title">Indiranagar Hub</div>
@@ -1278,8 +1283,17 @@
               </div>
             </div>
 
+            <!-- 2. Koramangala FastCharge -->
+            <div class="map-station-pill ${cur.id === 2 ? 'active' : ''}" style="bottom: 18px; left: 30px;" onclick="pickStation(2)">
+              <div class="pill-dot emerald"></div>
+              <div class="pill-content">
+                <div class="pill-title">Koramangala FastCharge</div>
+                <div class="pill-meta">1 in queue • ₹14/kWh • 3.8 km</div>
+              </div>
+            </div>
+
             <!-- 3. MG Road Metro Super Hub -->
-            <div class="map-station-pill ${cur.id === 3 ? 'active' : ''}" style="top: 55px; left: 12px;" onclick="pickStation(3)">
+            <div class="map-station-pill ${cur.id === 3 ? 'active' : ''}" style="top: 52px; left: 12px;" onclick="pickStation(3)">
               <div class="pill-dot crimson"></div>
               <div class="pill-content">
                 <div class="pill-title">MG Road Metro</div>
@@ -1288,7 +1302,7 @@
             </div>
 
             <!-- 4. Whitefield ITPL -->
-            <div class="map-station-pill ${cur.id === 4 ? 'active' : ''}" style="bottom: 45px; right: 14px;" onclick="pickStation(4)">
+            <div class="map-station-pill ${cur.id === 4 ? 'active' : ''}" style="bottom: 38px; right: 12px;" onclick="pickStation(4)">
               <div class="pill-dot emerald"></div>
               <div class="pill-content">
                 <div class="pill-title">Whitefield ITPL</div>
@@ -1298,10 +1312,10 @@
           </div>
 
           <!-- SELECTED STATION DETAIL & RESERVATION CARD -->
-          <div class="glass-panel" style="margin-top: 12px;">
+          <div class="glass-panel">
             <div style="display: flex; justify-content: space-between; align-items: flex-start;">
               <div>
-                <div style="font-size: 16px; font-weight: 800; color: var(--text-headline);">${cur.name}</div>
+                <div style="font-size: 15.5px; font-weight: 800; color: var(--text-headline);">${cur.name}</div>
                 <div style="font-size: 11px; color: var(--text-caption);">${cur.address}</div>
               </div>
               <span class="hero-stat-tag ${cur.chargers_available > 0 ? 'tag-sky' : 'tag-crimson'}">
@@ -1310,31 +1324,31 @@
             </div>
 
             <!-- 4 Clean Live Station Telemetry Badges -->
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 12px 0; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px); padding: 10px; border-radius: 14px; border: 0.5px solid rgba(255, 255, 255, 1);">
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 10px 0; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px); padding: 9px; border-radius: 13px; border: 0.5px solid rgba(255, 255, 255, 1);">
               <div>
-                <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">QUEUE</span>
-                <strong style="font-size: 12px; font-family: 'JetBrains Mono', monospace; color: ${cur.queue_length > 2 ? 'var(--crimson-emergency)' : 'var(--nature-emerald)'};">
+                <span style="font-size: 8px; color: var(--text-caption); display: block; font-weight: 700;">QUEUE</span>
+                <strong style="font-size: 11.5px; font-family: 'JetBrains Mono', monospace; color: ${cur.queue_length > 2 ? 'var(--crimson-emergency)' : 'var(--nature-emerald)'};">
                   ${cur.queue_length} cars
                 </strong>
               </div>
               <div>
-                <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">PRICE</span>
-                <strong style="font-size: 12px; font-family: 'JetBrains Mono', monospace;">₹${cur.price_per_kwh}</strong>
+                <span style="font-size: 8px; color: var(--text-caption); display: block; font-weight: 700;">PRICE</span>
+                <strong style="font-size: 11.5px; font-family: 'JetBrains Mono', monospace;">₹${cur.price_per_kwh}</strong>
               </div>
               <div>
-                <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">DIST.</span>
-                <strong style="font-size: 12px; font-family: 'JetBrains Mono', monospace;">${cur.distance_km} km</strong>
+                <span style="font-size: 8px; color: var(--text-caption); display: block; font-weight: 700;">DIST.</span>
+                <strong style="font-size: 11.5px; font-family: 'JetBrains Mono', monospace;">${cur.distance_km} km</strong>
               </div>
               <div>
-                <span style="font-size: 8.5px; color: var(--text-caption); display: block; font-weight: 700;">WAIT</span>
-                <strong style="font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--sky-vibrant);">
+                <span style="font-size: 8px; color: var(--text-caption); display: block; font-weight: 700;">WAIT</span>
+                <strong style="font-size: 11.5px; font-family: 'JetBrains Mono', monospace; color: var(--sky-vibrant);">
                   ~${cur.predicted_wait_min}m
                 </strong>
               </div>
             </div>
 
             <div>
-              <span style="font-size: 10px; font-weight: 800; color: var(--text-caption); text-transform: uppercase; letter-spacing: 0.5px;">
+              <span style="font-size: 9.5px; font-weight: 800; color: var(--text-caption); text-transform: uppercase; letter-spacing: 0.5px;">
                 Select 15-Minute Slot
               </span>
 
@@ -1374,8 +1388,6 @@
     function selectSlot(el, slot) {
       document.querySelectorAll('.slot-card').forEach(c => c.classList.remove('selected'));
       el.classList.add('selected');
-      el.classList.add('rubberband-trigger');
-      setTimeout(() => el.classList.remove('rubberband-trigger'), 450);
       state.selectedSlot = slot;
     }
 
@@ -1390,7 +1402,7 @@
 
       document.getElementById('ticketStationName').innerText = st.name;
       document.getElementById('ticketStationAddress').innerText = st.address;
-      document.getElementById('ticketBayLabel').innerText = urgent ? "Bay #1 (Emergency 120 kW)" : "Bay #1 (60 kW DC)";
+      document.getElementById('ticketBayLabel').innerText = urgent ? "Bay #1 (Emergency 120 kW)" : "Bay #1 (Fast DC)";
       document.getElementById('ticketPriorityLabel').innerText = urgent ? "PRIORITY CONFIRMED" : "CONFIRMED (15 MIN)";
       document.getElementById('ticketPriorityLabel').style.color = urgent ? "var(--crimson-emergency)" : "var(--sky-vibrant)";
       document.getElementById('ticketIdLabel').innerText = "GF-" + Math.floor(1000 + Math.random() * 9000);
