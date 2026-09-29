@@ -27,13 +27,20 @@ app.include_router(reservations.router)
 app.include_router(v2v.router)
 app.include_router(analytics.router)
 
+# Mount interactive mobile preview
+web_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "web_preview"))
+if os.path.exists(web_dir):
+    from starlette.staticfiles import StaticFiles
+    app.mount("/app", StaticFiles(directory=web_dir, html=True), name="app")
+
 @app.get("/")
 def root():
     return {
         "platform": settings.PROJECT_NAME,
         "version": settings.VERSION,
         "status": "online",
-        "docs_url": "/docs",
+        "mobile_app_preview_url": "http://127.0.0.1:8000/app",
+        "docs_url": "http://127.0.0.1:8000/docs",
         "endpoints": {
             "stations": "/stations",
             "predict_wait": "/predict_wait",
