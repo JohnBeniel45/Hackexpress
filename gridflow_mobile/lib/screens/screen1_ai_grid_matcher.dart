@@ -52,122 +52,106 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.fromLTRB(16, 10, 16, 90), // 90px bottom clearance for floating dock
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Screen Title & Priority Badge
+          // Header with generous breathing room
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "AI Grid & Matcher",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: -0.3,
-                  color: AppleLiquidColors.platinum100,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    "Grid & Charger Matcher",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: -0.4,
+                      color: AppleLiquidColors.textHeadline,
+                    ),
+                  ),
+                  SizedBox(height: 2),
+                  Text(
+                    "Clean energy coordination & XGBoost dispatch",
+                    style: TextStyle(fontSize: 11, color: AppleLiquidColors.textCaption),
+                  ),
+                ],
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: isUrgent
-                      ? AppleLiquidColors.crimsonAlert.withOpacity(0.15)
-                      : AppleLiquidColors.forestEmerald.withOpacity(0.15),
+                  color: isUrgent ? const Color(0xFFFEE2E2) : AppleLiquidColors.mintContainer,
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: isUrgent
-                        ? AppleLiquidColors.crimsonAlert
-                        : AppleLiquidColors.forestEmerald,
+                    color: isUrgent ? const Color(0xFFFCA5A5) : AppleLiquidColors.natureMint,
                     width: 0.5,
                   ),
                 ),
                 child: Text(
-                  isUrgent ? "LEAPFROG ARMED" : "GRID BALANCED",
+                  isUrgent ? "🚨 LEAPFROG ARMED" : "OPTIMAL GRID",
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w800,
-                    color: isUrgent
-                        ? AppleLiquidColors.crimsonAlert
-                        : AppleLiquidColors.forestPrimary,
+                    color: isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.natureEmerald,
                   ),
                 ),
               ),
             ],
           ),
 
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
 
-          // 1. LOCAL SUBSTATION GRID TELEMETRY CARD
+          // 1. HIGH-IMPACT STAT: SUBSTATION GRID HEALTH
           LiquidGlassCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Text(
+                  "LOCAL SUBSTATION HEALTH",
+                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppleLiquidColors.textCaption, letterSpacing: 0.6),
+                ),
+                const SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "LOCAL SUBSTATION STRESS",
-                          style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppleLiquidColors.silver400, letterSpacing: 0.5),
-                        ),
-                        const SizedBox(height: 2),
-                        Row(
-                          children: [
-                            const Text(
-                              "54.2%",
-                              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: Colors.white, fontFamily: 'monospace'),
-                            ),
-                            const SizedBox(width: 8),
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: AppleLiquidColors.forestEmerald.withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: const Text(
-                                "STABLE GREEN",
-                                style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: AppleLiquidColors.forestPrimary),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
+                    Text(
+                      "98.4%",
+                      style: TextStyle(
+                        fontSize: 34,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -1,
+                        fontFamily: 'monospace',
+                        color: isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.natureEmerald,
+                      ),
                     ),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text("DISCOM Feeder", style: TextStyle(fontSize: 10, color: AppleLiquidColors.silver400)),
-                        Text("BESCOM 11kV Node", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppleLiquidColors.silver200)),
-                      ],
-                    )
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: AppleLiquidColors.mintContainer,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: const Text(
+                        "STABLE & GREEN",
+                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w800, color: AppleLiquidColors.natureEmerald),
+                      ),
+                    ),
                   ],
                 ),
-                const SizedBox(height: 14),
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.white.withOpacity(0.04), width: 0.5),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      _metricCol("Peak Spike Risk", "0.12 (LOW)", AppleLiquidColors.forestEmerald),
-                      _metricCol("Renewable Mix", "38.5% Solar", AppleLiquidColors.forestPrimary),
-                      _metricCol("Active Plugs", "34 / 42 Online", AppleLiquidColors.silver200),
-                    ],
-                  ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text("Feeder: BESCOM 11kV Corridor", style: TextStyle(fontSize: 11, color: AppleLiquidColors.textSub)),
+                    Text("Spike Risk: 0.08 (Minimal)", style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppleLiquidColors.natureEmerald)),
+                  ],
                 ),
               ],
             ),
           ),
 
-          // 2. VEHICLE SOC & REACTIVE SLIDER CARD
+          // 2. BATTERY STATE SLIDER
           LiquidGlassCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,8 +162,8 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(p.vehicleModel, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: Colors.white)),
-                        Text("Range remaining: ~${p.estimatedRangeKm.toInt()} km", style: const TextStyle(fontSize: 11, color: AppleLiquidColors.silver400)),
+                        Text(p.vehicleModel, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: AppleLiquidColors.textHeadline)),
+                        Text("Range remaining: ~${p.estimatedRangeKm.toInt()} km", style: const TextStyle(fontSize: 11, color: AppleLiquidColors.textCaption)),
                       ],
                     ),
                     Text(
@@ -188,7 +172,7 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
                         fontSize: 22,
                         fontWeight: FontWeight.w800,
                         fontFamily: 'monospace',
-                        color: isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.forestPrimary,
+                        color: isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.natureEmerald,
                       ),
                     ),
                   ],
@@ -198,11 +182,9 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
                   value: p.batteryPct,
                   min: 4.0,
                   max: 100.0,
-                  activeColor: isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.forestPrimary,
+                  activeColor: isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.natureEmerald,
                   onChanged: (val) {
-                    setState(() {
-                      p.batteryPct = val;
-                    });
+                    setState(() => p.batteryPct = val);
                     widget.onProfileChanged();
                   },
                 ),
@@ -211,18 +193,18 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
                     margin: const EdgeInsets.only(top: 10),
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: AppleLiquidColors.crimsonAlert.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: AppleLiquidColors.crimsonAlert, width: 0.5),
+                      color: const Color(0xFFFEE2E2),
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(color: const Color(0xFFFCA5A5), width: 0.5),
                     ),
-                    child: const Row(
-                      children: [
+                    child: Row(
+                      children: const [
                         Text("🚨", style: TextStyle(fontSize: 16)),
                         SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            "Emergency Leapfrog active: queue preemption enabled at Bay #1.",
-                            style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFFFCA5A5)),
+                            "Critical battery (<=10%). Normal queue preempted at Bay #1.",
+                            style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF991B1B)),
                           ),
                         ),
                       ],
@@ -232,11 +214,11 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
             ),
           ),
 
-          // 3. OPTIMAL CHARGER CARD (POWERED BY XGBOOST)
+          // 3. OPTIMAL AI RECOMMENDATION CARD
           if (_recommendation != null)
             LiquidGlassCard(
-              borderColor: isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.glassBorderGreen,
-              backgroundColor: const Color(0xCC101622),
+              borderColor: isUrgent ? const Color(0xFFFCA5A5) : AppleLiquidColors.glassBorderGreen,
+              backgroundColor: const Color(0xF2FFFFFF), // 95% pristine pearl white
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -246,69 +228,54 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
-                          color: (isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.forestEmerald).withOpacity(0.2),
+                          color: isUrgent ? const Color(0xFFFEE2E2) : AppleLiquidColors.mintContainer,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          isUrgent ? "🚨 EMERGENCY LEAPFROG BAY" : "✨ TOP AI RECOMMENDATION",
+                          isUrgent ? "🚨 EMERGENCY BAY DISPATCH" : "✨ OPTIMAL CHARGER MATCH",
                           style: TextStyle(
                             fontSize: 9,
                             fontWeight: FontWeight.w800,
-                            color: isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.forestPrimary,
+                            color: isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.natureEmerald,
                           ),
                         ),
                       ),
-                      Text(
-                        "${_recommendation!.scoreBreakdown.totalScore.toInt()}/100 Match",
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w800,
-                          fontFamily: 'monospace',
-                          color: isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.forestPrimary,
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: AppleLiquidColors.mintContainer,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          "${_recommendation!.scoreBreakdown.totalScore.toInt()}/100 Match",
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'monospace',
+                            color: isUrgent ? AppleLiquidColors.crimsonAlert : AppleLiquidColors.natureEmerald,
+                          ),
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 10),
-                  Text(_recommendation!.recommendedStation.name, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: Colors.white)),
-                  Text(_recommendation!.recommendedStation.address, style: const TextStyle(fontSize: 11, color: AppleLiquidColors.silver400)),
-                  const SizedBox(height: 12),
-                  // Telemetry Metrics
+                  Text(_recommendation!.recommendedStation.name, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppleLiquidColors.textHeadline)),
+                  Text(_recommendation!.recommendedStation.address, style: const TextStyle(fontSize: 12, color: AppleLiquidColors.textCaption)),
+                  const SizedBox(height: 14),
+                  // Clean High-Impact Stats Row
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.35),
-                      borderRadius: BorderRadius.circular(14),
+                      color: const Color(0xFFF8FAFC),
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(color: const Color(0xFFE2E8F0), width: 0.5),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        _metricCol("Distance", "${_recommendation!.recommendedStation.distanceKm ?? 3.8} km", Colors.white),
-                        _metricCol("XGBoost Wait", "~${_recommendation!.recommendedStation.predictedWaitMin.toStringAsFixed(1)} min", AppleLiquidColors.forestPrimary),
-                        _metricCol("DC Power", "${_recommendation!.recommendedStation.powerKw.toInt()} kW", Colors.white),
-                        _metricCol("Grid Load", "${(_recommendation!.recommendedStation.gridLoad * 100).toInt()}%", AppleLiquidColors.silver200),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  // AI Rationale
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.04),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(Icons.auto_awesome, color: AppleLiquidColors.forestPrimary, size: 14),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            _recommendation!.aiRationale,
-                            style: const TextStyle(fontSize: 11, color: AppleLiquidColors.silver200, height: 1.35),
-                          ),
-                        ),
+                        _metricCol("DISTANCE", "${_recommendation!.recommendedStation.distanceKm ?? 3.8} km", AppleLiquidColors.textHeadline),
+                        _metricCol("XGBOOST WAIT", "~${_recommendation!.recommendedStation.predictedWaitMin.toStringAsFixed(1)} min", AppleLiquidColors.natureEmerald),
+                        _metricCol("DC POWER", "${_recommendation!.recommendedStation.powerKw.toInt()} kW", AppleLiquidColors.textHeadline),
                       ],
                     ),
                   ),
@@ -317,18 +284,18 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
                     onTap: () => widget.onReserve(_recommendation!.recommendedStation),
                     child: Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      padding: const EdgeInsets.symmetric(vertical: 15),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(colors: [Color(0xFF10B981), Color(0xFF059669)]),
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(20),
                         boxShadow: const [
-                          BoxShadow(color: Color(0x6610B981), blurRadius: 20, offset: Offset(0, 6)),
+                          BoxShadow(color: Color(0x5910B981), blurRadius: 20, offset: Offset(0, 8)),
                         ],
                       ),
                       child: Center(
                         child: Text(
-                          isUrgent ? "DISPATCH PRIORITY EMERGENCY BAY" : "RESERVE 15-MIN BAY SLOT",
-                          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: Color(0xFF042517)),
+                          isUrgent ? "DISPATCH EMERGENCY BAY #1" : "RESERVE 15-MIN BAY",
+                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: Colors.white),
                         ),
                       ),
                     ),
@@ -344,9 +311,9 @@ class _Screen1AiGridMatcherState extends State<Screen1AiGridMatcher> {
   Widget _metricCol(String title, String val, Color color) {
     return Column(
       children: [
-        Text(val, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: color, fontFamily: 'monospace')),
+        Text(val, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: color, fontFamily: 'monospace')),
         const SizedBox(height: 2),
-        Text(title, style: const TextStyle(fontSize: 9, color: AppleLiquidColors.silver400)),
+        Text(title, style: const TextStyle(fontSize: 9, color: AppleLiquidColors.textCaption)),
       ],
     );
   }

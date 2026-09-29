@@ -29,8 +29,8 @@ class _LiquidMorphingSliderState extends State<LiquidMorphingSlider> {
   @override
   Widget build(BuildContext context) {
     final double normalized = ((widget.value - widget.min) / (widget.max - widget.min)).clamp(0.0, 1.0);
-    final activeCol = widget.activeColor ?? AppleLiquidColors.forestPrimary;
-    final glowCol = widget.glowColor ?? AppleLiquidColors.forestGlow;
+    final activeCol = widget.activeColor ?? AppleLiquidColors.natureEmerald;
+    final glowCol = widget.glowColor ?? AppleLiquidColors.natureGlow;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -50,27 +50,30 @@ class _LiquidMorphingSliderState extends State<LiquidMorphingSlider> {
           },
           child: Container(
             height: 38,
-            color: Colors.transparent, // expand hit test
+            color: Colors.transparent, // Expand touch target
             child: Stack(
               alignment: Alignment.centerLeft,
               children: [
-                // 1. Frosted Inset Track
+                // 1. Soft Pearlescent Inset Track
                 Container(
                   height: 12,
                   width: totalWidth,
                   decoration: BoxDecoration(
-                    color: const Color(0x14FFFFFF),
+                    color: const Color(0xFFE2E8F0),
                     borderRadius: BorderRadius.circular(999),
-                    border: Border.all(color: const Color(0x1AFFFFFF), width: 0.5),
+                    border: Border.all(color: Colors.white, width: 0.5),
+                    boxShadow: const [
+                      BoxShadow(color: Color(0x0D000000), blurRadius: 2, offset: Offset(0, 1)),
+                    ],
                   ),
                 ),
-                // 2. Liquid Glowing Active Fill
+                // 2. Liquid Glowing Forest Green Fill
                 Container(
                   height: 12,
                   width: (normalized * totalWidth).clamp(12.0, totalWidth),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [AppleLiquidColors.forestDark, activeCol],
+                      colors: [const Color(0xFF059669), activeCol],
                     ),
                     borderRadius: BorderRadius.circular(999),
                     boxShadow: [
@@ -82,26 +85,27 @@ class _LiquidMorphingSliderState extends State<LiquidMorphingSlider> {
                     ],
                   ),
                 ),
-                // 3. Liquid-Morphing Reactive Thumb Handle
+                // 3. Crystal Lens Thumb Handle
                 Positioned(
                   left: thumbLeft,
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 150),
+                    duration: const Duration(milliseconds: 140),
                     curve: Curves.easeOutBack,
                     width: _isDragging ? 28 : 22,
                     height: _isDragging ? 28 : 22,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 1.5),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.5),
+                          color: const Color(0x260F172A),
                           blurRadius: 10,
                           offset: const Offset(0, 4),
                         ),
                         BoxShadow(
-                          color: activeCol.withOpacity(0.8),
-                          blurRadius: _isDragging ? 24 : 12,
+                          color: activeCol.withOpacity(0.6),
+                          blurRadius: _isDragging ? 22 : 10,
                           spreadRadius: _isDragging ? 3 : 1,
                         ),
                       ],

@@ -3,145 +3,148 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GridFlow AI — Apple Liquid Glass EV & V2V System</title>
+  <title>GridFlow AI — Apple Liquid Glass (Light Nature Edition)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Apple Liquid Glass Palette - Obsidian & Organic Forest Greens */
-      --bg-space: #07090D;
-      --bg-obsidian: #0B0E14;
-      --bg-surface: #10141D;
+      /* Apple Light Nature & Pristine Pearl Palette */
+      --sky-light: #EBF5FF;
+      --sky-pearl: #F8FAFC;
+      --nature-emerald: #059669;
+      --nature-leaf: #10B981;
+      --nature-mint: #E6F4EA;
+      --nature-glow: rgba(16, 185, 129, 0.28);
       
-      /* Pure Forest / Racing Greens (High-End Automotive) */
-      --forest-primary: #00E676;
-      --forest-emerald: #10B981;
-      --forest-dark: #064E3B;
-      --forest-deep: #022C22;
-      --forest-sheen: #34D399;
-      --forest-glow: rgba(16, 185, 129, 0.45);
+      /* Pure Pearl Glass & Crystal Refraction */
+      --glass-body: rgba(255, 255, 255, 0.62);
+      --glass-card: rgba(255, 255, 255, 0.72);
+      --glass-elevated: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.95);
+      --glass-border-subtle: rgba(255, 255, 255, 0.65);
+      --glass-inner-sheen: inset 0 1.5px 2px rgba(255, 255, 255, 1), inset 0 -1px 1px rgba(0, 0, 0, 0.03);
+      --glass-shadow: 0 20px 48px -12px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
       
-      /* Metallic Silver & Platinum (Apple HIG) */
-      --silver-100: #F8FAFC;
-      --silver-200: #E2E8F0;
-      --silver-400: #94A3B8;
-      --silver-600: #475569;
-      --silver-800: #1E293B;
+      /* Typography Colors (High Human Legibility) */
+      --text-headline: #0F172A;
+      --text-sub: #475569;
+      --text-caption: #64748B;
+      --text-emerald: #047857;
       
-      /* Alert & Status */
-      --amber-alert: #F59E0B;
-      --crimson-leapfrog: #EF4444;
-      
-      /* Liquid Glass Layering */
-      --glass-base: rgba(16, 21, 30, 0.65);
-      --glass-elevated: rgba(22, 28, 40, 0.72);
-      --glass-highlight: rgba(255, 255, 255, 0.08);
-      --glass-border: rgba(255, 255, 255, 0.12);
-      --glass-border-green: rgba(16, 185, 129, 0.3);
-      --specular-sheen: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.03) 40%, rgba(16,185,129,0.05) 100%);
-      
-      /* Spring Physics Timing */
-      --spring-physics: cubic-bezier(0.34, 1.56, 0.64, 1);
-      --smooth-ease: cubic-bezier(0.16, 1, 0.3, 1);
+      /* Status */
+      --amber-busy: #D97706;
+      --crimson-emergency: #DC2626;
+
+      /* Spring Physics Damping & Elastic Curves */
+      --spring-tactile: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --spring-rubberband: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      --macos-zoom: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
-    
+
     body {
-      background: radial-gradient(circle at 50% 0%, #0F172A 0%, #06080C 100%);
-      color: var(--silver-100);
       min-height: 100vh;
+      /* Soft morning sky and pearlescent mist background with organic nature lighting */
+      background: 
+        radial-gradient(60% 60% at 85% 15%, rgba(16, 185, 129, 0.12) 0%, transparent 60%),
+        radial-gradient(70% 70% at 15% 25%, rgba(56, 189, 248, 0.14) 0%, transparent 60%),
+        linear-gradient(175deg, #EFF6FF 0%, #F1F5F9 45%, #E2E8F0 100%);
+      color: var(--text-headline);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 24px;
       overflow-x: hidden;
     }
 
-    /* Ambient Spotlight Background Reflections */
-    .ambient-glow {
+    /* Ambient Sunbeam Glow Orbs */
+    .sunbeam-aura {
       position: fixed;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(0, 230, 118, 0.03) 45%, transparent 70%);
-      top: -100px;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(220, 252, 231, 0.4) 40%, transparent 70%);
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
       border-radius: 50%;
       pointer-events: none;
       z-index: 0;
-      animation: floatAura 8s ease-in-out infinite alternate;
-    }
-    @keyframes floatAura {
-      0% { transform: translate(-30px, 0) scale(1); }
-      100% { transform: translate(30px, 40px) scale(1.1); }
+      filter: blur(40px);
     }
 
-    /* Top Studio Header */
-    .studio-bar {
+    /* Header Bar */
+    .studio-header {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
       margin-bottom: 20px;
       z-index: 10;
     }
-    .badge-capsule {
-      background: rgba(16, 21, 30, 0.8);
-      border: 0.5px solid var(--glass-border);
+    .status-capsule {
+      background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(20px);
+      border: 0.5px solid rgba(255, 255, 255, 1);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
       padding: 6px 14px;
       border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--nature-emerald);
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      color: var(--silver-200);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      gap: 7px;
+      letter-spacing: 0.3px;
     }
-    .live-dot {
+    .pulsing-emerald {
       width: 7px;
       height: 7px;
-      background: var(--forest-primary);
+      background: var(--nature-leaf);
       border-radius: 50%;
-      box-shadow: 0 0 10px var(--forest-primary);
-      animation: springPulse 2s infinite;
+      box-shadow: 0 0 10px var(--nature-leaf);
+      animation: pulseBreath 2s infinite ease-in-out;
     }
-    @keyframes springPulse {
-      0%, 100% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 14px var(--forest-primary); }
+    @keyframes pulseBreath {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 14px var(--nature-leaf); }
     }
 
-    /* iPhone 16 Pro Liquid Glass Frame */
-    .device-shell {
+    /* iPhone 16 Pro Natural Pearl Shell */
+    .iphone-shell {
       position: relative;
       width: 405px;
       height: 844px;
-      background: var(--bg-obsidian);
+      background: #FFFFFF;
       border-radius: 54px;
-      padding: 12px;
+      padding: 11px;
       box-shadow: 
-        0 30px 80px -15px rgba(0, 0, 0, 0.9),
-        0 0 0 1px rgba(255, 255, 255, 0.1),
-        0 0 50px rgba(16, 185, 129, 0.08),
-        inset 0 1px 2px rgba(255, 255, 255, 0.3);
+        0 40px 90px -20px rgba(15, 23, 42, 0.16),
+        0 0 0 1px rgba(255, 255, 255, 1),
+        0 0 40px rgba(16, 185, 129, 0.08),
+        inset 0 1px 2px rgba(255, 255, 255, 0.9);
       z-index: 10;
       display: flex;
       flex-direction: column;
     }
-    .device-inner {
+    .screen-surface {
       position: relative;
       flex: 1;
-      background: linear-gradient(180deg, #090C12 0%, #07090E 100%);
+      /* Nature Photography Atmosphere (Sunlit EV Corridor in Green Forest) */
+      background: 
+        linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(240, 249, 245, 0.72) 40%, rgba(230, 244, 238, 0.85) 100%),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="800" viewBox="0 0 400 800"><defs><radialGradient id="sun" cx="50%" cy="10%" r="50%"><stop offset="0%" stop-color="%23A7F3D0" stop-opacity="0.35"/><stop offset="100%" stop-color="%23BAE6FD" stop-opacity="0"/></radialGradient></defs><rect width="400" height="800" fill="url(%23sun)"/><path d="M-50 450 Q 150 400 450 500 L450 800 L-50 800 Z" fill="%23059669" fill-opacity="0.04"/><path d="M-50 550 Q 200 480 450 580 L450 800 L-50 800 Z" fill="%2310B981" fill-opacity="0.05"/></svg>');
+      background-size: cover;
+      background-position: center;
       border-radius: 44px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.9);
     }
 
-    /* Dynamic Island & Status Bar */
-    .status-area {
+    /* Dynamic Island */
+    .status-row {
       height: 44px;
       padding: 12px 28px 0;
       display: flex;
@@ -149,16 +152,15 @@
       align-items: center;
       font-size: 12px;
       font-weight: 700;
-      letter-spacing: -0.2px;
-      color: var(--silver-200);
+      color: var(--text-headline);
       z-index: 50;
     }
-    .dynamic-island {
+    .dynamic-capsule {
       position: absolute;
       top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      width: 120px;
+      width: 122px;
       height: 30px;
       background: #000;
       border-radius: 20px;
@@ -167,144 +169,180 @@
       justify-content: space-between;
       padding: 0 12px;
       z-index: 60;
-      border: 0.5px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.4s var(--spring-physics);
+      transition: all 0.4s var(--spring-tactile);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
     }
-    .dynamic-island.expanded {
+    .dynamic-capsule.expanded {
       width: 220px;
-      height: 42px;
+      height: 38px;
       padding: 0 16px;
-      box-shadow: 0 10px 30px rgba(0, 230, 118, 0.2);
     }
-    .island-pill {
+    .capsule-content {
       display: flex;
       align-items: center;
       gap: 6px;
       font-size: 10px;
-      color: var(--forest-sheen);
+      color: #34D399;
       font-weight: 700;
     }
 
-    /* App Header in Mobile */
-    .app-topbar {
-      padding: 12px 20px 8px;
+    /* App Nav Header */
+    .app-header {
+      padding: 10px 22px 6px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 30;
     }
-    .app-brand {
-      display: flex;
-      flex-direction: column;
-    }
-    .brand-title {
+    .brand-group h2 {
       font-size: 19px;
       font-weight: 800;
       letter-spacing: -0.5px;
+      color: var(--text-headline);
       display: flex;
       align-items: center;
       gap: 6px;
-      background: linear-gradient(180deg, #FFFFFF 0%, #CBD5E1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
     }
-    .brand-sub {
+    .brand-group p {
       font-size: 10px;
-      color: var(--forest-emerald);
-      font-weight: 600;
-      letter-spacing: 0.6px;
+      color: var(--nature-emerald);
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.6px;
     }
 
-    /* Live Demo Mode Quick Switcher */
-    .demo-toggle-btn {
-      background: rgba(16, 185, 129, 0.12);
-      border: 0.5px solid var(--forest-sheen);
-      padding: 5px 11px;
+    /* DEMO MODE SWITCH PILL */
+    .demo-pill-btn {
+      background: rgba(255, 255, 255, 0.9);
+      border: 0.5px solid var(--nature-leaf);
+      padding: 5px 12px;
       border-radius: 999px;
-      color: var(--forest-sheen);
+      color: var(--nature-emerald);
       font-size: 10px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 5px;
-      transition: all 0.2s var(--spring-physics);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+      transition: all 0.25s var(--spring-tactile);
     }
-    .demo-toggle-btn:hover {
+    .demo-pill-btn:hover {
       transform: scale(1.05);
-      background: rgba(16, 185, 129, 0.25);
+      background: #FFFFFF;
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.25);
     }
-    .demo-toggle-btn:active {
+    .demo-pill-btn:active {
       transform: scale(0.95);
     }
 
-    /* Scrollable Screen Viewport */
-    .viewport-scroll {
+    /* SCROLLABLE VIEWPORT WITH GENEROUS BREATHING ROOM */
+    .scroll-body {
       flex: 1;
       overflow-y: auto;
       overflow-x: hidden;
-      padding: 8px 18px 24px;
+      padding: 8px 18px 90px; /* 90px bottom clearance for floating dock */
       display: flex;
       flex-direction: column;
       gap: 16px;
       scroll-behavior: smooth;
     }
-    .viewport-scroll::-webkit-scrollbar { width: 0; }
+    .scroll-body::-webkit-scrollbar { width: 0; }
 
-    /* REUSABLE APPLE LIQUID GLASS CARD */
-    .glass-card {
+    /* AUTHENTIC APPLE LIQUID GLASS FLOATING PANELS */
+    .glass-panel {
       position: relative;
-      background: var(--glass-base);
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
-      border-radius: 24px;
-      padding: 18px;
+      background: var(--glass-card);
+      backdrop-filter: blur(32px) saturate(180%);
+      -webkit-backdrop-filter: blur(32px) saturate(180%);
+      border-radius: 28px;
+      padding: 20px;
       border: 0.5px solid var(--glass-border);
-      box-shadow: 
-        0 16px 36px -10px rgba(0, 0, 0, 0.6),
-        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+      box-shadow: var(--glass-shadow), var(--glass-inner-sheen);
+      transition: all 0.35s var(--spring-tactile);
       overflow: hidden;
-      transition: transform 0.3s var(--spring-physics), border-color 0.3s ease;
     }
-    .glass-card:hover {
-      border-color: rgba(255, 255, 255, 0.22);
+    .glass-panel:hover {
+      transform: translateY(-2px);
+      background: var(--glass-elevated);
+      border-color: #FFFFFF;
+      box-shadow: 0 24px 54px -12px rgba(15, 23, 42, 0.12), var(--glass-inner-sheen);
     }
-    /* Specular diagonal highlight sheen */
-    .glass-card::before {
+    /* Sunlight Specular Refraction Sheen */
+    .glass-panel::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 60%;
-      background: var(--specular-sheen);
+      height: 45%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.1) 60%, transparent 100%);
       pointer-events: none;
-      border-top-left-radius: 24px;
-      border-top-right-radius: 24px;
-      opacity: 0.8;
+      border-top-left-radius: 28px;
+      border-top-right-radius: 28px;
     }
 
-    /* Screen Title & Segmented Navigation */
-    .screen-header {
+    /* SCREEN ANIMATION WRAPPER (Mac OS Window Minimizing / Scaling Physics) */
+    .view-content {
+      animation: macosWindowIn 0.35s var(--macos-zoom);
+    }
+    @keyframes macosWindowIn {
+      0% { opacity: 0; transform: scale(0.96) translateY(10px); filter: blur(4px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+    }
+
+    /* TYPOGRAPHY STANDARDS (Apple Clean Human Style) */
+    .view-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-headline);
+      letter-spacing: -0.4px;
+      margin-bottom: 2px;
+    }
+    .view-caption {
+      font-size: 12px;
+      color: var(--text-caption);
+      line-height: 1.4;
+    }
+
+    /* HIGH IMPACT METRIC ROW */
+    .hero-stat-row {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 4px;
+      align-items: baseline;
+      margin: 10px 0 14px;
     }
-    .screen-title {
-      font-size: 16px;
+    .hero-stat-large {
+      font-size: 32px;
       font-weight: 800;
-      letter-spacing: -0.3px;
-      color: var(--silver-100);
+      color: var(--text-headline);
+      letter-spacing: -1px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .hero-stat-tag {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.3px;
+    }
+    .tag-emerald {
+      background: var(--nature-mint);
+      color: var(--nature-emerald);
+      border: 0.5px solid rgba(16, 185, 129, 0.3);
+    }
+    .tag-crimson {
+      background: #FEE2E2;
+      color: var(--crimson-emergency);
+      border: 0.5px solid rgba(239, 68, 68, 0.3);
     }
 
-    /* Tactile Bouncy Buttons (Apple HIG Spring Physics) */
-    .spring-btn {
+    /* TACTILE BOUNCY SPRING BUTTONS (Apple Damped Harmonic Physics) */
+    .spring-tactile-btn {
       position: relative;
       background: linear-gradient(180deg, #10B981 0%, #059669 100%);
-      color: #042517;
+      color: #FFFFFF;
       border: none;
-      padding: 14px 20px;
-      border-radius: 18px;
+      padding: 15px 22px;
+      border-radius: 20px;
       font-size: 14px;
       font-weight: 800;
       letter-spacing: -0.2px;
@@ -314,54 +352,44 @@
       justify-content: center;
       gap: 8px;
       box-shadow: 
-        0 8px 24px -4px rgba(16, 185, 129, 0.5),
-        inset 0 1px 1px rgba(255, 255, 255, 0.4);
-      transition: all 0.25s var(--spring-physics);
+        0 10px 25px -4px rgba(16, 185, 129, 0.45),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+      transition: all 0.25s var(--spring-tactile);
       user-select: none;
     }
-    .spring-btn:hover {
+    .spring-tactile-btn:hover {
       transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 12px 30px -4px rgba(16, 185, 129, 0.65);
+      box-shadow: 0 14px 32px -4px rgba(16, 185, 129, 0.6);
     }
-    .spring-btn:active {
-      transform: translateY(1px) scale(0.96);
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
-    }
-
-    .spring-btn-secondary {
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--silver-100);
-      border: 0.5px solid var(--glass-border);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    }
-    .spring-btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.25);
+    .spring-tactile-btn:active {
+      transform: translateY(2px) scale(0.95); /* Rubber-band snap */
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
     }
 
-    /* LIQUID-MORPHING SLIDER */
-    .liquid-slider-wrap {
-      margin: 16px 0 8px;
+    /* LIQUID MORPHING SLIDER (Light Nature) */
+    .slider-container {
+      margin: 14px 0 6px;
       position: relative;
     }
-    .slider-track-bg {
-      position: relative;
+    .slider-sunlit-track {
       width: 100%;
       height: 12px;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(226, 232, 240, 0.7);
       border-radius: 999px;
-      border: 0.5px solid rgba(255, 255, 255, 0.08);
+      position: relative;
       overflow: hidden;
+      border: 0.5px solid rgba(255, 255, 255, 0.9);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
     }
-    .slider-liquid-fill {
+    .slider-fluid-fill {
       position: absolute;
       left: 0; top: 0; bottom: 0;
-      background: linear-gradient(90deg, #059669 0%, #00E676 100%);
+      background: linear-gradient(90deg, #059669 0%, #10B981 100%);
       border-radius: 999px;
-      box-shadow: 0 0 18px var(--forest-glow);
+      box-shadow: 0 0 14px var(--nature-glow);
       transition: width 0.08s linear;
     }
-    input[type=range].liquid-range {
+    .slider-input-overlay {
       position: absolute;
       top: -6px; left: 0;
       width: 100%;
@@ -370,7 +398,7 @@
       cursor: pointer;
       z-index: 10;
     }
-    .liquid-thumb-visual {
+    .slider-lens-thumb {
       position: absolute;
       top: 50%;
       transform: translate(-50%, -50%);
@@ -378,129 +406,104 @@
       height: 24px;
       background: #FFFFFF;
       border-radius: 50%;
-      box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.6),
-        0 0 15px var(--forest-primary);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18), 0 0 16px var(--nature-leaf);
       pointer-events: none;
-      transition: left 0.08s linear, transform 0.2s var(--spring-physics);
+      transition: left 0.08s linear, transform 0.2s var(--spring-tactile);
+      border: 1px solid rgba(255, 255, 255, 0.9);
     }
-    .liquid-thumb-visual.active {
+    .slider-lens-thumb.dragging {
       transform: translate(-50%, -50%) scale(1.3);
-      box-shadow: 0 0 25px var(--forest-primary);
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.25), 0 0 24px var(--nature-leaf);
     }
 
-    /* SCREEN 1: AI GRID & CHARGER MATCHER */
-    .grid-health-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 14px;
-      background: rgba(0, 0, 0, 0.35);
-      border-radius: 16px;
-      border: 0.5px solid rgba(255, 255, 255, 0.05);
-      margin-top: 10px;
-    }
-    .grid-metric-item {
-      display: flex;
-      flex-direction: column;
-    }
-    .metric-caption {
-      font-size: 10px;
-      color: var(--silver-400);
-      font-weight: 500;
-    }
-    .metric-val {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--silver-100);
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .status-tag {
-      font-size: 10px;
-      font-weight: 800;
-      padding: 4px 10px;
-      border-radius: 20px;
-      letter-spacing: 0.4px;
-    }
-    .tag-green { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 0.5px solid rgba(16, 185, 129, 0.3); }
-    .tag-amber { background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 0.5px solid rgba(245, 158, 11, 0.3); }
-    .tag-crimson { background: rgba(239, 68, 68, 0.15); color: #F87171; border: 0.5px solid rgba(239, 68, 68, 0.3); }
-
-    /* Recommended Champion Card */
-    .champion-card {
-      border: 0.5px solid var(--glass-border-green);
-      background: linear-gradient(165deg, rgba(16, 185, 129, 0.14) 0%, rgba(16, 21, 30, 0.85) 60%);
-    }
-    .match-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-    .score-capsule {
-      background: rgba(16, 185, 129, 0.2);
-      border: 0.5px solid var(--forest-sheen);
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--forest-sheen);
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .station-name {
-      font-size: 17px;
-      font-weight: 800;
-      color: #FFF;
-      letter-spacing: -0.3px;
-    }
-    .station-sub {
-      font-size: 12px;
-      color: var(--silver-400);
-      margin-top: 2px;
-    }
-    .telemetry-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      margin: 14px 0;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 10px;
-      border-radius: 16px;
-      text-align: center;
-    }
-    .telem-box span { font-size: 9px; color: var(--silver-400); display: block; margin-top: 2px; }
-    .telem-box strong { font-size: 13px; font-weight: 800; color: var(--silver-100); font-family: 'JetBrains Mono', monospace; }
-
-    /* AI Rationale Sheen Box */
-    .ai-rationale-box {
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 14px;
-      padding: 10px 12px;
-      border: 0.5px solid rgba(255, 255, 255, 0.06);
-      font-size: 11px;
-      line-height: 1.45;
-      color: var(--silver-200);
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-      margin-bottom: 12px;
-    }
-
-    /* SCREEN 2: V2V P2P ENERGY SHARING HUB */
-    .v2v-cockpit {
+    /* ============================================================
+       MAC OS / IOS FLOATING LIQUID GLASS CAPSULE DOCK
+       ============================================================ */
+    .floating-mac-dock {
+      position: absolute;
+      bottom: 18px;
+      left: 20px;
+      right: 20px;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(36px) saturate(200%);
+      -webkit-backdrop-filter: blur(36px) saturate(200%);
+      border-radius: 32px;
+      border: 0.5px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 
+        0 18px 40px -8px rgba(15, 23, 42, 0.15),
+        inset 0 1.5px 2px rgba(255, 255, 255, 1);
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 16px 8px;
+      justify-content: space-around;
+      padding: 0 8px;
+      z-index: 40;
     }
-    .vehicle-pod {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100px;
-      text-align: center;
+    /* Gliding Liquid Refractive Bubble Lens */
+    .dock-glide-bubble {
+      position: absolute;
+      height: 48px;
+      width: 104px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 244, 0.9) 100%);
+      border-radius: 24px;
+      box-shadow: 
+        0 8px 20px rgba(16, 185, 129, 0.15),
+        0 1px 3px rgba(0, 0, 0, 0.05),
+        inset 0 1px 1px #FFF;
+      border: 0.5px solid rgba(255, 255, 255, 1);
+      top: 8px;
+      left: 12px;
+      pointer-events: none;
+      transition: transform 0.4s var(--spring-tactile);
+      z-index: 1;
     }
-    .soc-liquid-dial {
+    .dock-tab {
       position: relative;
+      z-index: 2;
+      background: none;
+      border: none;
+      flex: 1;
+      height: 100%;
+      color: var(--text-caption);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      cursor: pointer;
+      transition: all 0.25s var(--spring-tactile);
+    }
+    .dock-tab.active {
+      color: var(--nature-emerald);
+      transform: scale(1.08); /* Mac OS Dock Magnification */
+    }
+    .dock-icon {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+      transition: transform 0.25s var(--spring-tactile);
+    }
+    .dock-tab.active .dock-icon {
+      transform: translateY(-1px);
+    }
+
+    /* SCREEN 2: V2V P2P LIQUID DIALS (Light Nature) */
+    .v2v-nature-stage {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 6px;
+    }
+    .car-orb {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 105px;
+    }
+    .orb-ring {
       width: 72px;
       height: 72px;
       border-radius: 50%;
@@ -508,376 +511,274 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 8px;
-      transition: all 0.4s var(--spring-physics);
+      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.12);
+      position: relative;
     }
-    .dial-inner {
+    .orb-center {
       width: 58px;
       height: 58px;
       border-radius: 50%;
-      background: var(--bg-surface);
+      background: #FFFFFF;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 800;
-      color: #FFF;
-      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
-      z-index: 2;
+      color: var(--text-headline);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
-    .vehicle-model {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--silver-100);
-      line-height: 1.2;
-    }
-    .vehicle-role {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--silver-400);
-      margin-top: 2px;
-    }
+    .orb-model { font-size: 12px; font-weight: 800; color: var(--text-headline); }
+    .orb-sub { font-size: 10px; color: var(--text-caption); margin-top: 2px; }
 
-    /* Liquid Beam Transfer Animation */
-    .v2v-energy-conduit {
+    /* Animated Nature Sunlit Energy Beam */
+    .beam-sunlit-conduit {
       flex: 1;
       height: 6px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(226, 232, 240, 0.6);
       border-radius: 999px;
-      margin: 0 12px;
+      margin: 0 10px;
       position: relative;
       overflow: hidden;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
     }
-    .conduit-flow {
+    .beam-stream {
       position: absolute;
       top: 0; left: 0; bottom: 0;
       width: 50%;
-      background: linear-gradient(90deg, transparent, #00E676, transparent);
-      box-shadow: 0 0 12px var(--forest-primary);
-      animation: conduitStream 1.1s linear infinite;
+      background: linear-gradient(90deg, transparent, #10B981, transparent);
+      box-shadow: 0 0 12px #10B981;
+      animation: streamFlow 1.1s linear infinite;
     }
-    @keyframes conduitStream {
+    @keyframes streamFlow {
       0% { transform: translateX(-100%); }
       100% { transform: translateX(200%); }
     }
 
-    /* SCREEN 3: LIVE MAP & SLOT RESERVATION */
-    .radar-canvas-box {
-      height: 280px;
-      background: #080C14;
-      border-radius: 22px;
+    /* SCREEN 3: RADAR MAP CANVAS (Light Nature) */
+    .map-sunlit-box {
+      height: 250px;
+      background: linear-gradient(180deg, #F0FDF4 0%, #E0F2FE 100%);
+      border-radius: 24px;
       position: relative;
       overflow: hidden;
-      border: 0.5px solid rgba(255, 255, 255, 0.08);
+      border: 0.5px solid var(--glass-border);
+      box-shadow: inset 0 0 30px rgba(16, 185, 129, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .radar-ring {
+    .radar-sun-ring {
       position: absolute;
       border-radius: 50%;
-      border: 1px solid rgba(16, 185, 129, 0.12);
-      pointer-events: none;
+      border: 1px solid rgba(16, 185, 129, 0.2);
     }
-    .radar-sweep {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: conic-gradient(from 0deg, rgba(16, 185, 129, 0.15) 0deg, transparent 60deg, transparent 360deg);
-      animation: radarRotate 5s linear infinite;
-      pointer-events: none;
-    }
-    @keyframes radarRotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    .user-ev-blip {
+    .user-sun-blip {
       position: relative;
       z-index: 20;
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       background: #FFFFFF;
-      border: 3px solid var(--forest-primary);
+      border: 3.5px solid var(--nature-emerald);
       border-radius: 50%;
-      box-shadow: 0 0 20px var(--forest-primary);
+      box-shadow: 0 0 20px rgba(5, 150, 105, 0.4);
     }
-    .station-blip {
+    .station-marker-pin {
       position: absolute;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
       z-index: 25;
-      transition: transform 0.25s var(--spring-physics);
+      transition: transform 0.25s var(--spring-tactile);
     }
-    .station-blip:hover {
-      transform: scale(1.25);
+    .station-marker-pin:hover {
+      transform: scale(1.22);
     }
-    .blip-dot {
+    .marker-dot {
       width: 14px;
       height: 14px;
       border-radius: 50%;
       border: 2px solid #FFF;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
-    .blip-label {
-      font-size: 8px;
+    .marker-text {
+      font-size: 9px;
       font-weight: 800;
-      color: #FFF;
-      background: rgba(0, 0, 0, 0.8);
-      padding: 1px 5px;
-      border-radius: 4px;
+      color: var(--text-headline);
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2px 6px;
+      border-radius: 6px;
       margin-top: 2px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
       white-space: nowrap;
-      border: 0.5px solid rgba(255, 255, 255, 0.15);
+      border: 0.5px solid rgba(255, 255, 255, 1);
     }
 
-    /* 15-Min Slot Selector Grid */
-    .slot-grid {
+    /* 15-Minute Slot Chips */
+    .slot-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
-      margin: 12px 0;
+      margin: 12px 0 16px;
     }
-    .slot-pill {
-      background: rgba(255, 255, 255, 0.04);
-      border: 0.5px solid var(--glass-border);
-      border-radius: 14px;
+    .slot-card {
+      background: rgba(255, 255, 255, 0.7);
+      border: 0.5px solid rgba(255, 255, 255, 1);
+      border-radius: 16px;
       padding: 10px 4px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.2s var(--spring-physics);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      transition: all 0.25s var(--spring-tactile);
     }
-    .slot-pill:hover {
-      background: rgba(255, 255, 255, 0.08);
-    }
-    .slot-pill.selected {
+    .slot-card.selected {
       background: linear-gradient(180deg, #10B981 0%, #059669 100%);
-      border-color: #34D399;
-      color: #042517;
-      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+      color: #FFF;
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+      transform: scale(1.04);
     }
-    .slot-time { font-size: 13px; font-weight: 800; }
-    .slot-desc { font-size: 9px; opacity: 0.8; margin-top: 2px; }
+    .slot-card .time { font-size: 13px; font-weight: 800; }
+    .slot-card .sub { font-size: 9px; opacity: 0.8; margin-top: 2px; }
 
-    /* Apple Liquid Glass Bottom Navigation */
-    .apple-tabbar {
-      height: 74px;
-      background: rgba(14, 18, 26, 0.82);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      border-top: 0.5px solid var(--glass-border);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 0 10px 10px;
-      z-index: 40;
-    }
-    .tab-item {
-      background: none;
-      border: none;
-      color: var(--silver-400);
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: -0.1px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      transition: all 0.25s var(--spring-physics);
-      padding: 8px 12px;
-      border-radius: 16px;
-    }
-    .tab-item:hover {
-      color: var(--silver-200);
-      transform: translateY(-2px);
-    }
-    .tab-item.active {
-      color: var(--forest-primary);
-      transform: translateY(-3px);
-    }
-    .tab-item.active svg {
-      filter: drop-shadow(0 0 8px var(--forest-glow));
-    }
-    .tab-icon {
-      width: 22px;
-      height: 22px;
-      fill: currentColor;
-    }
-
-    /* Apple Pass Ticket Modal */
-    .apple-pass-modal {
+    /* APPLE WALLET DIGITAL PASS MODAL (Mac OS Zoom in) */
+    .modal-backdrop {
       position: absolute;
       inset: 0;
-      background: rgba(6, 8, 12, 0.88);
-      backdrop-filter: blur(32px);
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
       z-index: 100;
       display: none;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 24px;
-      animation: modalFadeIn 0.3s var(--spring-physics);
+      animation: modalZoomIn 0.3s var(--macos-zoom);
     }
-    @keyframes modalFadeIn {
-      from { opacity: 0; transform: scale(0.95); }
+    @keyframes modalZoomIn {
+      from { opacity: 0; transform: scale(0.92); }
       to { opacity: 1; transform: scale(1); }
     }
-    .wallet-ticket {
+    .pass-ticket {
       width: 100%;
-      background: linear-gradient(180deg, #16202E 0%, #0F1622 100%);
-      border-radius: 28px;
-      border: 0.5px solid rgba(255, 255, 255, 0.18);
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+      background: #FFFFFF;
+      border-radius: 32px;
+      border: 1px solid rgba(255, 255, 255, 1);
+      box-shadow: 0 35px 70px -15px rgba(15, 23, 42, 0.25);
       padding: 24px;
       position: relative;
     }
-    .ticket-notch-l, .ticket-notch-r {
-      position: absolute;
-      top: 55%;
-      width: 20px;
-      height: 20px;
-      background: rgba(6, 8, 12, 1);
-      border-radius: 50%;
-    }
-    .ticket-notch-l { left: -10px; }
-    .ticket-notch-r { right: -10px; }
   </style>
 </head>
 <body>
 
-  <div class="ambient-glow"></div>
+  <div class="sunbeam-aura"></div>
 
-  <div class="studio-bar">
-    <div class="badge-capsule">
-      <div class="live-dot"></div>
-      <span>APPLE LIQUID GLASS UI • FASTAPI + XGBOOST ACTIVE</span>
+  <div class="studio-header">
+    <div class="status-capsule">
+      <div class="pulsing-emerald"></div>
+      <span>APPLE LIQUID GLASS • LIGHT EV NATURE THEME</span>
     </div>
   </div>
 
-  <!-- IPHONE 16 PRO LIQUID GLASS VIEWPORT -->
-  <div class="device-shell">
-    <div class="device-inner">
+  <!-- IPHONE 16 PRO PEARL LIQUID GLASS FRAME -->
+  <div class="iphone-shell">
+    <div class="screen-surface">
       
       <!-- DYNAMIC ISLAND -->
-      <div class="dynamic-island" id="dynamicIsland">
-        <div class="island-pill">
-          <div class="live-dot" style="width: 5px; height: 5px;"></div>
-          <span id="islandText">GRID: 54% (NORMAL)</span>
+      <div class="dynamic-capsule" id="dynamicCapsule">
+        <div class="capsule-content">
+          <div class="pulsing-emerald" style="width: 5px; height: 5px;"></div>
+          <span id="capsuleText">GRID: 98% (STABLE)</span>
         </div>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--forest-primary)"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#34D399"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></svg>
       </div>
 
       <!-- STATUS BAR -->
-      <div class="status-area">
-        <span id="liveClock">9:41</span>
+      <div class="status-row">
+        <span id="timeClock">9:41</span>
         <div style="display: flex; gap: 6px; align-items: center;">
-          <span style="font-size: 10px; font-weight: 700; color: var(--forest-sheen);">5G UC</span>
+          <span style="font-size: 10px; font-weight: 800; color: var(--nature-emerald);">5G</span>
           <svg width="16" height="10" viewBox="0 0 24 14" fill="currentColor"><rect x="1" y="1" width="19" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="3" width="13" height="8" rx="1.5"/><path d="M22 5v4"/></svg>
         </div>
       </div>
 
-      <!-- APP TOP BAR -->
-      <div class="app-topbar">
-        <div class="app-brand">
-          <div class="brand-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--forest-primary)"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <!-- APP HEADER -->
+      <div class="app-header">
+        <div class="brand-group">
+          <h2>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--nature-emerald)"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             GridFlow AI
-          </div>
-          <span class="brand-sub" id="vehicleModelLabel">TATA NEXON EV MAX (28%)</span>
+          </h2>
+          <p id="vehicleSubtext">TATA NEXON EV MAX (28%)</p>
         </div>
-        
-        <!-- LIVE DEMO SHORTCUT BUTTON (Strict Requirement 3) -->
-        <button class="demo-toggle-btn" onclick="toggleDemoMode()" id="demoToggleBtn">
+
+        <!-- DEMO MODE PILL SHORTCUT -->
+        <button class="demo-pill-btn" onclick="toggleDemoSeed()" id="demoPillBtn">
           <span>⚡ DEMO MODE</span>
         </button>
       </div>
 
-      <!-- SCROLLABLE SCREEN CONTAINER -->
-      <div class="viewport-scroll" id="screenContainer">
-        <!-- Rendered dynamically by active screen controller -->
+      <!-- SCROLLABLE CONTENT VIEWPORT -->
+      <div class="scroll-body" id="scrollContainer">
+        <!-- Rendered reactively by active screen controller -->
+      </div>
+
+      <!-- MAC OS / IOS FLOATING LIQUID GLASS DOCK -->
+      <div class="floating-mac-dock">
+        <!-- Smooth Gliding Refractive Bubble -->
+        <div class="dock-glide-bubble" id="dockBubble"></div>
+
+        <button class="dock-tab active" onclick="switchDockTab(0)">
+          <svg class="dock-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          AI Match
+        </button>
+        <button class="dock-tab" onclick="switchDockTab(1)">
+          <svg class="dock-icon" viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
+          V2V Hub
+        </button>
+        <button class="dock-tab" onclick="switchDockTab(2)">
+          <svg class="dock-icon" viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+          Live Map
+        </button>
       </div>
 
       <!-- APPLE WALLET DIGITAL PASS MODAL -->
-      <div class="apple-pass-modal" id="passModal">
-        <div class="wallet-ticket">
-          <div class="ticket-notch-l"></div>
-          <div class="ticket-notch-r"></div>
-
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid rgba(255,255,255,0.1); padding-bottom: 12px;">
-            <div style="font-size: 11px; font-weight: 800; color: var(--forest-sheen); letter-spacing: 0.5px;">APPLE WALLET CHARGING PASS</div>
-            <div style="font-size: 11px; font-weight: 700; color: var(--silver-400);" id="passIdText">GF-PASS-8841</div>
+      <div class="modal-backdrop" id="passBackdrop">
+        <div class="pass-ticket">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #F1F5F9; padding-bottom: 12px;">
+            <span style="font-size: 11px; font-weight: 800; color: var(--nature-emerald); letter-spacing: 0.6px;">APPLE WALLET CHARGING PASS</span>
+            <span style="font-size: 11px; font-weight: 700; color: var(--text-caption);" id="ticketIdLabel">GF-8841</span>
           </div>
 
           <div style="margin: 16px 0;">
-            <div style="font-size: 18px; font-weight: 800; color: #FFF;" id="passStationName">Indiranagar 100ft EV Hub</div>
-            <div style="font-size: 12px; color: var(--silver-400);" id="passAddress">100 Feet Rd, HAL 2nd Stage</div>
+            <div style="font-size: 19px; font-weight: 800; color: var(--text-headline);" id="ticketStationName">Indiranagar 100ft EV Hub</div>
+            <div style="font-size: 12px; color: var(--text-caption);" id="ticketStationAddress">100 Feet Rd, HAL 2nd Stage</div>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 16px; margin-bottom: 16px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #F8FAFC; border-radius: 16px; padding: 12px; margin-bottom: 16px; border: 0.5px solid #E2E8F0;">
             <div>
-              <span style="font-size: 9px; color: var(--silver-400); display: block;">ALLOCATED BAY</span>
-              <strong style="font-size: 13px; color: var(--forest-sheen);" id="passBayName">Bay #1 (120 kW DC)</strong>
+              <span style="font-size: 9px; color: var(--text-caption); display: block;">ALLOCATED BAY</span>
+              <strong style="font-size: 13px; color: var(--nature-emerald);" id="ticketBayLabel">Bay #1 (120 kW Fast)</strong>
             </div>
             <div>
-              <span style="font-size: 9px; color: var(--silver-400); display: block;">PRIORITY TIER</span>
-              <strong style="font-size: 13px; color: #FFF;" id="passPriorityText">URGENT LEAPFROG</strong>
+              <span style="font-size: 9px; color: var(--text-caption); display: block;">PRIORITY TIER</span>
+              <strong style="font-size: 13px; color: var(--text-headline);" id="ticketPriorityLabel">URGENT LEAPFROG</strong>
             </div>
           </div>
 
-          <!-- Digital Barcode / QR Sheen -->
-          <div style="background: #FFFFFF; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-            <svg width="200" height="48" viewBox="0 0 200 48" fill="#000">
-              <rect x="0" y="0" width="4" height="48"/>
-              <rect x="8" y="0" width="2" height="48"/>
-              <rect x="14" y="0" width="6" height="48"/>
-              <rect x="24" y="0" width="3" height="48"/>
-              <rect x="32" y="0" width="5" height="48"/>
-              <rect x="42" y="0" width="2" height="48"/>
-              <rect x="48" y="0" width="8" height="48"/>
-              <rect x="60" y="0" width="3" height="48"/>
-              <rect x="68" y="0" width="6" height="48"/>
-              <rect x="78" y="0" width="2" height="48"/>
-              <rect x="84" y="0" width="7" height="48"/>
-              <rect x="96" y="0" width="4" height="48"/>
-              <rect x="104" y="0" width="2" height="48"/>
-              <rect x="110" y="0" width="8" height="48"/>
-              <rect x="122" y="0" width="3" height="48"/>
-              <rect x="130" y="0" width="6" height="48"/>
-              <rect x="140" y="0" width="5" height="48"/>
-              <rect x="150" y="0" width="2" height="48"/>
-              <rect x="156" y="0" width="7" height="48"/>
-              <rect x="168" y="0" width="3" height="48"/>
-              <rect x="176" y="0" width="6" height="48"/>
-              <rect x="186" y="0" width="4" height="48"/>
-              <rect x="194" y="0" width="3" height="48"/>
+          <!-- Digital Barcode Sheen -->
+          <div style="background: #F1F5F9; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; align-items: center;">
+            <svg width="200" height="44" viewBox="0 0 200 44" fill="#0F172A">
+              <rect x="0" y="0" width="4" height="44"/><rect x="8" y="0" width="2" height="44"/><rect x="14" y="0" width="6" height="44"/><rect x="24" y="0" width="3" height="44"/><rect x="32" y="0" width="5" height="44"/><rect x="42" y="0" width="2" height="44"/><rect x="48" y="0" width="8" height="44"/><rect x="60" y="0" width="3" height="44"/><rect x="68" y="0" width="6" height="44"/><rect x="78" y="0" width="2" height="44"/><rect x="84" y="0" width="7" height="44"/><rect x="96" y="0" width="4" height="44"/><rect x="104" y="0" width="2" height="44"/><rect x="110" y="0" width="8" height="44"/><rect x="122" y="0" width="3" height="44"/><rect x="130" y="0" width="6" height="44"/><rect x="140" y="0" width="5" height="44"/><rect x="150" y="0" width="2" height="44"/><rect x="156" y="0" width="7" height="44"/><rect x="168" y="0" width="3" height="44"/><rect x="176" y="0" width="6" height="44"/><rect x="186" y="0" width="4" height="44"/><rect x="194" y="0" width="3" height="44"/>
             </svg>
-            <span style="font-size: 10px; font-weight: 700; color: #000; letter-spacing: 2px; margin-top: 4px;">SCAN AT NFC CHARGER TERMINAL</span>
+            <span style="font-size: 9px; font-weight: 800; color: var(--text-caption); letter-spacing: 2px; margin-top: 4px;">HOLD NEAR NFC CHARGER TERMINAL</span>
           </div>
 
-          <button class="spring-btn" style="width: 100%; margin-top: 18px;" onclick="closePassModal()">
+          <button class="spring-tactile-btn" style="width: 100%; margin-top: 18px;" onclick="closeTicketModal()">
             DONE & LOCK TO WALLET
           </button>
         </div>
-      </div>
-
-      <!-- APPLE HIG GLASS BOTTOM TAB BAR -->
-      <div class="apple-tabbar">
-        <button class="tab-item active" onclick="navigateScreen(1)">
-          <svg class="tab-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          AI Match
-        </button>
-        <button class="tab-item" onclick="navigateScreen(2)">
-          <svg class="tab-icon" viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
-          V2V Hub
-        </button>
-        <button class="tab-item" onclick="navigateScreen(3)">
-          <svg class="tab-icon" viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
-          Live Map
-        </button>
       </div>
 
     </div>
@@ -886,30 +787,27 @@
   <script>
     const API_BASE = "http://127.0.0.1:8000";
 
-    // Application Reactive State (with Instant Local Latency-Free Updates)
+    // Reactive State with Optimistic 0ms Latency Updates
     const state = {
-      currentScreen: 1,
-      demoMode: true, // Default to demo-ready state
-      userBatteryPct: 28,
+      activeTab: 0,
+      demoMode: true,
+      userBattery: 28,
       vehicleModel: "Tata Nexon EV Max",
       vehicleType: "Sedan",
-      membership: "normal",
       v2vTransferKwh: 10,
+
+      // Live Demo Seed
+      donorModel: "Hyundai Ioniq 5 (72.6 kWh)",
+      donorBattery: 92,
+      donorDistanceKm: 0.4,
+
+      // High-Impact Stats
+      substationHealth: 98.4,
+      substationStatus: "Normal & Stable",
       
-      // Demo Match Vehicles (Requirement 3: Hyundai Ioniq 5 92% to Tata Nexon EV 28% at 0.4km)
-      peerDonorModel: "Hyundai Ioniq 5 (72.6 kWh)",
-      peerDonorBattery: 92,
-      peerDistanceKm: 0.4,
-      
-      // Live Grid Telemetry
-      gridStress: 0.54,
-      gridStatus: "MODERATE",
-      
-      // Selected station for booking
       selectedStation: null,
-      selectedSlotTime: "18:45",
-      
-      // Stations Cache
+      selectedSlot: "18:45",
+
       stations: [
         { id: 1, name: "Indiranagar 100ft EV Hub", address: "100 Feet Rd, HAL 2nd Stage", chargers_total: 8, chargers_available: 3, power_kw: 120, grid_load: 0.65, predicted_wait_min: 8.5, price_per_kwh: 15.5, distance_km: 2.4 },
         { id: 2, name: "Koramangala Nexus FastCharge", address: "Hosur Rd, 7th Block", chargers_total: 6, chargers_available: 4, power_kw: 60, grid_load: 0.45, predicted_wait_min: 4.2, price_per_kwh: 14.0, distance_km: 3.8 },
@@ -918,298 +816,271 @@
       ]
     };
 
-    // Initialize
-    async function init() {
+    function init() {
+      state.selectedStation = state.stations[0];
       updateClock();
       setInterval(updateClock, 1000);
-      state.selectedStation = state.stations[0];
-      
-      // Try fetching live data in background without blocking UI
-      fetchLiveStations();
-      renderActiveScreen();
+      renderView();
     }
 
     function updateClock() {
       const now = new Date();
       const hrs = now.getHours().toString().padStart(2, '0');
       const mins = now.getMinutes().toString().padStart(2, '0');
-      document.getElementById('liveClock').innerText = `${hrs}:${mins}`;
+      document.getElementById('timeClock').innerText = `${hrs}:${mins}`;
     }
 
-    async function fetchLiveStations() {
-      try {
-        const res = await fetch(`${API_BASE}/stations`, { signal: AbortSignal.timeout(2000) });
-        if (res.ok) {
-          const data = await res.json();
-          if (data.stations && data.stations.length > 0) {
-            state.stations = data.stations;
-          }
-        }
-      } catch (e) {
-        // Graceful fallback - zero crash
-      }
-    }
-
-    function toggleDemoMode() {
+    function toggleDemoSeed() {
       state.demoMode = !state.demoMode;
-      const btn = document.getElementById('demoToggleBtn');
+      const btn = document.getElementById('demoPillBtn');
       if (state.demoMode) {
-        state.userBatteryPct = 28;
-        state.peerDonorBattery = 92;
-        state.peerDistanceKm = 0.4;
+        state.userBattery = 28;
+        state.donorBattery = 92;
+        state.donorDistanceKm = 0.4;
         btn.innerHTML = `<span>⚡ DEMO MODE</span>`;
-        btn.style.background = 'rgba(16, 185, 129, 0.25)';
-        triggerIslandAlert("DEMO DATA SEEDED: 92% ➔ 28%");
+        btn.style.borderColor = 'var(--nature-leaf)';
+        triggerIslandNote("DEMO SEED: 92% ➔ 28% @ 0.4KM");
       } else {
         btn.innerHTML = `<span>LIVE MODE</span>`;
-        btn.style.background = 'rgba(255, 255, 255, 0.08)';
-        triggerIslandAlert("LIVE CONNECTED MODE");
+        btn.style.borderColor = '#CBD5E1';
+        triggerIslandNote("LIVE HARDWARE SYNC");
       }
-      renderActiveScreen();
+      renderView();
     }
 
-    function triggerIslandAlert(text) {
-      const island = document.getElementById('dynamicIsland');
-      const label = document.getElementById('islandText');
+    function triggerIslandNote(text) {
+      const capsule = document.getElementById('dynamicCapsule');
+      const label = document.getElementById('capsuleText');
       label.innerText = text;
-      island.classList.add('expanded');
-      setTimeout(() => island.classList.remove('expanded'), 2500);
+      capsule.classList.add('expanded');
+      setTimeout(() => capsule.classList.remove('expanded'), 2500);
     }
 
-    function navigateScreen(screenIndex) {
-      state.currentScreen = screenIndex;
-      document.querySelectorAll('.tab-item').forEach((tab, idx) => {
-        if (idx === screenIndex - 1) tab.classList.add('active');
+    function switchDockTab(idx) {
+      state.activeTab = idx;
+      
+      // Mac OS Gliding Bubble Animation with spring overshoot
+      const bubble = document.getElementById('dockBubble');
+      const tabWidth = (365 - 16) / 3;
+      bubble.style.transform = `translateX(${idx * tabWidth}px)`;
+
+      document.querySelectorAll('.dock-tab').forEach((tab, i) => {
+        if (i === idx) tab.classList.add('active');
         else tab.classList.remove('active');
       });
-      renderActiveScreen();
+
+      renderView();
     }
 
-    function isEmergency() {
-      return state.vehicleType.toLowerCase() === "ambulance" || state.userBatteryPct <= 10;
+    function isUrgent() {
+      return state.vehicleType.toLowerCase() === "ambulance" || state.userBattery <= 10;
     }
 
     /* -------------------------------------------------------------
-       SCREEN RENDERERS
+       SCREEN RENDERERS (Clean, uncluttered, luxury human standard)
        ------------------------------------------------------------- */
-    function renderActiveScreen() {
-      const container = document.getElementById('screenContainer');
-      document.getElementById('vehicleModelLabel').innerText = 
-        `${state.vehicleModel.toUpperCase()} (${state.userBatteryPct}%)`;
+    function renderView() {
+      const body = document.getElementById('scrollContainer');
+      document.getElementById('vehicleSubtext').innerText = `${state.vehicleModel.toUpperCase()} (${state.userBattery}%)`;
 
-      if (state.currentScreen === 1) renderScreen1(container);
-      else if (state.currentScreen === 2) renderScreen2(container);
-      else if (state.currentScreen === 3) renderScreen3(container);
+      if (state.activeTab === 0) renderScreen1(body);
+      else if (state.activeTab === 1) renderScreen2(body);
+      else if (state.activeTab === 2) renderScreen3(body);
     }
 
     /* SCREEN 1: LIVE AI GRID & CHARGER MATCHER */
-    function renderScreen1(container) {
-      const urgent = isEmergency();
-      const topStation = state.stations[1]; // Koramangala or optimal
-      const waitMin = urgent ? 0.0 : 4.2;
+    function renderScreen1(body) {
+      const urgent = isUrgent();
+      const topMatch = state.stations[1]; // Koramangala optimal
 
-      container.innerHTML = `
-        <!-- SCREEN 1 HEADER -->
-        <div class="screen-header">
-          <span class="screen-title">Live AI Grid & Telemetry</span>
-          <span class="status-tag ${urgent ? 'tag-crimson' : 'tag-green'}">
-            ${urgent ? 'LEAPFROG ARMED' : 'GRID BALANCED'}
-          </span>
-        </div>
-
-        <!-- LOCAL GRID LOAD TELEMETRY CARD -->
-        <div class="glass-card" style="padding: 14px 16px;">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
+      body.innerHTML = `
+        <div class="view-content">
+          <!-- HEADER -->
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
             <div>
-              <span style="font-size: 11px; color: var(--silver-400); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">Substation Stress Index</span>
-              <div style="font-size: 20px; font-weight: 800; color: var(--silver-100); font-family: 'JetBrains Mono', monospace; margin-top: 2px;">
-                54.2% <span style="font-size: 11px; color: var(--forest-sheen); font-weight: 600;">(Stable Green)</span>
+              <div class="view-title">Grid & Charger Matcher</div>
+              <div class="view-caption">Clean energy coordination & XGBoost dispatch</div>
+            </div>
+            <span class="hero-stat-tag ${urgent ? 'tag-crimson' : 'tag-emerald'}">
+              ${urgent ? '🚨 LEAPFROG ACTIVE' : 'OPTIMAL GRID'}
+            </span>
+          </div>
+
+          <!-- HIGH-IMPACT STAT 1: SUBSTATION GRID HEALTH -->
+          <div class="glass-panel">
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-caption); text-transform: uppercase; letter-spacing: 0.5px;">
+              Local Substation Health
+            </div>
+            <div class="hero-stat-row">
+              <div class="hero-stat-large" style="color: ${urgent ? 'var(--crimson-emergency)' : 'var(--nature-emerald)'};">
+                ${state.substationHealth}%
               </div>
+              <span class="hero-stat-tag tag-emerald">STABLE & GREEN</span>
             </div>
-            <div style="text-align: right;">
-              <span style="font-size: 11px; color: var(--silver-400); font-weight: 600;">DISCOM Node</span>
-              <div style="font-size: 12px; font-weight: 700; color: var(--silver-200);">BESCOM South 11kV</div>
-            </div>
-          </div>
-
-          <div class="grid-health-bar">
-            <div class="grid-metric-item">
-              <span class="metric-caption">Peak Spike Risk</span>
-              <span class="metric-val" style="color: #34D399;">LOW (0.12)</span>
-            </div>
-            <div class="grid-metric-item">
-              <span class="metric-caption">Renewable Mix</span>
-              <span class="metric-val" style="color: var(--forest-primary);">38.5% Sol</span>
-            </div>
-            <div class="grid-metric-item">
-              <span class="metric-caption">Active Plugs</span>
-              <span class="metric-val">34 / 42</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- BATTERY SOC SIMULATOR CARD -->
-        <div class="glass-card" style="padding: 16px;">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <div style="font-size: 14px; font-weight: 800; color: #FFF;">Vehicle Energy State</div>
-              <div style="font-size: 11px; color: var(--silver-400);">Simulate Battery to trigger Leapfrog</div>
-            </div>
-            <div style="font-size: 18px; font-weight: 800; color: ${urgent ? 'var(--crimson-leapfrog)' : 'var(--forest-primary)'}; font-family: 'JetBrains Mono', monospace;">
-              ${state.userBatteryPct}%
+            <div style="font-size: 12px; color: var(--text-sub); display: flex; justify-content: space-between;">
+              <span>Feeder Node: <strong>BESCOM 11kV Corridor</strong></span>
+              <span>Spike Risk: <strong style="color: var(--nature-emerald);">0.08 (Minimal)</strong></span>
             </div>
           </div>
 
-          <div class="liquid-slider-wrap">
-            <div class="slider-track-bg">
-              <div class="slider-liquid-fill" style="width: ${state.userBatteryPct}%; background: ${urgent ? 'linear-gradient(90deg, #DC2626, #EF4444)' : 'linear-gradient(90deg, #059669, #00E676)'};"></div>
-            </div>
-            <input type="range" min="4" max="100" value="${state.userBatteryPct}" class="liquid-range" oninput="updateBatterySoc(this.value)">
-            <div class="liquid-thumb-visual" id="socThumb" style="left: ${state.userBatteryPct}%;"></div>
-          </div>
-
-          ${urgent ? `
-            <div style="background: rgba(239, 68, 68, 0.15); border: 0.5px solid var(--crimson-leapfrog); border-radius: 12px; padding: 10px; margin-top: 10px; display: flex; gap: 8px; align-items: center;">
-              <span style="font-size: 18px;">🚨</span>
-              <div style="font-size: 11px; color: #FCA5A5; font-weight: 600;">
-                Emergency Leapfrog Activated (&le;10%). Normal queue preempted at Bay #1.
+          <!-- BATTERY STATE SLIDER -->
+          <div class="glass-panel">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <div>
+                <div style="font-size: 14px; font-weight: 800; color: var(--text-headline);">Vehicle Battery Level</div>
+                <div style="font-size: 11px; color: var(--text-caption);">Simulate low battery to trigger preemption</div>
               </div>
-            </div>
-          ` : ''}
-        </div>
-
-        <!-- OPTIMAL CHARGER RECOMMENDATION (XGBOOST POWERED) -->
-        <div class="glass-card champion-card">
-          <div class="match-header">
-            <div>
-              <span class="status-tag ${urgent ? 'tag-crimson' : 'tag-green'}" style="font-size: 9px;">
-                ${urgent ? '🚨 EMERGENCY LEAPFROG BAY' : '✨ OPTIMAL AI MATCH'}
+              <span style="font-size: 20px; font-weight: 800; color: ${urgent ? 'var(--crimson-emergency)' : 'var(--nature-emerald)'}; font-family: 'JetBrains Mono', monospace;">
+                ${state.userBattery}%
               </span>
-              <div class="station-name" style="margin-top: 6px;">${topStation.name}</div>
-              <div class="station-sub">${topStation.address}</div>
             </div>
-            <div class="score-capsule">
-              ${urgent ? '99/100' : '94/100'}
+
+            <div class="slider-container">
+              <div class="slider-sunlit-track">
+                <div class="slider-fluid-fill" style="width: ${state.userBattery}%; background: ${urgent ? 'linear-gradient(90deg, #DC2626, #EF4444)' : 'linear-gradient(90deg, #059669, #10B981)'};"></div>
+              </div>
+              <input type="range" min="4" max="100" value="${state.userBattery}" class="slider-input-overlay" oninput="updateBatterySlider(this.value)">
+              <div class="slider-lens-thumb" id="batteryThumb" style="left: ${state.userBattery}%;"></div>
             </div>
+
+            ${urgent ? `
+              <div style="background: #FEE2E2; border-radius: 14px; padding: 10px 12px; margin-top: 10px; display: flex; gap: 8px; align-items: center; border: 0.5px solid #FCA5A5;">
+                <span style="font-size: 16px;">🚨</span>
+                <span style="font-size: 11px; font-weight: 700; color: #991B1B;">
+                  Critical battery (&le;10%). Normal queue preempted at Bay #1.
+                </span>
+              </div>
+            ` : ''}
           </div>
 
-          <div class="telemetry-row">
-            <div class="telem-box">
-              <strong>${topStation.distance_km} km</strong>
-              <span>Distance</span>
+          <!-- OPTIMAL AI RECOMMENDATION CARD -->
+          <div class="glass-panel" style="background: linear-gradient(175deg, rgba(255,255,255,0.9) 0%, rgba(236,253,245,0.85) 100%); border-color: rgba(16,185,129,0.4);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div>
+                <span class="hero-stat-tag ${urgent ? 'tag-crimson' : 'tag-emerald'}" style="font-size: 9px;">
+                  ${urgent ? '🚨 EMERGENCY BAY DISPATCH' : '✨ OPTIMAL CHARGER MATCH'}
+                </span>
+                <div style="font-size: 18px; font-weight: 800; color: var(--text-headline); margin-top: 6px;">${topMatch.name}</div>
+                <div style="font-size: 12px; color: var(--text-caption);">${topMatch.address}</div>
+              </div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 800; color: var(--nature-emerald); background: var(--nature-mint); padding: 4px 10px; border-radius: 10px;">
+                ${urgent ? '99/100' : '94/100'}
+              </div>
             </div>
-            <div class="telem-box">
-              <strong style="color: var(--forest-sheen);">~${waitMin} min</strong>
-              <span>XGBoost Wait</span>
-            </div>
-            <div class="telem-box">
-              <strong>${topStation.power_kw} kW</strong>
-              <span>DC Rate</span>
-            </div>
-            <div class="telem-box">
-              <strong>${(topStation.grid_load * 100).toFixed(0)}%</strong>
-              <span>Grid Stress</span>
-            </div>
-          </div>
 
-          <div class="ai-rationale-box">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--forest-primary)" style="flex-shrink:0; margin-top:1px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-            <div>
-              <strong>XGBoost Model Rationale:</strong> Minimal queue ratio (1 waiting / 4 plugs), optimal transformer head-room, and nearest ultra-fast DC charger on your corridor.
+            <!-- Clean High-Impact Stats Row -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; background: #FFFFFF; padding: 12px; border-radius: 18px; border: 0.5px solid #E2E8F0;">
+              <div>
+                <span style="font-size: 9px; color: var(--text-caption); display: block;">DISTANCE</span>
+                <strong style="font-size: 14px; font-family: 'JetBrains Mono', monospace;">${topMatch.distance_km} km</strong>
+              </div>
+              <div>
+                <span style="font-size: 9px; color: var(--text-caption); display: block;">XGBOOST WAIT</span>
+                <strong style="font-size: 14px; color: var(--nature-emerald); font-family: 'JetBrains Mono', monospace;">~${urgent ? '0.0' : topMatch.predicted_wait_min} min</strong>
+              </div>
+              <div>
+                <span style="font-size: 9px; color: var(--text-caption); display: block;">DC CHARGE</span>
+                <strong style="font-size: 14px; font-family: 'JetBrains Mono', monospace;">${topMatch.power_kw} kW</strong>
+              </div>
             </div>
-          </div>
 
-          <button class="spring-btn" style="width: 100%;" onclick="openReservationFlow(${topStation.id})">
-            ${urgent ? 'DISPATCH PRIORITY EMERGENCY BAY' : 'RESERVE 15-MIN BAY SLOT'}
-          </button>
+            <button class="spring-tactile-btn" style="width: 100%;" onclick="openReservationModal(${topMatch.id})">
+              ${urgent ? 'DISPATCH EMERGENCY BAY #1' : 'RESERVE 15-MIN BAY'}
+            </button>
+          </div>
         </div>
       `;
     }
 
-    function updateBatterySoc(val) {
-      state.userBatteryPct = parseInt(val);
-      document.getElementById('socThumb').style.left = val + '%';
-      renderActiveScreen();
+    function updateBatterySlider(val) {
+      state.userBattery = parseInt(val);
+      document.getElementById('batteryThumb').style.left = val + '%';
+      renderView();
     }
 
     /* SCREEN 2: V2V P2P ENERGY SHARING HUB */
-    function renderScreen2(container) {
-      const transferKwh = state.v2vTransferKwh;
-      const donorSoc = Math.max(15, (state.peerDonorBattery - (transferKwh / 72.6 * 100)).toFixed(0));
-      const receiverSoc = Math.min(100, (state.userBatteryPct + (transferKwh / 40.5 * 100)).toFixed(0));
-      const ecoCredits = transferKwh * 15;
-      const durationMin = ((transferKwh / 22.0) * 60).toFixed(0);
+    function renderScreen2(body) {
+      const kwh = state.v2vTransferKwh;
+      const donorSoc = Math.max(15, (state.donorBattery - (kwh / 72.6 * 100)).toFixed(0));
+      const receiverSoc = Math.min(100, (state.userBattery + (kwh / 40.5 * 100)).toFixed(0));
+      const durationMin = ((kwh / 22.0) * 60).toFixed(0);
+      const ecoCredits = kwh * 15;
 
-      container.innerHTML = `
-        <div class="screen-header">
-          <span class="screen-title">V2V Energy Sharing Hub</span>
-          <span class="status-tag tag-green">P2P LINK READY</span>
-        </div>
+      body.innerHTML = `
+        <div class="view-content">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
+            <div>
+              <div class="view-title">V2V Energy Sharing</div>
+              <div class="view-caption">Peer-to-peer mobile DC charging</div>
+            </div>
+            <span class="hero-stat-tag tag-emerald">P2P LINK SECURED</span>
+          </div>
 
-        <!-- CAR-TO-CAR LIQUID COCKPIT -->
-        <div class="glass-card" style="padding: 16px;">
-          <div class="v2v-cockpit">
-            <!-- DONOR VEHICLE (HYUNDAI IONIQ 5) -->
-            <div class="vehicle-pod">
-              <div class="soc-liquid-dial" style="background: conic-gradient(var(--forest-primary) ${donorSoc}%, rgba(255,255,255,0.06) 0);">
-                <div class="dial-inner">${donorSoc}%</div>
+          <!-- CAR-TO-CAR STAGE -->
+          <div class="glass-panel">
+            <div class="v2v-nature-stage">
+              <!-- DONOR -->
+              <div class="car-orb">
+                <div class="orb-ring" style="background: conic-gradient(var(--nature-emerald) ${donorSoc}%, #E2E8F0 0);">
+                  <div class="orb-center">${donorSoc}%</div>
+                </div>
+                <div class="orb-model">Hyundai Ioniq 5</div>
+                <div class="orb-sub">Peer Donor</div>
               </div>
-              <div class="vehicle-model">${state.peerDonorModel.split(' ')[0]} ${state.peerDonorModel.split(' ')[1]}</div>
-              <div class="vehicle-role">Peer Donor</div>
-            </div>
 
-            <!-- ANIMATED ENERGY CONDUIT -->
-            <div class="v2v-energy-conduit">
-              <div class="conduit-flow"></div>
-            </div>
-
-            <!-- RECEIVER VEHICLE (YOUR TATA NEXON EV) -->
-            <div class="vehicle-pod">
-              <div class="soc-liquid-dial" style="background: conic-gradient(#00E676 ${receiverSoc}%, rgba(255,255,255,0.06) 0);">
-                <div class="dial-inner" style="color: var(--forest-primary);">${receiverSoc}%</div>
+              <!-- SUNLIT ENERGY BEAM -->
+              <div class="beam-sunlit-conduit">
+                <div class="beam-stream"></div>
               </div>
-              <div class="vehicle-model">Tata Nexon EV</div>
-              <div class="vehicle-role" style="color: var(--forest-sheen);">Your Vehicle</div>
+
+              <!-- RECEIVER -->
+              <div class="car-orb">
+                <div class="orb-ring" style="background: conic-gradient(#10B981 ${receiverSoc}%, #E2E8F0 0);">
+                  <div class="orb-center" style="color: var(--nature-emerald);">${receiverSoc}%</div>
+                </div>
+                <div class="orb-model">Tata Nexon EV</div>
+                <div class="orb-sub">Your Vehicle</div>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-sub); border-top: 1px solid #F1F5F9; padding-top: 12px; margin-top: 6px;">
+              <span>Proximity: <strong style="color: var(--text-headline);">${state.donorDistanceKm} km away</strong></span>
+              <span>Rate: <strong style="color: var(--nature-emerald);">22 kW Mobile DC</strong></span>
             </div>
           </div>
 
-          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--silver-400); border-top: 0.5px solid rgba(255,255,255,0.08); padding-top: 10px; margin-top: 6px;">
-            <span>Proximity: <strong style="color: var(--silver-100);">${state.peerDistanceKm} km away</strong></span>
-            <span>Mobile DC: <strong style="color: var(--forest-sheen);">22 kW Link</strong></span>
-          </div>
-        </div>
-
-        <!-- INTERACTIVE KWH TRANSFER SLIDER -->
-        <div class="glass-card">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-size: 13px; font-weight: 700; color: #FFF;">Energy Transfer Volume</span>
-            <span style="font-size: 18px; font-weight: 800; color: var(--forest-primary); font-family: 'JetBrains Mono', monospace;" id="kwhDisplay">
-              ${transferKwh} kWh
-            </span>
-          </div>
-
-          <div class="liquid-slider-wrap">
-            <div class="slider-track-bg">
-              <div class="slider-liquid-fill" id="v2vFill" style="width: ${(transferKwh / 25) * 100}%;"></div>
+          <!-- KWH SLIDER PANEL -->
+          <div class="glass-panel">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <span style="font-size: 14px; font-weight: 800;">Transfer Energy</span>
+              <span style="font-size: 24px; font-weight: 800; color: var(--nature-emerald); font-family: 'JetBrains Mono', monospace;" id="kwhLabel">
+                ${kwh} kWh
+              </span>
             </div>
-            <input type="range" min="3" max="25" value="${transferKwh}" class="liquid-range" oninput="updateV2VSlider(this.value)">
-            <div class="liquid-thumb-visual" id="v2vThumb" style="left: ${(transferKwh / 25) * 100}%;"></div>
-          </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px;">
-            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 12px;">
-              <span style="font-size: 10px; color: var(--silver-400);">Transfer Time</span>
-              <div style="font-size: 14px; font-weight: 800; color: #FFF; font-family: 'JetBrains Mono', monospace;">~${durationMin} min</div>
+            <div class="slider-container">
+              <div class="slider-sunlit-track">
+                <div class="slider-fluid-fill" id="v2vFill" style="width: ${(kwh / 25) * 100}%;"></div>
+              </div>
+              <input type="range" min="3" max="25" value="${kwh}" class="slider-input-overlay" oninput="updateV2VSlider(this.value)">
+              <div class="slider-lens-thumb" id="v2vThumb" style="left: ${(kwh / 25) * 100}%;"></div>
             </div>
-            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 12px;">
-              <span style="font-size: 10px; color: var(--silver-400);">EcoCredits Bounty</span>
-              <div style="font-size: 14px; font-weight: 800; color: var(--forest-primary); font-family: 'JetBrains Mono', monospace;">+${ecoCredits} Pts</div>
-            </div>
-          </div>
 
-          <button class="spring-btn" style="width: 100%; margin-top: 16px;" onclick="executeV2VTransferAction()">
-            INITIATE V2V P2P POWER TRANSFER
-          </button>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0 16px;">
+              <div style="background: #FFFFFF; padding: 12px; border-radius: 16px; border: 0.5px solid #E2E8F0;">
+                <span style="font-size: 10px; color: var(--text-caption); display: block;">TIME REQUIRED</span>
+                <strong style="font-size: 15px; font-family: 'JetBrains Mono', monospace;">~${durationMin} min</strong>
+              </div>
+              <div style="background: #FFFFFF; padding: 12px; border-radius: 16px; border: 0.5px solid #E2E8F0;">
+                <span style="font-size: 10px; color: var(--text-caption); display: block;">ECOCREDITS REWARD</span>
+                <strong style="font-size: 15px; color: var(--nature-emerald); font-family: 'JetBrains Mono', monospace;">+${ecoCredits} Pts</strong>
+              </div>
+            </div>
+
+            <button class="spring-tactile-btn" style="width: 100%;" onclick="executeV2VTransfer()">
+              EXECUTE V2V POWER TRANSFER
+            </button>
+          </div>
         </div>
       `;
     }
@@ -1217,171 +1088,163 @@
     function updateV2VSlider(val) {
       state.v2vTransferKwh = parseInt(val);
       const pct = (val / 25) * 100;
-      document.getElementById('kwhDisplay').innerText = `${val} kWh`;
+      document.getElementById('kwhLabel').innerText = `${val} kWh`;
       document.getElementById('v2vFill').style.width = pct + '%';
       document.getElementById('v2vThumb').style.left = pct + '%';
-      
-      // Update cockpit dials reactively without re-rendering whole screen
-      const transferKwh = state.v2vTransferKwh;
-      const donorSoc = Math.max(15, (state.peerDonorBattery - (transferKwh / 72.6 * 100)).toFixed(0));
-      const receiverSoc = Math.min(100, (state.userBatteryPct + (transferKwh / 40.5 * 100)).toFixed(0));
-      document.querySelectorAll('.dial-inner')[0].innerText = donorSoc + '%';
-      document.querySelectorAll('.dial-inner')[1].innerText = receiverSoc + '%';
+
+      // Live reactive dials
+      const kwh = state.v2vTransferKwh;
+      const donorSoc = Math.max(15, (state.donorBattery - (kwh / 72.6 * 100)).toFixed(0));
+      const receiverSoc = Math.min(100, (state.userBattery + (kwh / 40.5 * 100)).toFixed(0));
+      document.querySelectorAll('.orb-center')[0].innerText = donorSoc + '%';
+      document.querySelectorAll('.orb-center')[1].innerText = receiverSoc + '%';
     }
 
-    async function executeV2VTransferAction() {
-      triggerIslandAlert(`V2V TRANSFERRING: ${state.v2vTransferKwh} kWh`);
-      
-      // Optimistic instant state update (Zero UI delay)
-      const addedPct = Math.round((state.v2vTransferKwh / 40.5) * 100);
-      state.userBatteryPct = Math.min(100, state.userBatteryPct + addedPct);
-      state.peerDonorBattery = Math.max(20, state.peerDonorBattery - Math.round((state.v2vTransferKwh / 72.6) * 100));
-      
-      // Try background API call
-      try {
-        await fetch(`${API_BASE}/v2v/transfer`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            donor_user_id: "peer_ioniq_01",
-            receiver_user_id: "user_live_01",
-            kwh_amount: state.v2vTransferKwh,
-            transfer_power_kw: 22.0
-          }),
-          signal: AbortSignal.timeout(1500)
-        });
-      } catch (e) {
-        // Handled silently
-      }
+    function executeV2VTransfer() {
+      triggerIslandNote(`V2V TRANSFERRING: ${state.v2vTransferKwh} kWh`);
+
+      // Optimistic instant state update
+      const added = Math.round((state.v2vTransferKwh / 40.5) * 100);
+      state.userBattery = Math.min(100, state.userBattery + added);
+      state.donorBattery = Math.max(20, state.donorBattery - Math.round((state.v2vTransferKwh / 72.6) * 100));
+
+      // Background API integration
+      fetch(`${API_BASE}/v2v/transfer`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          donor_user_id: "peer_ioniq_01",
+          receiver_user_id: "user_live_01",
+          kwh_amount: state.v2vTransferKwh,
+          transfer_power_kw: 22.0
+        })
+      }).catch(() => {});
 
       setTimeout(() => {
-        triggerIslandAlert(`TRANSFER COMPLETE (+${state.v2vTransferKwh * 15} PTS)`);
-        renderActiveScreen();
+        triggerIslandNote(`V2V SUCCESS (+${state.v2vTransferKwh * 15} PTS)`);
+        renderView();
       }, 1000);
     }
 
     /* SCREEN 3: LIVE MAP & SLOT RESERVATION VIEW */
-    function renderScreen3(container) {
-      container.innerHTML = `
-        <div class="screen-header">
-          <span class="screen-title">Live Map & Bay Reservation</span>
-          <span class="status-tag tag-green">4 HUBS ONLINE</span>
-        </div>
-
-        <!-- RADAR MAP CANVAS -->
-        <div class="radar-canvas-box">
-          <div class="radar-sweep"></div>
-          <div class="radar-ring" style="width: 220px; height: 220px;"></div>
-          <div class="radar-ring" style="width: 140px; height: 140px;"></div>
-          <div class="radar-ring" style="width: 60px; height: 60px;"></div>
-          
-          <div class="user-ev-blip"></div>
-
-          <!-- Statically placed blips for elegance -->
-          <div class="station-blip" style="top: 40px; right: 60px;" onclick="selectBlipStation(1)">
-            <div class="blip-dot" style="background: var(--forest-primary);"></div>
-            <div class="blip-label">Indiranagar (3)</div>
-          </div>
-
-          <div class="station-blip" style="bottom: 50px; right: 80px;" onclick="selectBlipStation(2)">
-            <div class="blip-dot" style="background: var(--forest-primary);"></div>
-            <div class="blip-label">Koramangala (4)</div>
-          </div>
-
-          <div class="station-blip" style="top: 80px; left: 50px;" onclick="selectBlipStation(3)">
-            <div class="blip-dot" style="background: var(--crimson-leapfrog);"></div>
-            <div class="blip-label">MG Road (0)</div>
-          </div>
-
-          <div class="station-blip" style="bottom: 60px; left: 70px;" onclick="selectBlipStation(4)">
-            <div class="blip-dot" style="background: var(--forest-primary);"></div>
-            <div class="blip-label">Whitefield (5)</div>
-          </div>
-        </div>
-
-        <!-- SELECTED STATION RESERVATION CARD -->
-        <div class="glass-card">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    function renderScreen3(body) {
+      body.innerHTML = `
+        <div class="view-content">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
             <div>
-              <div style="font-size: 16px; font-weight: 800; color: #FFF;" id="resStationTitle">
-                ${state.selectedStation.name}
-              </div>
-              <div style="font-size: 11px; color: var(--silver-400);" id="resStationSub">
-                ${state.selectedStation.address}
-              </div>
+              <div class="view-title">Live Map & Slots</div>
+              <div class="view-caption">Real-time corridor bay reservations</div>
             </div>
-            <span class="status-tag tag-green">${state.selectedStation.chargers_available} Free Bays</span>
+            <span class="hero-stat-tag tag-emerald">4 HUBS READY</span>
           </div>
 
-          <div style="margin-top: 14px;">
-            <div style="font-size: 11px; font-weight: 700; color: var(--silver-200); text-transform: uppercase; letter-spacing: 0.5px;">
-              Select 15-Minute Arrival Window
+          <!-- RADAR MAP CANVAS -->
+          <div class="map-sunlit-box">
+            <div class="radar-sun-ring" style="width: 220px; height: 220px;"></div>
+            <div class="radar-sun-ring" style="width: 140px; height: 140px;"></div>
+            <div class="radar-sun-ring" style="width: 60px; height: 60px;"></div>
+
+            <div class="user-sun-blip"></div>
+
+            <!-- Station Pins -->
+            <div class="station-marker-pin" style="top: 35px; right: 50px;" onclick="pickStation(1)">
+              <div class="marker-dot" style="background: var(--nature-emerald);"></div>
+              <div class="marker-text">Indiranagar (3)</div>
             </div>
-            
-            <div class="slot-grid">
-              <div class="slot-pill selected" onclick="pickSlot(this, '18:45')">
-                <div class="slot-time">18:45</div>
-                <div class="slot-desc">Ready</div>
-              </div>
-              <div class="slot-pill" onclick="pickSlot(this, '19:00')">
-                <div class="slot-time">19:00</div>
-                <div class="slot-desc">+15m</div>
-              </div>
-              <div class="slot-pill" onclick="pickSlot(this, '19:15')">
-                <div class="slot-time">19:15</div>
-                <div class="slot-desc">+30m</div>
-              </div>
-              <div class="slot-pill" onclick="pickSlot(this, '19:30')">
-                <div class="slot-time">19:30</div>
-                <div class="slot-desc">+45m</div>
-              </div>
+            <div class="station-marker-pin" style="bottom: 45px; right: 65px;" onclick="pickStation(2)">
+              <div class="marker-dot" style="background: var(--nature-emerald);"></div>
+              <div class="marker-text">Koramangala (4)</div>
+            </div>
+            <div class="station-marker-pin" style="top: 65px; left: 45px;" onclick="pickStation(3)">
+              <div class="marker-dot" style="background: var(--crimson-emergency);"></div>
+              <div class="marker-text">MG Road (0)</div>
+            </div>
+            <div class="station-marker-pin" style="bottom: 50px; left: 55px;" onclick="pickStation(4)">
+              <div class="marker-dot" style="background: var(--nature-emerald);"></div>
+              <div class="marker-text">Whitefield (5)</div>
             </div>
           </div>
 
-          <button class="spring-btn" style="width: 100%; margin-top: 6px;" onclick="confirmAndOpenPass()">
-            CONFIRM & GENERATE DIGITAL PASS
-          </button>
+          <!-- RESERVATION CARD -->
+          <div class="glass-panel" style="margin-top: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div>
+                <div style="font-size: 16px; font-weight: 800; color: var(--text-headline);">${state.selectedStation.name}</div>
+                <div style="font-size: 11px; color: var(--text-caption);">${state.selectedStation.address}</div>
+              </div>
+              <span class="hero-stat-tag tag-emerald">${state.selectedStation.chargers_available} Free Bays</span>
+            </div>
+
+            <div style="margin-top: 14px;">
+              <span style="font-size: 10px; font-weight: 700; color: var(--text-caption); text-transform: uppercase; letter-spacing: 0.5px;">
+                Select 15-Minute Slot
+              </span>
+
+              <div class="slot-row">
+                <div class="slot-card selected" onclick="selectSlot(this, '18:45')">
+                  <div class="time">18:45</div>
+                  <div class="sub">Ready</div>
+                </div>
+                <div class="slot-card" onclick="selectSlot(this, '19:00')">
+                  <div class="time">19:00</div>
+                  <div class="sub">+15m</div>
+                </div>
+                <div class="slot-card" onclick="selectSlot(this, '19:15')">
+                  <div class="time">19:15</div>
+                  <div class="sub">+30m</div>
+                </div>
+                <div class="slot-card" onclick="selectSlot(this, '19:30')">
+                  <div class="time">19:30</div>
+                  <div class="sub">+45m</div>
+                </div>
+              </div>
+            </div>
+
+            <button class="spring-tactile-btn" style="width: 100%;" onclick="openTicketModal()">
+              CONFIRM & GENERATE DIGITAL PASS
+            </button>
+          </div>
         </div>
       `;
     }
 
-    function selectBlipStation(id) {
+    function pickStation(id) {
       state.selectedStation = state.stations.find(s => s.id === id) || state.stations[0];
-      renderActiveScreen();
+      renderView();
     }
 
-    function pickSlot(el, time) {
-      document.querySelectorAll('.slot-pill').forEach(p => p.classList.remove('selected'));
+    function selectSlot(el, slot) {
+      document.querySelectorAll('.slot-card').forEach(c => c.classList.remove('selected'));
       el.classList.add('selected');
-      state.selectedSlotTime = time;
+      state.selectedSlot = slot;
     }
 
-    function openReservationFlow(stationId) {
-      state.selectedStation = state.stations.find(s => s.id === stationId) || state.stations[0];
-      confirmAndOpenPass();
+    function openReservationModal(id) {
+      pickStation(id);
+      openTicketModal();
     }
 
-    function confirmAndOpenPass() {
-      const urgent = isEmergency();
+    function openTicketModal() {
+      const urgent = isUrgent();
       const st = state.selectedStation;
-      
-      document.getElementById('passStationName').innerText = st.name;
-      document.getElementById('passAddress').innerText = st.address;
-      document.getElementById('passBayName').innerText = urgent ? "Bay #1 (Emergency Fast 150 kW)" : "Bay #2 (60 kW DC Fast)";
-      document.getElementById('passPriorityText').innerText = urgent ? "🚨 URGENT LEAPFROG PREEMPTION" : "STANDARD RESERVED";
-      document.getElementById('passPriorityText').style.color = urgent ? "var(--crimson-leapfrog)" : "var(--forest-sheen)";
-      document.getElementById('passIdText').innerText = "GF-" + Math.floor(1000 + Math.random() * 9000);
 
-      document.getElementById('passModal').style.display = 'flex';
-      triggerIslandAlert("PASS LOCKED: " + st.name.substring(0, 14));
+      document.getElementById('ticketStationName').innerText = st.name;
+      document.getElementById('ticketStationAddress').innerText = st.address;
+      document.getElementById('ticketBayLabel').innerText = urgent ? "Bay #1 (Emergency 120 kW)" : "Bay #2 (60 kW Fast)";
+      document.getElementById('ticketPriorityLabel').innerText = urgent ? "🚨 URGENT LEAPFROG" : "STANDARD CONFIRMED";
+      document.getElementById('ticketPriorityLabel').style.color = urgent ? "var(--crimson-emergency)" : "var(--nature-emerald)";
+      document.getElementById('ticketIdLabel').innerText = "GF-" + Math.floor(1000 + Math.random() * 9000);
+
+      document.getElementById('passBackdrop').style.display = 'flex';
+      triggerIslandNote("PASS READY: " + st.name.substring(0, 14));
     }
 
-    function closePassModal() {
-      document.getElementById('passModal').style.display = 'none';
-      navigateScreen(1);
+    function closeTicketModal() {
+      document.getElementById('passBackdrop').style.display = 'none';
+      switchDockTab(0);
     }
 
-    // Launch on DOM Ready
+    // Launch
     window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>

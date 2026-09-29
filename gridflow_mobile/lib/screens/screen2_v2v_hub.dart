@@ -25,9 +25,9 @@ class _Screen2V2VHubState extends State<Screen2V2VHub> with SingleTickerProvider
   double _transferKwh = 10.0;
   bool _isTransferring = false;
 
-  // Realistic Demo Peer (Strict Requirement 3)
+  // Realistic Demo Match State
   double _donorBattery = 92.0;
-  final String _donorModel = "Hyundai Ioniq 5 (72.6 kWh)";
+  final String _donorModel = "Hyundai Ioniq 5";
   final double _proximityKm = 0.4;
 
   @override
@@ -47,9 +47,9 @@ class _Screen2V2VHubState extends State<Screen2V2VHub> with SingleTickerProvider
 
   void _executeTransfer() async {
     setState(() => _isTransferring = true);
-    await Future.delayed(const Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 900));
 
-    // Zero-latency optimistic update
+    // Instant optimistic state update
     final addedPct = (_transferKwh / 40.5) * 100.0;
     final droppedPct = (_transferKwh / 72.6) * 100.0;
 
@@ -72,13 +72,13 @@ class _Screen2V2VHubState extends State<Screen2V2VHub> with SingleTickerProvider
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          backgroundColor: AppleLiquidColors.obsidianSurface,
+          backgroundColor: Colors.white,
           content: Text(
             "⚡ V2V Complete: +${_transferKwh.toInt()} kWh transferred. +${(_transferKwh * 15).toInt()} EcoCredits awarded!",
-            style: const TextStyle(color: AppleLiquidColors.forestPrimary, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: AppleLiquidColors.natureEmerald, fontWeight: FontWeight.bold),
           ),
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
       );
     }
@@ -92,51 +92,61 @@ class _Screen2V2VHubState extends State<Screen2V2VHub> with SingleTickerProvider
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.fromLTRB(16, 10, 16, 90),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Screen Title
+          // Header
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "V2V Energy Sharing Hub",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    "V2V Energy Sharing",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, letterSpacing: -0.4, color: AppleLiquidColors.textHeadline),
+                  ),
+                  SizedBox(height: 2),
+                  Text(
+                    "Peer-to-peer mobile DC charging",
+                    style: TextStyle(fontSize: 11, color: AppleLiquidColors.textCaption),
+                  ),
+                ],
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: AppleLiquidColors.forestEmerald.withOpacity(0.15),
+                  color: AppleLiquidColors.mintContainer,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppleLiquidColors.forestEmerald, width: 0.5),
+                  border: Border.all(color: AppleLiquidColors.natureMint, width: 0.5),
                 ),
                 child: const Text(
-                  "P2P LINK READY",
-                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.w800, color: AppleLiquidColors.forestPrimary),
+                  "P2P LINK SECURED",
+                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.w800, color: AppleLiquidColors.natureEmerald),
                 ),
               ),
             ],
           ),
 
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
 
-          // 1. CAR-TO-CAR LIQUID COCKPIT CARD
+          // 1. CAR-TO-CAR STAGE CARD
           LiquidGlassCard(
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Donor Vehicle (Hyundai Ioniq 5)
-                    _vehiclePod(
-                      model: "Hyundai Ioniq 5",
+                    // Donor (Hyundai Ioniq 5)
+                    _carPod(
+                      model: _donorModel,
                       role: "Peer Donor",
                       batteryPct: _donorBattery,
-                      color: AppleLiquidColors.forestEmerald,
+                      color: AppleLiquidColors.natureEmerald,
                     ),
 
-                    // Animated Energy Conduit
+                    // Sunlit Energy Stream Conduit
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -148,7 +158,7 @@ class _Screen2V2VHubState extends State<Screen2V2VHub> with SingleTickerProvider
                                 return Container(
                                   height: 6,
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.06),
+                                    color: const Color(0xFFE2E8F0),
                                     borderRadius: BorderRadius.circular(999),
                                   ),
                                   child: Align(
@@ -158,11 +168,11 @@ class _Screen2V2VHubState extends State<Screen2V2VHub> with SingleTickerProvider
                                       height: 6,
                                       decoration: BoxDecoration(
                                         gradient: const LinearGradient(
-                                          colors: [Colors.transparent, AppleLiquidColors.forestPrimary, Colors.transparent],
+                                          colors: [Colors.transparent, AppleLiquidColors.natureLeaf, Colors.transparent],
                                         ),
                                         borderRadius: BorderRadius.circular(999),
                                         boxShadow: const [
-                                          BoxShadow(color: AppleLiquidColors.forestPrimary, blurRadius: 10),
+                                          BoxShadow(color: AppleLiquidColors.natureLeaf, blurRadius: 10),
                                         ],
                                       ),
                                     ),
@@ -172,14 +182,14 @@ class _Screen2V2VHubState extends State<Screen2V2VHub> with SingleTickerProvider
                             ),
                             const SizedBox(height: 6),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                               decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.4),
+                                color: const Color(0xFFF1F5F9),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: const Text(
                                 "22 kW Mobile DC",
-                                style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: AppleLiquidColors.silver200),
+                                style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: AppleLiquidColors.textSub),
                               ),
                             ),
                           ],
@@ -187,31 +197,31 @@ class _Screen2V2VHubState extends State<Screen2V2VHub> with SingleTickerProvider
                       ),
                     ),
 
-                    // Receiver Vehicle (Your Tata Nexon EV)
-                    _vehiclePod(
+                    // Receiver (Tata Nexon EV)
+                    _carPod(
                       model: "Tata Nexon EV",
-                      role: "Your EV (Receiver)",
+                      role: "Your Vehicle",
                       batteryPct: p.batteryPct,
-                      color: AppleLiquidColors.forestPrimary,
+                      color: AppleLiquidColors.natureLeaf,
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
-                const Divider(color: Color(0x1AFFFFFF), height: 1),
-                const SizedBox(height: 12),
+                const SizedBox(height: 14),
+                const Divider(color: Color(0xFFF1F5F9), height: 1),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.near_me, size: 14, color: AppleLiquidColors.forestPrimary),
+                        const Icon(Icons.near_me, size: 14, color: AppleLiquidColors.natureEmerald),
                         const SizedBox(width: 4),
-                        Text("Proximity: ${_proximityKm} km away", style: const TextStyle(fontSize: 11, color: AppleLiquidColors.silver200)),
+                        Text("Proximity: ${_proximityKm} km away", style: const TextStyle(fontSize: 11, color: AppleLiquidColors.textSub)),
                       ],
                     ),
-                    Text(
+                    const Text(
                       "P2P Link Secured",
-                      style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppleLiquidColors.forestEmerald),
+                      style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppleLiquidColors.natureEmerald),
                     ),
                   ],
                 ),
@@ -227,10 +237,10 @@ class _Screen2V2VHubState extends State<Screen2V2VHub> with SingleTickerProvider
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text("Energy Transfer Volume", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: Colors.white)),
+                    const Text("Transfer Energy", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppleLiquidColors.textHeadline)),
                     Text(
                       "${_transferKwh.toInt()} kWh",
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800, fontFamily: 'monospace', color: AppleLiquidColors.forestPrimary),
+                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800, fontFamily: 'monospace', color: AppleLiquidColors.natureEmerald),
                     ),
                   ],
                 ),
@@ -248,17 +258,18 @@ class _Screen2V2VHubState extends State<Screen2V2VHub> with SingleTickerProvider
                   children: [
                     Expanded(
                       child: Container(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(12),
+                          color: const Color(0xFFF8FAFC),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: const Color(0xFFE2E8F0), width: 0.5),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("Transfer Duration", style: TextStyle(fontSize: 10, color: AppleLiquidColors.silver400)),
+                            const Text("TIME REQUIRED", style: TextStyle(fontSize: 9, color: AppleLiquidColors.textCaption, fontWeight: FontWeight.bold)),
                             const SizedBox(height: 2),
-                            Text("~${durationMin} min", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: Colors.white, fontFamily: 'monospace')),
+                            Text("~${durationMin} min", style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, fontFamily: 'monospace', color: AppleLiquidColors.textHeadline)),
                           ],
                         ),
                       ),
@@ -266,17 +277,18 @@ class _Screen2V2VHubState extends State<Screen2V2VHub> with SingleTickerProvider
                     const SizedBox(width: 10),
                     Expanded(
                       child: Container(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(12),
+                          color: const Color(0xFFF8FAFC),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: const Color(0xFFE2E8F0), width: 0.5),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("EcoCredits Bounty", style: TextStyle(fontSize: 10, color: AppleLiquidColors.silver400)),
+                            const Text("ECOCREDITS REWARD", style: TextStyle(fontSize: 9, color: AppleLiquidColors.textCaption, fontWeight: FontWeight.bold)),
                             const SizedBox(height: 2),
-                            Text("+${ecoCredits} Pts", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppleLiquidColors.forestPrimary, fontFamily: 'monospace')),
+                            Text("+${ecoCredits} Pts", style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, fontFamily: 'monospace', color: AppleLiquidColors.natureEmerald)),
                           ],
                         ),
                       ),
@@ -288,20 +300,20 @@ class _Screen2V2VHubState extends State<Screen2V2VHub> with SingleTickerProvider
                   onTap: _isTransferring ? () {} : _executeTransfer,
                   child: Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    padding: const EdgeInsets.symmetric(vertical: 15),
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(colors: [Color(0xFF10B981), Color(0xFF059669)]),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(20),
                       boxShadow: const [
-                        BoxShadow(color: Color(0x6610B981), blurRadius: 20, offset: Offset(0, 6)),
+                        BoxShadow(color: Color(0x5910B981), blurRadius: 20, offset: Offset(0, 8)),
                       ],
                     ),
                     child: Center(
                       child: _isTransferring
-                          ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.black, strokeWidth: 2))
+                          ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
                           : const Text(
-                              "INITIATE V2V P2P POWER TRANSFER",
-                              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: Color(0xFF042517)),
+                              "EXECUTE V2V POWER TRANSFER",
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: Colors.white),
                             ),
                     ),
                   ),
@@ -314,36 +326,31 @@ class _Screen2V2VHubState extends State<Screen2V2VHub> with SingleTickerProvider
     );
   }
 
-  Widget _vehiclePod({
-    required String model,
-    required String role,
-    required double batteryPct,
-    required Color color,
-  }) {
+  Widget _carPod({required String model, required String role, required double batteryPct, required Color color}) {
     return Column(
       children: [
         Stack(
           alignment: Alignment.center,
           children: [
             SizedBox(
-              width: 64,
-              height: 64,
+              width: 68,
+              height: 68,
               child: CircularProgressIndicator(
                 value: (batteryPct / 100.0).clamp(0.0, 1.0),
                 strokeWidth: 6,
-                backgroundColor: const Color(0x1FFFFFFF),
+                backgroundColor: const Color(0xFFE2E8F0),
                 valueColor: AlwaysStoppedAnimation<Color>(color),
               ),
             ),
             Text(
               "${batteryPct.toInt()}%",
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, fontFamily: 'monospace', color: Colors.white),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, fontFamily: 'monospace', color: AppleLiquidColors.textHeadline),
             ),
           ],
         ),
         const SizedBox(height: 8),
-        Text(model, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: Colors.white)),
-        Text(role, style: const TextStyle(fontSize: 10, color: AppleLiquidColors.silver400)),
+        Text(model, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: AppleLiquidColors.textHeadline)),
+        Text(role, style: const TextStyle(fontSize: 10, color: AppleLiquidColors.textCaption)),
       ],
     );
   }

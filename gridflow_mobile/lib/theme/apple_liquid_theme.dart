@@ -1,43 +1,43 @@
 import 'package:flutter/material.dart';
 
 class AppleLiquidColors {
-  // Deep Obsidian & Charcoal (Apple Liquid Glass)
-  static const Color background = Color(0xFF07090D);
-  static const Color obsidianSurface = Color(0xFF0B0E14);
-  static const Color glassSurface = Color(0xFF10141D);
+  // Light Nature EV Background & Pearl White Palette
+  static const Color background = Color(0xFFF1F5F9);
+  static const Color pearlSurface = Color(0xFFFFFFFF);
+  static const Color skyLight = Color(0xFFEBF5FF);
+  static const Color mintContainer = Color(0xFFE6F4EA);
   
-  // Organic Forest Greens (High-End Automotive - NO NEON PURPLE)
-  static const Color forestPrimary = Color(0xFF00E676);
-  static const Color forestEmerald = Color(0xFF10B981);
-  static const Color forestDark = Color(0xFF059669);
-  static const Color forestDeep = Color(0xFF022C22);
-  static const Color forestGlow = Color(0x7310B981);
+  // Authentic Nature Greens (Apple Human Interface Standard)
+  static const Color natureEmerald = Color(0xFF059669);
+  static const Color natureLeaf = Color(0xFF10B981);
+  static const Color natureMint = Color(0xFFD1FAE5);
+  static const Color natureGlow = Color(0x4710B981);
   
-  // Metallic Silver & Platinum Accents
-  static const Color platinum100 = Color(0xFFF8FAFC);
-  static const Color silver200 = Color(0xFFE2E8F0);
-  static const Color silver400 = Color(0xFF94A3B8);
-  static const Color silver700 = Color(0xFF334155);
+  // Clean Human Typography & Accents
+  static const Color textHeadline = Color(0xFF0F172A);
+  static const Color textSub = Color(0xFF475569);
+  static const Color textCaption = Color(0xFF64748B);
   
   // Status Colors
-  static const Color amberWarning = Color(0xFFF59E0B);
-  static const Color crimsonAlert = Color(0xFFEF4444);
+  static const Color amberWarning = Color(0xFFD97706);
+  static const Color crimsonAlert = Color(0xFFDC2626);
   
-  // Glass Borders & Sheens
-  static const Color glassBorder = Color(0x1FFFFFFF);        // 0.5px subtle white
-  static const Color glassBorderGreen = Color(0x4D10B981);   // Subtle green glow border
+  // Crystal Glass Refraction Borders & Sheens
+  static const Color glassBorder = Color(0xE6FFFFFF);         // 90% pure crystal white
+  static const Color glassBorderSubtle = Color(0x80FFFFFF);   // 50% white
+  static const Color glassBorderGreen = Color(0x6610B981);    // 40% emerald
 }
 
 class AppleLiquidTheme {
-  static ThemeData get darkTheme {
+  static ThemeData get lightNatureTheme {
     return ThemeData(
-      brightness: Brightness.dark,
+      brightness: Brightness.light,
       scaffoldBackgroundColor: AppleLiquidColors.background,
-      primaryColor: AppleLiquidColors.forestPrimary,
-      colorScheme: const ColorScheme.dark(
-        primary: AppleLiquidColors.forestPrimary,
-        secondary: AppleLiquidColors.forestEmerald,
-        surface: AppleLiquidColors.obsidianSurface,
+      primaryColor: AppleLiquidColors.natureEmerald,
+      colorScheme: const ColorScheme.light(
+        primary: AppleLiquidColors.natureEmerald,
+        secondary: AppleLiquidColors.natureLeaf,
+        surface: AppleLiquidColors.pearlSurface,
         background: AppleLiquidColors.background,
         error: AppleLiquidColors.crimsonAlert,
       ),
@@ -47,11 +47,12 @@ class AppleLiquidTheme {
         elevation: 0,
         centerTitle: false,
         titleTextStyle: TextStyle(
-          color: AppleLiquidColors.platinum100,
-          fontSize: 18,
+          color: AppleLiquidColors.textHeadline,
+          fontSize: 19,
           fontWeight: FontWeight.w800,
           letterSpacing: -0.4,
         ),
+        iconTheme: IconThemeData(color: AppleLiquidColors.textHeadline),
       ),
     );
   }

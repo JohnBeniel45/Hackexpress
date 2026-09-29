@@ -15,9 +15,9 @@ class LiquidGlassCard extends StatelessWidget {
   const LiquidGlassCard({
     Key? key,
     required this.child,
-    this.padding = const EdgeInsets.all(18),
-    this.margin = const EdgeInsets.only(bottom: 14),
-    this.borderRadius = 24.0,
+    this.padding = const EdgeInsets.all(20),
+    this.margin = const EdgeInsets.only(bottom: 16),
+    this.borderRadius = 28.0,
     this.borderColor,
     this.backgroundColor,
     this.hasSpecularHighlight = true,
@@ -32,20 +32,25 @@ class LiquidGlassCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(borderRadius),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x99000000),
-            blurRadius: 36,
-            offset: Offset(0, 14),
-            spreadRadius: -8,
+            color: Color(0x140F172A), // 8% soft atmospheric drop shadow
+            blurRadius: 40,
+            offset: Offset(0, 18),
+            spreadRadius: -10,
+          ),
+          BoxShadow(
+            color: Color(0x08000000),
+            blurRadius: 4,
+            offset: Offset(0, 1),
           ),
         ],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 28, sigmaY: 28),
+          filter: ImageFilter.blur(sigmaX: 32, sigmaY: 32),
           child: Container(
             decoration: BoxDecoration(
-              color: backgroundColor ?? const Color(0xB310141D), // 70% opacity obsidian
+              color: backgroundColor ?? Colors.white.withOpacity(0.72),
               borderRadius: BorderRadius.circular(borderRadius),
               border: Border.all(
                 color: borderColor ?? AppleLiquidColors.glassBorder,
@@ -54,13 +59,13 @@ class LiquidGlassCard extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                // Specular Light Sheen Reflection
+                // Crystal Sunlight Refraction Sheen
                 if (hasSpecularHighlight)
                   Positioned(
                     top: 0,
                     left: 0,
                     right: 0,
-                    height: 100,
+                    height: 70,
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.vertical(top: Radius.circular(borderRadius)),
@@ -68,11 +73,11 @@ class LiquidGlassCard extends StatelessWidget {
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
-                            Color(0x2EFFFFFF), // 18% white highlight
-                            Color(0x05FFFFFF),
-                            Color(0x0D10B981), // 5% emerald reflection
+                            Color(0x99FFFFFF), // 60% white sunlight reflection
+                            Color(0x1AFFFFFF),
+                            Colors.transparent,
                           ],
-                          stops: [0.0, 0.45, 1.0],
+                          stops: [0.0, 0.4, 1.0],
                         ),
                       ),
                     ),

@@ -1,6 +1,6 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../theme/apple_liquid_theme.dart';
+import '../components/mac_floating_dock.dart';
 import '../models/user_profile.dart';
 import '../models/station.dart';
 import 'screen1_ai_grid_matcher.dart';
@@ -17,14 +17,13 @@ class AppleRootScreen extends StatefulWidget {
 class _AppleRootScreenState extends State<AppleRootScreen> {
   int _currentIndex = 0;
   final UserProfile _userProfile = UserProfile();
-  bool _demoMode = true; // Default ready for presentation demo!
+  bool _demoMode = true; // Ready for hackathon judging demo!
   Station? _preselectedStation;
 
   void _toggleDemoMode() {
     setState(() {
       _demoMode = !_demoMode;
       if (_demoMode) {
-        // Strict Requirement 3: Hyundai Ioniq 5 (92%) to Tata Nexon EV (28%) within 0.4km
         _userProfile.vehicleModel = "Tata Nexon EV Max";
         _userProfile.batteryPct = 28.0;
         _userProfile.vehicleType = "Sedan";
@@ -33,14 +32,14 @@ class _AppleRootScreenState extends State<AppleRootScreen> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        backgroundColor: const Color(0xE60E131F),
+        backgroundColor: Colors.white,
         content: Text(
           _demoMode ? "⚡ DEMO MODE: Matched Ioniq 5 (92%) to Nexon EV (28%) @ 0.4km" : "LIVE SENSOR MODE",
-          style: const TextStyle(color: AppleLiquidColors.forestPrimary, fontWeight: FontWeight.bold, fontSize: 12),
+          style: const TextStyle(color: AppleLiquidColors.natureEmerald, fontWeight: FontWeight.bold, fontSize: 12),
         ),
         behavior: SnackBarBehavior.floating,
         duration: const Duration(seconds: 2),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
     );
   }
@@ -77,44 +76,59 @@ class _AppleRootScreenState extends State<AppleRootScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              children: [
-                const Icon(Icons.bolt, color: AppleLiquidColors.forestPrimary, size: 20),
-                const SizedBox(width: 6),
-                const Text(
+              children: const [
+                Icon(Icons.bolt, color: AppleLiquidColors.natureEmerald, size: 20),
+                SizedBox(width: 6),
+                Text(
                   "GridFlow AI",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white, letterSpacing: -0.4),
+                  style: TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.w800,
+                    color: AppleLiquidColors.textHeadline,
+                    letterSpacing: -0.4,
+                  ),
                 ),
               ],
             ),
             Text(
               "${_userProfile.vehicleModel.toUpperCase()} (${_userProfile.batteryPct.toInt()}%)",
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppleLiquidColors.forestEmerald, letterSpacing: 0.5),
+              style: const TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w700,
+                color: AppleLiquidColors.natureEmerald,
+                letterSpacing: 0.5,
+              ),
             ),
           ],
         ),
         actions: [
-          // DEDICATED DEMO MODE SHORTCUT BUTTON (Strict Requirement 3)
+          // DEMO MODE TOGGLE PILL
           GestureDetector(
             onTap: _toggleDemoMode,
             child: Container(
               margin: const EdgeInsets.only(right: 16),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
               decoration: BoxDecoration(
-                color: _demoMode
-                    ? AppleLiquidColors.forestEmerald.withOpacity(0.2)
-                    : Colors.white.withOpacity(0.08),
+                color: _demoMode ? Colors.white : const Color(0xFFE2E8F0),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: _demoMode ? AppleLiquidColors.forestPrimary : Colors.white24,
+                  color: _demoMode ? AppleLiquidColors.natureLeaf : const Color(0xFFCBD5E1),
                   width: 0.5,
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: _demoMode ? const Color(0x2610B981) : Colors.transparent,
+                    blurRadius: 10,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
               ),
               child: Row(
                 children: [
                   Icon(
                     Icons.speed,
                     size: 14,
-                    color: _demoMode ? AppleLiquidColors.forestPrimary : Colors.white70,
+                    color: _demoMode ? AppleLiquidColors.natureEmerald : AppleLiquidColors.textCaption,
                   ),
                   const SizedBox(width: 4),
                   Text(
@@ -122,7 +136,7 @@ class _AppleRootScreenState extends State<AppleRootScreen> {
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w800,
-                      color: _demoMode ? AppleLiquidColors.forestPrimary : Colors.white70,
+                      color: _demoMode ? AppleLiquidColors.natureEmerald : AppleLiquidColors.textCaption,
                     ),
                   ),
                 ],
@@ -131,62 +145,27 @@ class _AppleRootScreenState extends State<AppleRootScreen> {
           ),
         ],
       ),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: screens,
-      ),
-      // APPLE LIQUID GLASS BOTTOM NAVIGATION BAR
-      bottomNavigationBar: ClipRRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-          child: Container(
-            height: 74,
-            decoration: BoxDecoration(
-              color: const Color(0xCC0C1018), // 80% frosted obsidian
-              border: const Border(top: BorderSide(color: Color(0x1AFFFFFF), width: 0.5)),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _tabItem(0, Icons.auto_awesome, "AI Match"),
-                _tabItem(1, Icons.swap_horiz, "V2V Hub"),
-                _tabItem(2, Icons.map_outlined, "Live Map"),
-              ],
+      body: Stack(
+        children: [
+          // Screen Viewport with Mac OS scaling transition
+          Positioned.fill(
+            child: IndexedStack(
+              index: _currentIndex,
+              children: screens,
             ),
           ),
-        ),
-      ),
-    );
-  }
 
-  Widget _tabItem(int index, IconData icon, String label) {
-    final isSelected = _currentIndex == index;
-    return GestureDetector(
-      onTap: () => setState(() => _currentIndex = index),
-      behavior: HitTestBehavior.opaque,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeOutBack,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              size: 22,
-              color: isSelected ? AppleLiquidColors.forestPrimary : AppleLiquidColors.silver400,
+          // MAC OS / IOS FLOATING LIQUID GLASS DOCK
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: MacFloatingDock(
+              activeIndex: _currentIndex,
+              onTabSelected: (idx) => setState(() => _currentIndex = idx),
             ),
-            const SizedBox(height: 3),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-                color: isSelected ? AppleLiquidColors.forestPrimary : AppleLiquidColors.silver400,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
