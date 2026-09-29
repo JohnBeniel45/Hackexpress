@@ -147,6 +147,35 @@ class _AppleRootScreenState extends State<AppleRootScreen> {
       ),
       body: Stack(
         children: [
+          // EV Nature Atmospheric Background Layer
+          Positioned.fill(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.asset(
+                  'assets/ev_nature_backdrop.jpg',
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    color: AppleLiquidColors.background,
+                  ),
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0x52E0F2FE), // Soft Sky Blue (32%)
+                        Color(0x6BF8FAFC), // Pearl Mist (42%)
+                        Color(0x5CD1FAE5), // Mint Green (36%)
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
           // Screen Viewport with Mac OS scaling transition
           Positioned.fill(
             child: IndexedStack(

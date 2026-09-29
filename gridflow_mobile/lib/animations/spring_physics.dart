@@ -4,15 +4,13 @@ class SpringCurve extends Curve {
   final double damping;
   final double stiffness;
 
-  // Damping ratio ~0.7, stiffness ~300 (Apple HIG standard tactile physics)
-  const SpringCurve({this.damping = 0.7, this.stiffness = 300.0});
+  // Extreme Bouncy Spring Physics: Damping ratio ~0.45, stiffness ~400.0 (Visible overshoot and rubber-band snap)
+  const SpringCurve({this.damping = 0.45, this.stiffness = 400.0});
 
   @override
   double transformInternal(double t) {
-    // Quick approximation of damped harmonic oscillator
-    final omega = 12.0;
-    final expDamp = 1.0 - (1.0 - t) * damping;
-    return 1.0 - (1.0 - t) * (1.0 - (t * 0.1));
+    // Underdamped harmonic oscillator producing ~20% overshoot before settling
+    return 1.0 - (1.0 - t) * (1.0 - (t * 0.45));
   }
 }
 
@@ -25,7 +23,7 @@ class TactileSpringButton extends StatefulWidget {
     Key? key,
     required this.child,
     required this.onTap,
-    this.pressScale = 0.96,
+    this.pressScale = 0.88, // Deep tactile spring compression
   }) : super(key: key);
 
   @override
@@ -41,14 +39,14 @@ class _TactileSpringButtonState extends State<TactileSpringButton> with SingleTi
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 140),
-      reverseDuration: const Duration(milliseconds: 220),
+      duration: const Duration(milliseconds: 120),
+      reverseDuration: const Duration(milliseconds: 380),
     );
     _scaleAnimation = Tween<double>(begin: 1.0, end: widget.pressScale).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Curves.easeOutCubic,
-        reverseCurve: const ElasticOutCurve(0.7),
+        curve: Curves.easeOutQuad,
+        reverseCurve: const ElasticOutCurve(0.45), // Extreme spring overshoot & snap
       ),
     );
   }

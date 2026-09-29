@@ -50,11 +50,11 @@ class LiquidGlassCard extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: 32, sigmaY: 32),
           child: Container(
             decoration: BoxDecoration(
-              color: backgroundColor ?? Colors.white.withOpacity(0.72),
+              color: backgroundColor ?? Colors.white.withOpacity(0.52),
               borderRadius: BorderRadius.circular(borderRadius),
               border: Border.all(
                 color: borderColor ?? AppleLiquidColors.glassBorder,
-                width: 0.5,
+                width: 0.8,
               ),
             ),
             child: Stack(

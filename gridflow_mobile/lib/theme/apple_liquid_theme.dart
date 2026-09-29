@@ -4,8 +4,13 @@ class AppleLiquidColors {
   // Light Nature EV Background & Pearl White Palette
   static const Color background = Color(0xFFF1F5F9);
   static const Color pearlSurface = Color(0xFFFFFFFF);
-  static const Color skyLight = Color(0xFFEBF5FF);
-  static const Color mintContainer = Color(0xFFE6F4EA);
+  
+  // Electric Sky Blue Accents (Modern EV Dashboard Palette)
+  static const Color skyElectric = Color(0xFF00A3FF);
+  static const Color skyVibrant = Color(0xFF0284C7);
+  static const Color skySoft = Color(0xFF38BDF8);
+  static const Color skyMist = Color(0xFFBAE6FD);
+  static const Color skyAura = Color(0xFFE0F2FE);
   
   // Authentic Nature Greens (Apple Human Interface Standard)
   static const Color natureEmerald = Color(0xFF059669);
@@ -15,7 +20,7 @@ class AppleLiquidColors {
   
   // Clean Human Typography & Accents
   static const Color textHeadline = Color(0xFF0F172A);
-  static const Color textSub = Color(0xFF475569);
+  static const Color textSub = Color(0xFF334155);
   static const Color textCaption = Color(0xFF64748B);
   
   // Status Colors
@@ -25,7 +30,15 @@ class AppleLiquidColors {
   // Crystal Glass Refraction Borders & Sheens
   static const Color glassBorder = Color(0xE6FFFFFF);         // 90% pure crystal white
   static const Color glassBorderSubtle = Color(0x80FFFFFF);   // 50% white
+  static const Color glassBorderSky = Color(0x6600A3FF);      // 40% electric sky
   static const Color glassBorderGreen = Color(0x6610B981);    // 40% emerald
+
+  // Primary Gradient (Electric Sky to Emerald Green)
+  static const LinearGradient primaryGradient = LinearGradient(
+    colors: [skyElectric, skyVibrant, natureEmerald],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 }
 
 class AppleLiquidTheme {
@@ -33,9 +46,9 @@ class AppleLiquidTheme {
     return ThemeData(
       brightness: Brightness.light,
       scaffoldBackgroundColor: AppleLiquidColors.background,
-      primaryColor: AppleLiquidColors.natureEmerald,
+      primaryColor: AppleLiquidColors.skyVibrant,
       colorScheme: const ColorScheme.light(
-        primary: AppleLiquidColors.natureEmerald,
+        primary: AppleLiquidColors.skyVibrant,
         secondary: AppleLiquidColors.natureLeaf,
         surface: AppleLiquidColors.pearlSurface,
         background: AppleLiquidColors.background,
@@ -56,4 +69,7 @@ class AppleLiquidTheme {
       ),
     );
   }
+
+  // Backward compatibility alias
+  static ThemeData get darkTheme => lightNatureTheme;
 }

@@ -21,3 +21,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/ev_nature_backdrop.jpg
+    - assets/ev_charging_nature.jpg

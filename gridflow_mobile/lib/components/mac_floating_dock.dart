@@ -15,15 +15,15 @@ class MacFloatingDock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+      margin: const EdgeInsets.only(left: 18, right: 18, bottom: 18),
       height: 64,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(32),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x1F0F172A),
-            blurRadius: 36,
-            offset: Offset(0, 16),
+            color: Color(0x2E0F172A),
+            blurRadius: 40,
+            offset: Offset(0, 18),
             spreadRadius: -6,
           ),
         ],
@@ -35,9 +35,9 @@ class MacFloatingDock extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.72),
+              color: Colors.white.withOpacity(0.65),
               borderRadius: BorderRadius.circular(32),
-              border: Border.all(color: Colors.white.withOpacity(0.95), width: 0.5),
+              border: Border.all(color: Colors.white.withOpacity(0.95), width: 0.8),
             ),
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -46,10 +46,10 @@ class MacFloatingDock extends StatelessWidget {
                 return Stack(
                   alignment: Alignment.centerLeft,
                   children: [
-                    // Gliding Liquid Magnification Bubble Lens
+                    // Gliding Liquid Magnification Bubble Lens (with Chromatic Dispersion Rim)
                     AnimatedPositioned(
-                      duration: const Duration(milliseconds: 380),
-                      curve: const Cubic(0.34, 1.56, 0.64, 1), // Apple Spring Physics
+                      duration: const Duration(milliseconds: 500),
+                      curve: const Cubic(0.175, 1.45, 0.32, 1.28), // Extreme Bouncy Spring Physics
                       left: activeIndex * tabWidth + 4,
                       width: tabWidth - 8,
                       height: 48,
@@ -60,16 +60,23 @@ class MacFloatingDock extends StatelessWidget {
                             end: Alignment.bottomCenter,
                             colors: [
                               Colors.white.withOpacity(0.98),
-                              const Color(0xFFF0FDF4),
+                              const Color(0xFFF0F9FF),
                             ],
                           ),
                           borderRadius: BorderRadius.circular(24),
-                          border: Border.all(color: Colors.white, width: 0.5),
+                          border: Border.all(color: Colors.white, width: 0.8),
                           boxShadow: const [
+                            // Refractive Blue Rim
                             BoxShadow(
-                              color: Color(0x1A10B981),
+                              color: Color(0x3800A3FF),
                               blurRadius: 18,
                               offset: Offset(0, 6),
+                            ),
+                            // Refractive Emerald Rim
+                            BoxShadow(
+                              color: Color(0x2610B981),
+                              blurRadius: 10,
+                              offset: Offset(0, -2),
                             ),
                           ],
                         ),
@@ -104,16 +111,16 @@ class MacFloatingDock extends StatelessWidget {
         onTap: () => onTabSelected(index),
         behavior: HitTestBehavior.opaque,
         child: AnimatedScale(
-          scale: isSelected ? 1.08 : 1.0, // Mac OS Magnification
-          duration: const Duration(milliseconds: 250),
-          curve: Curves.easeOutBack,
+          scale: isSelected ? 1.18 : 1.0, // Mac OS Magnification Bulge
+          duration: const Duration(milliseconds: 350),
+          curve: const Cubic(0.175, 1.45, 0.32, 1.35), // Bouncy scale
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 icon,
                 size: 21,
-                color: isSelected ? AppleLiquidColors.natureEmerald : AppleLiquidColors.textCaption,
+                color: isSelected ? AppleLiquidColors.skyVibrant : AppleLiquidColors.textCaption,
               ),
               const SizedBox(height: 2),
               Text(
@@ -121,7 +128,7 @@ class MacFloatingDock extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-                  color: isSelected ? AppleLiquidColors.natureEmerald : AppleLiquidColors.textCaption,
+                  color: isSelected ? AppleLiquidColors.skyVibrant : AppleLiquidColors.textCaption,
                 ),
               ),
             ],

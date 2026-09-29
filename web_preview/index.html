@@ -3,41 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GridFlow AI — Apple Liquid Glass (Light Nature Edition)</title>
+  <title>GridFlow AI — Apple Liquid Glass (EV Nature Edition)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Apple Light Nature & Pristine Pearl Palette */
-      --sky-light: #EBF5FF;
-      --sky-pearl: #F8FAFC;
+      /* Apple Light Nature & Sky Blue EV Palette */
+      --sky-electric: #00A3FF;
+      --sky-vibrant: #0284C7;
+      --sky-soft: #38BDF8;
+      --sky-mist: #BAE6FD;
+      --sky-aura: #E0F2FE;
+      
       --nature-emerald: #059669;
       --nature-leaf: #10B981;
-      --nature-mint: #E6F4EA;
-      --nature-glow: rgba(16, 185, 129, 0.28);
+      --nature-mint: #D1FAE5;
+      --nature-glow: rgba(16, 185, 129, 0.3);
       
       /* Pure Pearl Glass & Crystal Refraction */
-      --glass-body: rgba(255, 255, 255, 0.62);
-      --glass-card: rgba(255, 255, 255, 0.72);
-      --glass-elevated: rgba(255, 255, 255, 0.85);
-      --glass-border: rgba(255, 255, 255, 0.95);
+      --glass-body: rgba(255, 255, 255, 0.48);
+      --glass-card: rgba(255, 255, 255, 0.54);
+      --glass-elevated: rgba(255, 255, 255, 0.72);
+      --glass-border: rgba(255, 255, 255, 0.88);
       --glass-border-subtle: rgba(255, 255, 255, 0.65);
-      --glass-inner-sheen: inset 0 1.5px 2px rgba(255, 255, 255, 1), inset 0 -1px 1px rgba(0, 0, 0, 0.03);
-      --glass-shadow: 0 20px 48px -12px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
+      --glass-inner-sheen: inset 0 1.5px 2px rgba(255, 255, 255, 0.95), inset 0 -1px 1px rgba(0, 0, 0, 0.03);
+      --glass-shadow: 0 18px 40px -10px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
       
       /* Typography Colors (High Human Legibility) */
       --text-headline: #0F172A;
-      --text-sub: #475569;
+      --text-sub: #334155;
       --text-caption: #64748B;
       --text-emerald: #047857;
+      --text-sky: #0369A1;
       
       /* Status */
       --amber-busy: #D97706;
       --crimson-emergency: #DC2626;
 
-      /* Spring Physics Damping & Elastic Curves */
-      --spring-tactile: cubic-bezier(0.34, 1.56, 0.64, 1);
-      --spring-rubberband: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      /* Extreme Bouncy Spring Physics (Damping ~0.45, Stiffness ~400) */
+      --spring-bouncy: cubic-bezier(0.175, 1.45, 0.32, 1.35);
+      --spring-dock: cubic-bezier(0.175, 1.45, 0.32, 1.28);
       --macos-zoom: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -45,11 +50,11 @@
 
     body {
       min-height: 100vh;
-      /* Soft morning sky and pearlescent mist background with organic nature lighting */
+      /* Soft morning daylight studio presentation environment with blurred nature backdrop */
       background: 
-        radial-gradient(60% 60% at 85% 15%, rgba(16, 185, 129, 0.12) 0%, transparent 60%),
-        radial-gradient(70% 70% at 15% 25%, rgba(56, 189, 248, 0.14) 0%, transparent 60%),
-        linear-gradient(175deg, #EFF6FF 0%, #F1F5F9 45%, #E2E8F0 100%);
+        radial-gradient(ellipse at 50% 20%, rgba(186, 230, 253, 0.4) 0%, rgba(224, 242, 254, 0.25) 50%, rgba(241, 245, 249, 0.95) 100%),
+        url('assets/ev_nature_backdrop.jpg') center/cover no-repeat fixed;
+      position: relative;
       color: var(--text-headline);
       display: flex;
       flex-direction: column;
@@ -59,19 +64,15 @@
       overflow-x: hidden;
     }
 
-    /* Ambient Sunbeam Glow Orbs */
-    .sunbeam-aura {
+    /* Ambient Glass Blur Backdrop Overlay */
+    body::before {
+      content: '';
       position: fixed;
-      width: 700px;
-      height: 700px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(220, 252, 231, 0.4) 40%, transparent 70%);
-      top: -150px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 50%;
-      pointer-events: none;
+      inset: 0;
+      background: rgba(241, 245, 249, 0.82);
+      backdrop-filter: blur(55px);
+      -webkit-backdrop-filter: blur(55px);
       z-index: 0;
-      filter: blur(40px);
     }
 
     /* Header Bar */
@@ -79,23 +80,23 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       z-index: 10;
     }
     .status-capsule {
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(20px);
-      border: 0.5px solid rgba(255, 255, 255, 1);
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
-      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(24px);
+      border: 0.8px solid rgba(255, 255, 255, 1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+      padding: 7px 16px;
       border-radius: 999px;
       font-size: 11px;
-      font-weight: 700;
-      color: var(--nature-emerald);
+      font-weight: 800;
+      color: var(--sky-vibrant);
       display: flex;
       align-items: center;
-      gap: 7px;
-      letter-spacing: 0.3px;
+      gap: 8px;
+      letter-spacing: 0.4px;
     }
     .pulsing-emerald {
       width: 7px;
@@ -107,40 +108,48 @@
     }
     @keyframes pulseBreath {
       0%, 100% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 14px var(--nature-leaf); }
+      50% { transform: scale(1.35); opacity: 1; box-shadow: 0 0 16px var(--nature-leaf); }
     }
 
-    /* iPhone 16 Pro Natural Pearl Shell */
+    /* ============================================================
+       IPHONE 16 PRO PEARL LIQUID GLASS FRAME
+       ============================================================ */
     .iphone-shell {
       position: relative;
       width: 405px;
       height: 844px;
       background: #FFFFFF;
       border-radius: 54px;
-      padding: 11px;
+      padding: 10px;
       box-shadow: 
-        0 40px 90px -20px rgba(15, 23, 42, 0.16),
+        0 40px 90px -20px rgba(15, 23, 42, 0.28),
         0 0 0 1px rgba(255, 255, 255, 1),
-        0 0 40px rgba(16, 185, 129, 0.08),
-        inset 0 1px 2px rgba(255, 255, 255, 0.9);
+        0 0 45px rgba(0, 163, 255, 0.12),
+        inset 0 1px 2px rgba(255, 255, 255, 0.95);
       z-index: 10;
       display: flex;
       flex-direction: column;
     }
+    
+    /* PHONE SCREEN SURFACE (Rich EV Nature & Sky Blue Atmospheric Backdrop) */
     .screen-surface {
       position: relative;
       flex: 1;
-      /* Nature Photography Atmosphere (Sunlit EV Corridor in Green Forest) */
-      background: 
-        linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(240, 249, 245, 0.72) 40%, rgba(230, 244, 238, 0.85) 100%),
-        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="800" viewBox="0 0 400 800"><defs><radialGradient id="sun" cx="50%" cy="10%" r="50%"><stop offset="0%" stop-color="%23A7F3D0" stop-opacity="0.35"/><stop offset="100%" stop-color="%23BAE6FD" stop-opacity="0"/></radialGradient></defs><rect width="400" height="800" fill="url(%23sun)"/><path d="M-50 450 Q 150 400 450 500 L450 800 L-50 800 Z" fill="%23059669" fill-opacity="0.04"/><path d="M-50 550 Q 200 480 450 580 L450 800 L-50 800 Z" fill="%2310B981" fill-opacity="0.05"/></svg>');
+      background-image: 
+        linear-gradient(180deg, 
+          rgba(224, 242, 254, 0.32) 0%, 
+          rgba(248, 250, 252, 0.42) 45%, 
+          rgba(209, 250, 229, 0.36) 100%
+        ),
+        url('assets/ev_nature_backdrop.jpg');
       background-size: cover;
-      background-position: center;
+      background-position: center top;
       border-radius: 44px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.8);
     }
 
     /* Dynamic Island */
@@ -169,11 +178,11 @@
       justify-content: space-between;
       padding: 0 12px;
       z-index: 60;
-      transition: all 0.4s var(--spring-tactile);
-      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+      transition: all 0.45s var(--spring-bouncy);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.18);
     }
     .dynamic-capsule.expanded {
-      width: 220px;
+      width: 230px;
       height: 38px;
       padding: 0 16px;
     }
@@ -182,8 +191,8 @@
       align-items: center;
       gap: 6px;
       font-size: 10px;
-      color: #34D399;
-      font-weight: 700;
+      color: #38BDF8;
+      font-weight: 800;
     }
 
     /* App Nav Header */
@@ -205,43 +214,43 @@
     }
     .brand-group p {
       font-size: 10px;
-      color: var(--nature-emerald);
-      font-weight: 700;
+      color: var(--sky-vibrant);
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.6px;
     }
 
     /* DEMO MODE SWITCH PILL */
     .demo-pill-btn {
-      background: rgba(255, 255, 255, 0.9);
-      border: 0.5px solid var(--nature-leaf);
+      background: rgba(255, 255, 255, 0.92);
+      border: 0.8px solid var(--sky-soft);
       padding: 5px 12px;
       border-radius: 999px;
-      color: var(--nature-emerald);
+      color: var(--sky-vibrant);
       font-size: 10px;
       font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 5px;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
-      transition: all 0.25s var(--spring-tactile);
+      box-shadow: 0 4px 14px rgba(0, 163, 255, 0.18);
+      transition: all 0.4s var(--spring-bouncy);
     }
     .demo-pill-btn:hover {
-      transform: scale(1.05);
+      transform: scale(1.08);
       background: #FFFFFF;
-      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.25);
+      box-shadow: 0 6px 20px rgba(0, 163, 255, 0.3);
     }
     .demo-pill-btn:active {
-      transform: scale(0.95);
+      transform: scale(0.88); /* Rubber-band snap */
     }
 
-    /* SCROLLABLE VIEWPORT WITH GENEROUS BREATHING ROOM */
+    /* SCROLLABLE VIEWPORT */
     .scroll-body {
       flex: 1;
       overflow-y: auto;
       overflow-x: hidden;
-      padding: 8px 18px 90px; /* 90px bottom clearance for floating dock */
+      padding: 8px 18px 90px; /* 90px clearance for floating dock */
       display: flex;
       flex-direction: column;
       gap: 16px;
@@ -253,20 +262,20 @@
     .glass-panel {
       position: relative;
       background: var(--glass-card);
-      backdrop-filter: blur(32px) saturate(180%);
-      -webkit-backdrop-filter: blur(32px) saturate(180%);
+      backdrop-filter: blur(30px) saturate(210%);
+      -webkit-backdrop-filter: blur(30px) saturate(210%);
       border-radius: 28px;
       padding: 20px;
-      border: 0.5px solid var(--glass-border);
+      border: 0.8px solid var(--glass-border);
       box-shadow: var(--glass-shadow), var(--glass-inner-sheen);
-      transition: all 0.35s var(--spring-tactile);
+      transition: transform 0.45s var(--spring-bouncy), box-shadow 0.3s ease;
       overflow: hidden;
     }
     .glass-panel:hover {
-      transform: translateY(-2px);
+      transform: translateY(-3px) scale(1.01);
       background: var(--glass-elevated);
       border-color: #FFFFFF;
-      box-shadow: 0 24px 54px -12px rgba(15, 23, 42, 0.12), var(--glass-inner-sheen);
+      box-shadow: 0 24px 54px -10px rgba(15, 23, 42, 0.16), var(--glass-inner-sheen);
     }
     /* Sunlight Specular Refraction Sheen */
     .glass-panel::before {
@@ -274,22 +283,22 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 45%;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.1) 60%, transparent 100%);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.12) 60%, transparent 100%);
       pointer-events: none;
       border-top-left-radius: 28px;
       border-top-right-radius: 28px;
     }
 
-    /* SCREEN ANIMATION WRAPPER (Mac OS Window Minimizing / Scaling Physics) */
+    /* SCREEN ANIMATION WRAPPER (Mac OS Window Scaling Physics) */
     .view-content {
-      animation: macosWindowIn 0.35s var(--macos-zoom);
+      animation: macosWindowIn 0.38s var(--macos-zoom);
     }
     @keyframes macosWindowIn {
-      0% { opacity: 0; transform: scale(0.96) translateY(10px); filter: blur(4px); }
+      0% { opacity: 0; transform: scale(0.93) translateY(12px); filter: blur(6px); }
       100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
     }
 
-    /* TYPOGRAPHY STANDARDS (Apple Clean Human Style) */
+    /* TYPOGRAPHY STANDARDS */
     .view-title {
       font-size: 17px;
       font-weight: 800;
@@ -324,6 +333,11 @@
       border-radius: 999px;
       letter-spacing: 0.3px;
     }
+    .tag-sky {
+      background: var(--sky-aura);
+      color: var(--sky-vibrant);
+      border: 0.5px solid rgba(2, 132, 199, 0.3);
+    }
     .tag-emerald {
       background: var(--nature-mint);
       color: var(--nature-emerald);
@@ -335,10 +349,10 @@
       border: 0.5px solid rgba(239, 68, 68, 0.3);
     }
 
-    /* TACTILE BOUNCY SPRING BUTTONS (Apple Damped Harmonic Physics) */
+    /* EXTREME BOUNCY SPRING BUTTONS (Apple Damped Harmonic Physics: Damping ~0.45, Stiffness ~400) */
     .spring-tactile-btn {
       position: relative;
-      background: linear-gradient(180deg, #10B981 0%, #059669 100%);
+      background: linear-gradient(135deg, #00A3FF 0%, #0284C7 45%, #10B981 100%);
       color: #FFFFFF;
       border: none;
       padding: 15px 22px;
@@ -352,21 +366,35 @@
       justify-content: center;
       gap: 8px;
       box-shadow: 
-        0 10px 25px -4px rgba(16, 185, 129, 0.45),
-        inset 0 1px 2px rgba(255, 255, 255, 0.4);
-      transition: all 0.25s var(--spring-tactile);
+        0 12px 28px -4px rgba(0, 163, 255, 0.45),
+        0 0 16px rgba(16, 185, 129, 0.25),
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.6);
+      transition: transform 0.45s var(--spring-bouncy), box-shadow 0.3s ease;
       user-select: none;
     }
     .spring-tactile-btn:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 14px 32px -4px rgba(16, 185, 129, 0.6);
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 16px 36px -4px rgba(0, 163, 255, 0.6), 0 0 22px rgba(16, 185, 129, 0.35);
     }
     .spring-tactile-btn:active {
-      transform: translateY(2px) scale(0.95); /* Rubber-band snap */
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      transform: translateY(2px) scale(0.88); /* Rubber-band snap */
+      box-shadow: 0 4px 12px rgba(0, 163, 255, 0.3);
     }
 
-    /* LIQUID MORPHING SLIDER (Light Nature) */
+    /* RUBBER-BAND SNAP ANIMATION ON CLICK */
+    @keyframes extremeRubberBand {
+      0% { transform: scale(1); }
+      22% { transform: scale(0.86); }
+      52% { transform: scale(1.18); } /* ~20% visible overshoot! */
+      72% { transform: scale(0.96); }
+      86% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+    .rubberband-trigger {
+      animation: extremeRubberBand 0.42s var(--spring-bouncy) forwards;
+    }
+
+    /* LIQUID MORPHING SLIDER */
     .slider-container {
       margin: 14px 0 6px;
       position: relative;
@@ -384,9 +412,9 @@
     .slider-fluid-fill {
       position: absolute;
       left: 0; top: 0; bottom: 0;
-      background: linear-gradient(90deg, #059669 0%, #10B981 100%);
+      background: linear-gradient(90deg, #0284C7 0%, #00A3FF 60%, #10B981 100%);
       border-radius: 999px;
-      box-shadow: 0 0 14px var(--nature-glow);
+      box-shadow: 0 0 14px rgba(0, 163, 255, 0.4);
       transition: width 0.08s linear;
     }
     .slider-input-overlay {
@@ -402,59 +430,63 @@
       position: absolute;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       background: #FFFFFF;
       border-radius: 50%;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18), 0 0 16px var(--nature-leaf);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18), 0 0 18px var(--sky-electric);
       pointer-events: none;
-      transition: left 0.08s linear, transform 0.2s var(--spring-tactile);
-      border: 1px solid rgba(255, 255, 255, 0.9);
+      transition: left 0.08s linear, transform 0.3s var(--spring-bouncy);
+      border: 1px solid rgba(255, 255, 255, 0.95);
     }
     .slider-lens-thumb.dragging {
-      transform: translate(-50%, -50%) scale(1.3);
-      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.25), 0 0 24px var(--nature-leaf);
+      transform: translate(-50%, -50%) scale(1.35);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25), 0 0 28px var(--sky-electric);
     }
 
     /* ============================================================
        MAC OS / IOS FLOATING LIQUID GLASS CAPSULE DOCK
+       (With Chromatic Dispersion Refractive Lens - Reference Images)
        ============================================================ */
     .floating-mac-dock {
       position: absolute;
       bottom: 18px;
-      left: 20px;
-      right: 20px;
+      left: 18px;
+      right: 18px;
       height: 64px;
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(36px) saturate(200%);
-      -webkit-backdrop-filter: blur(36px) saturate(200%);
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(36px) saturate(220%);
+      -webkit-backdrop-filter: blur(36px) saturate(220%);
       border-radius: 32px;
-      border: 0.5px solid rgba(255, 255, 255, 0.95);
+      border: 0.8px solid rgba(255, 255, 255, 0.95);
       box-shadow: 
-        0 18px 40px -8px rgba(15, 23, 42, 0.15),
-        inset 0 1.5px 2px rgba(255, 255, 255, 1);
+        0 20px 44px -8px rgba(15, 23, 42, 0.18),
+        inset 0 1.5px 2px rgba(255, 255, 255, 1),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.04);
       display: flex;
       align-items: center;
       justify-content: space-around;
       padding: 0 8px;
       z-index: 40;
     }
-    /* Gliding Liquid Refractive Bubble Lens */
+    /* Gliding Liquid Refractive Bubble Lens (with Chromatic Rainbow Dispersion Edge) */
     .dock-glide-bubble {
       position: absolute;
       height: 48px;
       width: 104px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 244, 0.9) 100%);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(240, 249, 255, 0.90) 100%);
       border-radius: 24px;
+      border: 0.8px solid rgba(255, 255, 255, 1);
       box-shadow: 
-        0 8px 20px rgba(16, 185, 129, 0.15),
-        0 1px 3px rgba(0, 0, 0, 0.05),
-        inset 0 1px 1px #FFF;
-      border: 0.5px solid rgba(255, 255, 255, 1);
+        0 10px 24px rgba(0, 163, 255, 0.28),
+        inset 2.5px 0 5px rgba(0, 163, 255, 0.6),    /* Refractive Cyan/Blue rim */
+        inset -2.5px 0 5px rgba(16, 185, 129, 0.6),  /* Refractive Emerald rim */
+        inset 0 2px 4px rgba(255, 255, 255, 1),
+        inset 0 -2px 4px rgba(251, 191, 36, 0.3);   /* Refractive Amber rim */
       top: 8px;
       left: 12px;
       pointer-events: none;
-      transition: transform 0.4s var(--spring-tactile);
+      transition: transform 0.5s var(--spring-dock);
       z-index: 1;
     }
     .dock-tab {
@@ -473,23 +505,25 @@
       justify-content: center;
       gap: 3px;
       cursor: pointer;
-      transition: all 0.25s var(--spring-tactile);
+      transition: transform 0.4s var(--spring-bouncy), color 0.25s ease;
+      user-select: none;
     }
     .dock-tab.active {
-      color: var(--nature-emerald);
-      transform: scale(1.08); /* Mac OS Dock Magnification */
+      color: var(--sky-vibrant);
+      transform: scale(1.18); /* Mac OS Dock Magnification */
+      text-shadow: 0 0 14px rgba(0, 163, 255, 0.45);
     }
     .dock-icon {
       width: 20px;
       height: 20px;
       fill: currentColor;
-      transition: transform 0.25s var(--spring-tactile);
+      transition: transform 0.4s var(--spring-bouncy);
     }
     .dock-tab.active .dock-icon {
-      transform: translateY(-1px);
+      transform: translateY(-2px);
     }
 
-    /* SCREEN 2: V2V P2P LIQUID DIALS (Light Nature) */
+    /* SCREEN 2: V2V P2P LIQUID DIALS */
     .v2v-nature-stage {
       display: flex;
       align-items: center;
@@ -511,7 +545,7 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 8px;
-      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.12);
+      box-shadow: 0 10px 24px rgba(0, 163, 255, 0.15);
       position: relative;
     }
     .orb-center {
@@ -531,7 +565,7 @@
     .orb-model { font-size: 12px; font-weight: 800; color: var(--text-headline); }
     .orb-sub { font-size: 10px; color: var(--text-caption); margin-top: 2px; }
 
-    /* Animated Nature Sunlit Energy Beam */
+    /* Animated Nature Sunlit Energy Beam (Dual Sky Blue + Emerald Stream) */
     .beam-sunlit-conduit {
       flex: 1;
       height: 6px;
@@ -546,8 +580,8 @@
       position: absolute;
       top: 0; left: 0; bottom: 0;
       width: 50%;
-      background: linear-gradient(90deg, transparent, #10B981, transparent);
-      box-shadow: 0 0 12px #10B981;
+      background: linear-gradient(90deg, transparent, #00A3FF, #10B981, transparent);
+      box-shadow: 0 0 14px #00A3FF;
       animation: streamFlow 1.1s linear infinite;
     }
     @keyframes streamFlow {
@@ -555,15 +589,15 @@
       100% { transform: translateX(200%); }
     }
 
-    /* SCREEN 3: RADAR MAP CANVAS (Light Nature) */
+    /* SCREEN 3: RADAR MAP CANVAS */
     .map-sunlit-box {
       height: 250px;
-      background: linear-gradient(180deg, #F0FDF4 0%, #E0F2FE 100%);
+      background: linear-gradient(180deg, rgba(240, 253, 244, 0.85) 0%, rgba(224, 242, 254, 0.85) 100%);
       border-radius: 24px;
       position: relative;
       overflow: hidden;
-      border: 0.5px solid var(--glass-border);
-      box-shadow: inset 0 0 30px rgba(16, 185, 129, 0.08);
+      border: 0.8px solid var(--glass-border);
+      box-shadow: inset 0 0 30px rgba(0, 163, 255, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -571,7 +605,7 @@
     .radar-sun-ring {
       position: absolute;
       border-radius: 50%;
-      border: 1px solid rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(0, 163, 255, 0.25);
     }
     .user-sun-blip {
       position: relative;
@@ -579,9 +613,9 @@
       width: 22px;
       height: 22px;
       background: #FFFFFF;
-      border: 3.5px solid var(--nature-emerald);
+      border: 3.5px solid var(--sky-electric);
       border-radius: 50%;
-      box-shadow: 0 0 20px rgba(5, 150, 105, 0.4);
+      box-shadow: 0 0 20px rgba(0, 163, 255, 0.5);
     }
     .station-marker-pin {
       position: absolute;
@@ -590,10 +624,10 @@
       flex-direction: column;
       align-items: center;
       z-index: 25;
-      transition: transform 0.25s var(--spring-tactile);
+      transition: transform 0.4s var(--spring-bouncy);
     }
     .station-marker-pin:hover {
-      transform: scale(1.22);
+      transform: scale(1.3);
     }
     .marker-dot {
       width: 14px;
@@ -623,29 +657,29 @@
       margin: 12px 0 16px;
     }
     .slot-card {
-      background: rgba(255, 255, 255, 0.7);
-      border: 0.5px solid rgba(255, 255, 255, 1);
+      background: rgba(255, 255, 255, 0.72);
+      border: 0.8px solid rgba(255, 255, 255, 1);
       border-radius: 16px;
       padding: 10px 4px;
       text-align: center;
       cursor: pointer;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-      transition: all 0.25s var(--spring-tactile);
+      transition: all 0.35s var(--spring-bouncy);
     }
     .slot-card.selected {
-      background: linear-gradient(180deg, #10B981 0%, #059669 100%);
+      background: linear-gradient(135deg, #00A3FF 0%, #10B981 100%);
       color: #FFF;
-      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
-      transform: scale(1.04);
+      box-shadow: 0 8px 22px rgba(0, 163, 255, 0.4);
+      transform: scale(1.06);
     }
     .slot-card .time { font-size: 13px; font-weight: 800; }
-    .slot-card .sub { font-size: 9px; opacity: 0.8; margin-top: 2px; }
+    .slot-card .sub { font-size: 9px; opacity: 0.85; margin-top: 2px; }
 
-    /* APPLE WALLET DIGITAL PASS MODAL (Mac OS Zoom in) */
+    /* APPLE WALLET DIGITAL PASS MODAL */
     .modal-backdrop {
       position: absolute;
       inset: 0;
-      background: rgba(15, 23, 42, 0.4);
+      background: rgba(15, 23, 42, 0.45);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
       z-index: 100;
@@ -653,10 +687,10 @@
       align-items: center;
       justify-content: center;
       padding: 24px;
-      animation: modalZoomIn 0.3s var(--macos-zoom);
+      animation: modalZoomIn 0.32s var(--macos-zoom);
     }
     @keyframes modalZoomIn {
-      from { opacity: 0; transform: scale(0.92); }
+      from { opacity: 0; transform: scale(0.90); }
       to { opacity: 1; transform: scale(1); }
     }
     .pass-ticket {
@@ -664,7 +698,7 @@
       background: #FFFFFF;
       border-radius: 32px;
       border: 1px solid rgba(255, 255, 255, 1);
-      box-shadow: 0 35px 70px -15px rgba(15, 23, 42, 0.25);
+      box-shadow: 0 35px 70px -15px rgba(15, 23, 42, 0.28);
       padding: 24px;
       position: relative;
     }
@@ -672,12 +706,10 @@
 </head>
 <body>
 
-  <div class="sunbeam-aura"></div>
-
   <div class="studio-header">
     <div class="status-capsule">
       <div class="pulsing-emerald"></div>
-      <span>APPLE LIQUID GLASS • LIGHT EV NATURE THEME</span>
+      <span>APPLE LIQUID GLASS • EV NATURE CORRIDOR</span>
     </div>
   </div>
 
@@ -689,16 +721,16 @@
       <div class="dynamic-capsule" id="dynamicCapsule">
         <div class="capsule-content">
           <div class="pulsing-emerald" style="width: 5px; height: 5px;"></div>
-          <span id="capsuleText">GRID: 98% (STABLE)</span>
+          <span id="capsuleText">GRID: 98% (OPTIMAL)</span>
         </div>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="#34D399"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#38BDF8"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></svg>
       </div>
 
       <!-- STATUS BAR -->
       <div class="status-row">
         <span id="timeClock">9:41</span>
         <div style="display: flex; gap: 6px; align-items: center;">
-          <span style="font-size: 10px; font-weight: 800; color: var(--nature-emerald);">5G</span>
+          <span style="font-size: 10px; font-weight: 800; color: var(--sky-vibrant);">5G</span>
           <svg width="16" height="10" viewBox="0 0 24 14" fill="currentColor"><rect x="1" y="1" width="19" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="3" width="13" height="8" rx="1.5"/><path d="M22 5v4"/></svg>
         </div>
       </div>
@@ -707,7 +739,7 @@
       <div class="app-header">
         <div class="brand-group">
           <h2>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--nature-emerald)"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--sky-vibrant)"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             GridFlow AI
           </h2>
           <p id="vehicleSubtext">TATA NEXON EV MAX (28%)</p>
@@ -724,9 +756,9 @@
         <!-- Rendered reactively by active screen controller -->
       </div>
 
-      <!-- MAC OS / IOS FLOATING LIQUID GLASS DOCK -->
+      <!-- MAC OS / IOS FLOATING LIQUID GLASS CAPSULE DOCK -->
       <div class="floating-mac-dock">
-        <!-- Smooth Gliding Refractive Bubble -->
+        <!-- Gliding Liquid Refractive Bubble Lens (with Chromatic Aberration Rim) -->
         <div class="dock-glide-bubble" id="dockBubble"></div>
 
         <button class="dock-tab active" onclick="switchDockTab(0)">
@@ -747,7 +779,7 @@
       <div class="modal-backdrop" id="passBackdrop">
         <div class="pass-ticket">
           <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #F1F5F9; padding-bottom: 12px;">
-            <span style="font-size: 11px; font-weight: 800; color: var(--nature-emerald); letter-spacing: 0.6px;">APPLE WALLET CHARGING PASS</span>
+            <span style="font-size: 11px; font-weight: 800; color: var(--sky-vibrant); letter-spacing: 0.6px;">APPLE WALLET CHARGING PASS</span>
             <span style="font-size: 11px; font-weight: 700; color: var(--text-caption);" id="ticketIdLabel">GF-8841</span>
           </div>
 
@@ -756,7 +788,7 @@
             <div style="font-size: 12px; color: var(--text-caption);" id="ticketStationAddress">100 Feet Rd, HAL 2nd Stage</div>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #F8FAFC; border-radius: 16px; padding: 12px; margin-bottom: 16px; border: 0.5px solid #E2E8F0;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: rgba(248, 250, 252, 0.9); border-radius: 16px; padding: 12px; margin-bottom: 16px; border: 0.5px solid #E2E8F0;">
             <div>
               <span style="font-size: 9px; color: var(--text-caption); display: block;">ALLOCATED BAY</span>
               <strong style="font-size: 13px; color: var(--nature-emerald);" id="ticketBayLabel">Bay #1 (120 kW Fast)</strong>
@@ -803,7 +835,7 @@
 
       // High-Impact Stats
       substationHealth: 98.4,
-      substationStatus: "Normal & Stable",
+      substationStatus: "Optimal & Green",
       
       selectedStation: null,
       selectedSlot: "18:45",
@@ -821,6 +853,22 @@
       updateClock();
       setInterval(updateClock, 1000);
       renderView();
+
+      // Fetch live stations from backend if online
+      fetch(`${API_BASE}/stations`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.stations && data.stations.length > 0) {
+            state.stations = data.stations.slice(0, 4).map((s, idx) => ({
+              ...s,
+              distance_km: (2.4 + idx * 1.5).toFixed(1)
+            }));
+            renderView();
+          }
+        })
+        .catch(() => {
+          // Graceful fallback to rich local state
+        });
     }
 
     function updateClock() {
@@ -833,16 +881,21 @@
     function toggleDemoSeed() {
       state.demoMode = !state.demoMode;
       const btn = document.getElementById('demoPillBtn');
+      btn.classList.add('rubberband-trigger');
+      setTimeout(() => btn.classList.remove('rubberband-trigger'), 450);
+
       if (state.demoMode) {
         state.userBattery = 28;
         state.donorBattery = 92;
         state.donorDistanceKm = 0.4;
         btn.innerHTML = `<span>⚡ DEMO MODE</span>`;
-        btn.style.borderColor = 'var(--nature-leaf)';
+        btn.style.borderColor = 'var(--sky-soft)';
+        btn.style.color = 'var(--sky-vibrant)';
         triggerIslandNote("DEMO SEED: 92% ➔ 28% @ 0.4KM");
       } else {
         btn.innerHTML = `<span>LIVE MODE</span>`;
         btn.style.borderColor = '#CBD5E1';
+        btn.style.color = 'var(--text-caption)';
         triggerIslandNote("LIVE HARDWARE SYNC");
       }
       renderView();
@@ -859,14 +912,19 @@
     function switchDockTab(idx) {
       state.activeTab = idx;
       
-      // Mac OS Gliding Bubble Animation with spring overshoot
+      // Extreme Bouncy Mac OS Gliding Bubble with ~20% Spring Overshoot
       const bubble = document.getElementById('dockBubble');
       const tabWidth = (365 - 16) / 3;
       bubble.style.transform = `translateX(${idx * tabWidth}px)`;
 
       document.querySelectorAll('.dock-tab').forEach((tab, i) => {
-        if (i === idx) tab.classList.add('active');
-        else tab.classList.remove('active');
+        if (i === idx) {
+          tab.classList.add('active');
+          tab.classList.add('rubberband-trigger');
+          setTimeout(() => tab.classList.remove('rubberband-trigger'), 450);
+        } else {
+          tab.classList.remove('active');
+        }
       });
 
       renderView();
@@ -877,7 +935,7 @@
     }
 
     /* -------------------------------------------------------------
-       SCREEN RENDERERS (Clean, uncluttered, luxury human standard)
+       SCREEN RENDERERS (Apple Liquid Glass over EV Nature Backdrop)
        ------------------------------------------------------------- */
     function renderView() {
       const body = document.getElementById('scrollContainer');
@@ -891,7 +949,7 @@
     /* SCREEN 1: LIVE AI GRID & CHARGER MATCHER */
     function renderScreen1(body) {
       const urgent = isUrgent();
-      const topMatch = state.stations[1]; // Koramangala optimal
+      const topMatch = state.stations[1] || state.stations[0];
 
       body.innerHTML = `
         <div class="view-content">
@@ -901,24 +959,24 @@
               <div class="view-title">Grid & Charger Matcher</div>
               <div class="view-caption">Clean energy coordination & XGBoost dispatch</div>
             </div>
-            <span class="hero-stat-tag ${urgent ? 'tag-crimson' : 'tag-emerald'}">
-              ${urgent ? '🚨 LEAPFROG ACTIVE' : 'OPTIMAL GRID'}
+            <span class="hero-stat-tag ${urgent ? 'tag-crimson' : 'tag-sky'}">
+              ${urgent ? '🚨 LEAPFROG ACTIVE' : '✨ OPTIMAL GRID'}
             </span>
           </div>
 
           <!-- HIGH-IMPACT STAT 1: SUBSTATION GRID HEALTH -->
           <div class="glass-panel">
-            <div style="font-size: 11px; font-weight: 700; color: var(--text-caption); text-transform: uppercase; letter-spacing: 0.5px;">
-              Local Substation Health
+            <div style="font-size: 11px; font-weight: 800; color: var(--text-caption); text-transform: uppercase; letter-spacing: 0.5px;">
+              Substation Load Status
             </div>
             <div class="hero-stat-row">
-              <div class="hero-stat-large" style="color: ${urgent ? 'var(--crimson-emergency)' : 'var(--nature-emerald)'};">
+              <div class="hero-stat-large" style="color: ${urgent ? 'var(--crimson-emergency)' : 'var(--sky-vibrant)'};">
                 ${state.substationHealth}%
               </div>
               <span class="hero-stat-tag tag-emerald">STABLE & GREEN</span>
             </div>
-            <div style="font-size: 12px; color: var(--text-sub); display: flex; justify-content: space-between;">
-              <span>Feeder Node: <strong>BESCOM 11kV Corridor</strong></span>
+            <div style="font-size: 12px; color: var(--text-sub); display: flex; justify-content: space-between; background: rgba(255,255,255,0.65); padding: 8px 12px; border-radius: 12px; border: 0.5px solid rgba(255,255,255,0.9);">
+              <span>Feeder: <strong>BESCOM 11kV Node</strong></span>
               <span>Spike Risk: <strong style="color: var(--nature-emerald);">0.08 (Minimal)</strong></span>
             </div>
           </div>
@@ -928,25 +986,25 @@
             <div style="display: flex; justify-content: space-between; align-items: baseline;">
               <div>
                 <div style="font-size: 14px; font-weight: 800; color: var(--text-headline);">Vehicle Battery Level</div>
-                <div style="font-size: 11px; color: var(--text-caption);">Simulate low battery to trigger preemption</div>
+                <div style="font-size: 11px; color: var(--text-caption);">Drag to simulate critical battery preemption</div>
               </div>
-              <span style="font-size: 20px; font-weight: 800; color: ${urgent ? 'var(--crimson-emergency)' : 'var(--nature-emerald)'}; font-family: 'JetBrains Mono', monospace;">
+              <span style="font-size: 20px; font-weight: 800; color: ${urgent ? 'var(--crimson-emergency)' : 'var(--sky-vibrant)'}; font-family: 'JetBrains Mono', monospace;">
                 ${state.userBattery}%
               </span>
             </div>
 
             <div class="slider-container">
               <div class="slider-sunlit-track">
-                <div class="slider-fluid-fill" style="width: ${state.userBattery}%; background: ${urgent ? 'linear-gradient(90deg, #DC2626, #EF4444)' : 'linear-gradient(90deg, #059669, #10B981)'};"></div>
+                <div class="slider-fluid-fill" style="width: ${state.userBattery}%; background: ${urgent ? 'linear-gradient(90deg, #DC2626, #EF4444)' : 'linear-gradient(90deg, #0284C7 0%, #00A3FF 60%, #10B981 100%)'};"></div>
               </div>
               <input type="range" min="4" max="100" value="${state.userBattery}" class="slider-input-overlay" oninput="updateBatterySlider(this.value)">
               <div class="slider-lens-thumb" id="batteryThumb" style="left: ${state.userBattery}%;"></div>
             </div>
 
             ${urgent ? `
-              <div style="background: #FEE2E2; border-radius: 14px; padding: 10px 12px; margin-top: 10px; display: flex; gap: 8px; align-items: center; border: 0.5px solid #FCA5A5;">
+              <div style="background: rgba(254, 226, 226, 0.9); border-radius: 14px; padding: 10px 12px; margin-top: 10px; display: flex; gap: 8px; align-items: center; border: 0.5px solid #FCA5A5;">
                 <span style="font-size: 16px;">🚨</span>
-                <span style="font-size: 11px; font-weight: 700; color: #991B1B;">
+                <span style="font-size: 11px; font-weight: 800; color: #991B1B;">
                   Critical battery (&le;10%). Normal queue preempted at Bay #1.
                 </span>
               </div>
@@ -954,32 +1012,32 @@
           </div>
 
           <!-- OPTIMAL AI RECOMMENDATION CARD -->
-          <div class="glass-panel" style="background: linear-gradient(175deg, rgba(255,255,255,0.9) 0%, rgba(236,253,245,0.85) 100%); border-color: rgba(16,185,129,0.4);">
+          <div class="glass-panel" style="background: linear-gradient(175deg, rgba(255,255,255,0.72) 0%, rgba(224,242,254,0.65) 100%); border-color: rgba(0,163,255,0.45);">
             <div style="display: flex; justify-content: space-between; align-items: flex-start;">
               <div>
-                <span class="hero-stat-tag ${urgent ? 'tag-crimson' : 'tag-emerald'}" style="font-size: 9px;">
+                <span class="hero-stat-tag ${urgent ? 'tag-crimson' : 'tag-sky'}" style="font-size: 9px;">
                   ${urgent ? '🚨 EMERGENCY BAY DISPATCH' : '✨ OPTIMAL CHARGER MATCH'}
                 </span>
                 <div style="font-size: 18px; font-weight: 800; color: var(--text-headline); margin-top: 6px;">${topMatch.name}</div>
                 <div style="font-size: 12px; color: var(--text-caption);">${topMatch.address}</div>
               </div>
-              <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 800; color: var(--nature-emerald); background: var(--nature-mint); padding: 4px 10px; border-radius: 10px;">
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 800; color: var(--sky-vibrant); background: var(--sky-aura); padding: 4px 10px; border-radius: 10px; border: 0.5px solid rgba(2, 132, 199, 0.3);">
                 ${urgent ? '99/100' : '94/100'}
               </div>
             </div>
 
             <!-- Clean High-Impact Stats Row -->
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; background: #FFFFFF; padding: 12px; border-radius: 18px; border: 0.5px solid #E2E8F0;">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); padding: 12px; border-radius: 18px; border: 0.5px solid rgba(255, 255, 255, 1);">
               <div>
-                <span style="font-size: 9px; color: var(--text-caption); display: block;">DISTANCE</span>
+                <span style="font-size: 9px; color: var(--text-caption); display: block; font-weight: 700;">DISTANCE</span>
                 <strong style="font-size: 14px; font-family: 'JetBrains Mono', monospace;">${topMatch.distance_km} km</strong>
               </div>
               <div>
-                <span style="font-size: 9px; color: var(--text-caption); display: block;">XGBOOST WAIT</span>
-                <strong style="font-size: 14px; color: var(--nature-emerald); font-family: 'JetBrains Mono', monospace;">~${urgent ? '0.0' : topMatch.predicted_wait_min} min</strong>
+                <span style="font-size: 9px; color: var(--text-caption); display: block; font-weight: 700;">XGBOOST WAIT</span>
+                <strong style="font-size: 14px; color: var(--sky-vibrant); font-family: 'JetBrains Mono', monospace;">~${urgent ? '0.0' : topMatch.predicted_wait_min} min</strong>
               </div>
               <div>
-                <span style="font-size: 9px; color: var(--text-caption); display: block;">DC CHARGE</span>
+                <span style="font-size: 9px; color: var(--text-caption); display: block; font-weight: 700;">DC CHARGE</span>
                 <strong style="font-size: 14px; font-family: 'JetBrains Mono', monospace;">${topMatch.power_kw} kW</strong>
               </div>
             </div>
@@ -1013,7 +1071,7 @@
               <div class="view-title">V2V Energy Sharing</div>
               <div class="view-caption">Peer-to-peer mobile DC charging</div>
             </div>
-            <span class="hero-stat-tag tag-emerald">P2P LINK SECURED</span>
+            <span class="hero-stat-tag tag-sky">P2P LINK SECURED</span>
           </div>
 
           <!-- CAR-TO-CAR STAGE -->
@@ -1021,14 +1079,14 @@
             <div class="v2v-nature-stage">
               <!-- DONOR -->
               <div class="car-orb">
-                <div class="orb-ring" style="background: conic-gradient(var(--nature-emerald) ${donorSoc}%, #E2E8F0 0);">
+                <div class="orb-ring" style="background: conic-gradient(var(--sky-vibrant) ${donorSoc}%, #E2E8F0 0);">
                   <div class="orb-center">${donorSoc}%</div>
                 </div>
                 <div class="orb-model">Hyundai Ioniq 5</div>
                 <div class="orb-sub">Peer Donor</div>
               </div>
 
-              <!-- SUNLIT ENERGY BEAM -->
+              <!-- SUNLIT ENERGY BEAM (Dual Electric Cyan & Emerald Glow) -->
               <div class="beam-sunlit-conduit">
                 <div class="beam-stream"></div>
               </div>
@@ -1043,9 +1101,9 @@
               </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-sub); border-top: 1px solid #F1F5F9; padding-top: 12px; margin-top: 6px;">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-sub); border-top: 1px solid rgba(241, 245, 249, 0.8); padding-top: 12px; margin-top: 6px; background: rgba(255,255,255,0.5); padding: 8px 12px; border-radius: 12px;">
               <span>Proximity: <strong style="color: var(--text-headline);">${state.donorDistanceKm} km away</strong></span>
-              <span>Rate: <strong style="color: var(--nature-emerald);">22 kW Mobile DC</strong></span>
+              <span>Rate: <strong style="color: var(--sky-vibrant);">22 kW Mobile DC</strong></span>
             </div>
           </div>
 
@@ -1053,7 +1111,7 @@
           <div class="glass-panel">
             <div style="display: flex; justify-content: space-between; align-items: baseline;">
               <span style="font-size: 14px; font-weight: 800;">Transfer Energy</span>
-              <span style="font-size: 24px; font-weight: 800; color: var(--nature-emerald); font-family: 'JetBrains Mono', monospace;" id="kwhLabel">
+              <span style="font-size: 24px; font-weight: 800; color: var(--sky-vibrant); font-family: 'JetBrains Mono', monospace;" id="kwhLabel">
                 ${kwh} kWh
               </span>
             </div>
@@ -1067,12 +1125,12 @@
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0 16px;">
-              <div style="background: #FFFFFF; padding: 12px; border-radius: 16px; border: 0.5px solid #E2E8F0;">
-                <span style="font-size: 10px; color: var(--text-caption); display: block;">TIME REQUIRED</span>
+              <div style="background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); padding: 12px; border-radius: 16px; border: 0.5px solid rgba(255,255,255,1);">
+                <span style="font-size: 10px; color: var(--text-caption); display: block; font-weight: 700;">TIME REQUIRED</span>
                 <strong style="font-size: 15px; font-family: 'JetBrains Mono', monospace;">~${durationMin} min</strong>
               </div>
-              <div style="background: #FFFFFF; padding: 12px; border-radius: 16px; border: 0.5px solid #E2E8F0;">
-                <span style="font-size: 10px; color: var(--text-caption); display: block;">ECOCREDITS REWARD</span>
+              <div style="background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); padding: 12px; border-radius: 16px; border: 0.5px solid rgba(255,255,255,1);">
+                <span style="font-size: 10px; color: var(--text-caption); display: block; font-weight: 700;">ECOCREDITS REWARD</span>
                 <strong style="font-size: 15px; color: var(--nature-emerald); font-family: 'JetBrains Mono', monospace;">+${ecoCredits} Pts</strong>
               </div>
             </div>
@@ -1135,7 +1193,7 @@
               <div class="view-title">Live Map & Slots</div>
               <div class="view-caption">Real-time corridor bay reservations</div>
             </div>
-            <span class="hero-stat-tag tag-emerald">4 HUBS READY</span>
+            <span class="hero-stat-tag tag-sky">4 HUBS READY</span>
           </div>
 
           <!-- RADAR MAP CANVAS -->
@@ -1148,7 +1206,7 @@
 
             <!-- Station Pins -->
             <div class="station-marker-pin" style="top: 35px; right: 50px;" onclick="pickStation(1)">
-              <div class="marker-dot" style="background: var(--nature-emerald);"></div>
+              <div class="marker-dot" style="background: var(--sky-vibrant);"></div>
               <div class="marker-text">Indiranagar (3)</div>
             </div>
             <div class="station-marker-pin" style="bottom: 45px; right: 65px;" onclick="pickStation(2)">
@@ -1160,7 +1218,7 @@
               <div class="marker-text">MG Road (0)</div>
             </div>
             <div class="station-marker-pin" style="bottom: 50px; left: 55px;" onclick="pickStation(4)">
-              <div class="marker-dot" style="background: var(--nature-emerald);"></div>
+              <div class="marker-dot" style="background: var(--sky-vibrant);"></div>
               <div class="marker-text">Whitefield (5)</div>
             </div>
           </div>
@@ -1172,11 +1230,11 @@
                 <div style="font-size: 16px; font-weight: 800; color: var(--text-headline);">${state.selectedStation.name}</div>
                 <div style="font-size: 11px; color: var(--text-caption);">${state.selectedStation.address}</div>
               </div>
-              <span class="hero-stat-tag tag-emerald">${state.selectedStation.chargers_available} Free Bays</span>
+              <span class="hero-stat-tag tag-sky">${state.selectedStation.chargers_available} Free Bays</span>
             </div>
 
             <div style="margin-top: 14px;">
-              <span style="font-size: 10px; font-weight: 700; color: var(--text-caption); text-transform: uppercase; letter-spacing: 0.5px;">
+              <span style="font-size: 10px; font-weight: 800; color: var(--text-caption); text-transform: uppercase; letter-spacing: 0.5px;">
                 Select 15-Minute Slot
               </span>
 
@@ -1216,6 +1274,8 @@
     function selectSlot(el, slot) {
       document.querySelectorAll('.slot-card').forEach(c => c.classList.remove('selected'));
       el.classList.add('selected');
+      el.classList.add('rubberband-trigger');
+      setTimeout(() => el.classList.remove('rubberband-trigger'), 450);
       state.selectedSlot = slot;
     }
 
@@ -1232,7 +1292,7 @@
       document.getElementById('ticketStationAddress').innerText = st.address;
       document.getElementById('ticketBayLabel').innerText = urgent ? "Bay #1 (Emergency 120 kW)" : "Bay #2 (60 kW Fast)";
       document.getElementById('ticketPriorityLabel').innerText = urgent ? "🚨 URGENT LEAPFROG" : "STANDARD CONFIRMED";
-      document.getElementById('ticketPriorityLabel').style.color = urgent ? "var(--crimson-emergency)" : "var(--nature-emerald)";
+      document.getElementById('ticketPriorityLabel').style.color = urgent ? "var(--crimson-emergency)" : "var(--sky-vibrant)";
       document.getElementById('ticketIdLabel').innerText = "GF-" + Math.floor(1000 + Math.random() * 9000);
 
       document.getElementById('passBackdrop').style.display = 'flex';
