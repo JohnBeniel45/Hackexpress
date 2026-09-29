@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'theme/app_theme.dart';
-import 'screens/main_navigation_screen.dart';
+import 'theme/apple_liquid_theme.dart';
+import 'screens/apple_root_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,19 +9,19 @@ void main() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  runApp(const GridFlowApp());
+  runApp(const GridFlowAppleLiquidApp());
 }
 
-class GridFlowApp extends StatelessWidget {
-  const GridFlowApp({Key? key}) : super(key: key);
+class GridFlowAppleLiquidApp extends StatelessWidget {
+  const GridFlowAppleLiquidApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'GridFlow AI',
+      title: 'GridFlow AI — Apple Liquid Glass',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme,
-      home: const MainNavigationScreen(),
+      theme: AppleLiquidTheme.darkTheme,
+      home: const AppleRootScreen(),
     );
   }
 }

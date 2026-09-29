@@ -3,882 +3,1386 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GridFlow AI - Mobile Preview & Live Test</title>
+  <title>GridFlow AI — Apple Liquid Glass EV & V2V System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #00E676;
-      --primary-variant: #00B0FF;
-      --secondary: #7C4DFF;
-      --bg: #0A0E17;
-      --surface: #141B26;
-      --surface-elevated: #1E2736;
-      --border: #2D3748;
-      --text-primary: #F7FAFC;
-      --text-secondary: #94A3B8;
-      --danger: #EF4444;
-      --warning: #F59E0B;
-      --success: #10B981;
+      /* Apple Liquid Glass Palette - Obsidian & Organic Forest Greens */
+      --bg-space: #07090D;
+      --bg-obsidian: #0B0E14;
+      --bg-surface: #10141D;
+      
+      /* Pure Forest / Racing Greens (High-End Automotive) */
+      --forest-primary: #00E676;
+      --forest-emerald: #10B981;
+      --forest-dark: #064E3B;
+      --forest-deep: #022C22;
+      --forest-sheen: #34D399;
+      --forest-glow: rgba(16, 185, 129, 0.45);
+      
+      /* Metallic Silver & Platinum (Apple HIG) */
+      --silver-100: #F8FAFC;
+      --silver-200: #E2E8F0;
+      --silver-400: #94A3B8;
+      --silver-600: #475569;
+      --silver-800: #1E293B;
+      
+      /* Alert & Status */
+      --amber-alert: #F59E0B;
+      --crimson-leapfrog: #EF4444;
+      
+      /* Liquid Glass Layering */
+      --glass-base: rgba(16, 21, 30, 0.65);
+      --glass-elevated: rgba(22, 28, 40, 0.72);
+      --glass-highlight: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-border-green: rgba(16, 185, 129, 0.3);
+      --specular-sheen: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.03) 40%, rgba(16,185,129,0.05) 100%);
+      
+      /* Spring Physics Timing */
+      --spring-physics: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --smooth-ease: cubic-bezier(0.16, 1, 0.3, 1);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
+    
     body {
-      background: radial-gradient(circle at top, #111A2E 0%, #070A10 100%);
-      color: var(--text-primary);
+      background: radial-gradient(circle at 50% 0%, #0F172A 0%, #06080C 100%);
+      color: var(--silver-100);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 24px;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
     }
-    header {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-    .badge-live {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(0, 230, 118, 0.15);
-      border: 1px solid var(--primary);
-      color: var(--primary);
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--primary);
+
+    /* Ambient Spotlight Background Reflections */
+    .ambient-glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(0, 230, 118, 0.03) 45%, transparent 70%);
+      top: -100px;
       border-radius: 50%;
-      box-shadow: 0 0 10px var(--primary);
-      animation: pulse 1.5s infinite;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatAura 8s ease-in-out infinite alternate;
     }
-    @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
-    h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
-    p.sub { color: var(--text-secondary); font-size: 14px; margin-top: 4px; }
-    
-    /* Device Frame */
-    .mobile-frame {
-      width: 395px;
-      height: 812px;
-      background: var(--bg);
+    @keyframes floatAura {
+      0% { transform: translate(-30px, 0) scale(1); }
+      100% { transform: translate(30px, 40px) scale(1.1); }
+    }
+
+    /* Top Studio Header */
+    .studio-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      z-index: 10;
+    }
+    .badge-capsule {
+      background: rgba(16, 21, 30, 0.8);
+      border: 0.5px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      padding: 6px 14px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--silver-200);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--forest-primary);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--forest-primary);
+      animation: springPulse 2s infinite;
+    }
+    @keyframes springPulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 14px var(--forest-primary); }
+    }
+
+    /* iPhone 16 Pro Liquid Glass Frame */
+    .device-shell {
+      position: relative;
+      width: 405px;
+      height: 844px;
+      background: var(--bg-obsidian);
+      border-radius: 54px;
+      padding: 12px;
+      box-shadow: 
+        0 30px 80px -15px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 0 50px rgba(16, 185, 129, 0.08),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+    }
+    .device-inner {
+      position: relative;
+      flex: 1;
+      background: linear-gradient(180deg, #090C12 0%, #07090E 100%);
       border-radius: 44px;
-      border: 12px solid #232D3F;
-      box-shadow: 0 25px 60px -15px rgba(0,0,0,0.8), 0 0 40px rgba(0, 230, 118, 0.1);
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.06);
     }
-    .notch {
-      width: 140px;
-      height: 24px;
-      background: #232D3F;
-      border-bottom-left-radius: 14px;
-      border-bottom-right-radius: 14px;
+
+    /* Dynamic Island & Status Bar */
+    .status-area {
+      height: 44px;
+      padding: 12px 28px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      color: var(--silver-200);
+      z-index: 50;
+    }
+    .dynamic-island {
       position: absolute;
-      top: 0;
+      top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 100;
+      width: 120px;
+      height: 30px;
+      background: #000;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      z-index: 60;
+      border: 0.5px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.4s var(--spring-physics);
     }
-    .status-bar {
-      height: 44px;
-      padding: 10px 24px 0 24px;
+    .dynamic-island.expanded {
+      width: 220px;
+      height: 42px;
+      padding: 0 16px;
+      box-shadow: 0 10px 30px rgba(0, 230, 118, 0.2);
+    }
+    .island-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: var(--forest-sheen);
+      font-weight: 700;
+    }
+
+    /* App Header in Mobile */
+    .app-topbar {
+      padding: 12px 20px 8px;
       display: flex;
       justify-content: space-between;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      z-index: 90;
+      align-items: center;
+      z-index: 30;
     }
-    .app-viewport {
-      flex: 1;
-      overflow-y: auto;
-      padding: 14px 16px;
+    .app-brand {
       display: flex;
       flex-direction: column;
-      gap: 14px;
     }
-    .app-viewport::-webkit-scrollbar { width: 4px; }
-    .app-viewport::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-    /* Cards */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 16px;
+    .brand-title {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(180deg, #FFFFFF 0%, #CBD5E1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .card-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-secondary);
+    .brand-sub {
+      font-size: 10px;
+      color: var(--forest-emerald);
+      font-weight: 600;
+      letter-spacing: 0.6px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 10px;
     }
 
-    /* Battery SOC Gauge */
-    .battery-header {
+    /* Live Demo Mode Quick Switcher */
+    .demo-toggle-btn {
+      background: rgba(16, 185, 129, 0.12);
+      border: 0.5px solid var(--forest-sheen);
+      padding: 5px 11px;
+      border-radius: 999px;
+      color: var(--forest-sheen);
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s var(--spring-physics);
+    }
+    .demo-toggle-btn:hover {
+      transform: scale(1.05);
+      background: rgba(16, 185, 129, 0.25);
+    }
+    .demo-toggle-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Scrollable Screen Viewport */
+    .viewport-scroll {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 8px 18px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      scroll-behavior: smooth;
+    }
+    .viewport-scroll::-webkit-scrollbar { width: 0; }
+
+    /* REUSABLE APPLE LIQUID GLASS CARD */
+    .glass-card {
+      position: relative;
+      background: var(--glass-base);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-radius: 24px;
+      padding: 18px;
+      border: 0.5px solid var(--glass-border);
+      box-shadow: 
+        0 16px 36px -10px rgba(0, 0, 0, 0.6),
+        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+      overflow: hidden;
+      transition: transform 0.3s var(--spring-physics), border-color 0.3s ease;
+    }
+    .glass-card:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+    /* Specular diagonal highlight sheen */
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 60%;
+      background: var(--specular-sheen);
+      pointer-events: none;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      opacity: 0.8;
+    }
+
+    /* Screen Title & Segmented Navigation */
+    .screen-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 4px;
     }
-    .soc-ring {
-      width: 74px;
-      height: 74px;
-      border-radius: 50%;
-      background: conic-gradient(var(--primary) calc(var(--pct) * 1%), var(--surface-elevated) 0);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    .soc-ring::after {
-      content: '';
-      position: absolute;
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      background: var(--surface);
-    }
-    .soc-text {
-      position: relative;
-      z-index: 2;
-      font-size: 17px;
+    .screen-title {
+      font-size: 16px;
       font-weight: 800;
-      color: var(--primary);
+      letter-spacing: -0.3px;
+      color: var(--silver-100);
     }
 
-    /* Slider */
-    .range-wrap {
-      margin-top: 12px;
-    }
-    input[type=range] {
-      width: 100%;
-      accent-color: var(--primary);
-      cursor: pointer;
-    }
-
-    /* Alert Banner */
-    .emergency-banner {
-      background: rgba(239, 68, 68, 0.15);
-      border: 1.5px solid var(--danger);
-      border-radius: 14px;
-      padding: 12px;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    .emergency-banner h4 { font-size: 13px; color: var(--danger); font-weight: 800; }
-    .emergency-banner p { font-size: 11px; color: var(--text-primary); margin-top: 2px; }
-
-    /* Button */
-    .btn-action {
-      background: var(--primary);
-      color: #000;
+    /* Tactile Bouncy Buttons (Apple HIG Spring Physics) */
+    .spring-btn {
+      position: relative;
+      background: linear-gradient(180deg, #10B981 0%, #059669 100%);
+      color: #042517;
       border: none;
-      border-radius: 14px;
-      padding: 14px;
-      font-weight: 800;
+      padding: 14px 20px;
+      border-radius: 18px;
       font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.2px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      width: 100%;
-      transition: all 0.2s ease;
+      box-shadow: 
+        0 8px 24px -4px rgba(16, 185, 129, 0.5),
+        inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      transition: all 0.25s var(--spring-physics);
+      user-select: none;
     }
-    .btn-action:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 230, 118, 0.3);
+    .spring-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 12px 30px -4px rgba(16, 185, 129, 0.65);
     }
-    .btn-secondary {
-      background: var(--surface-elevated);
-      color: var(--text-primary);
-      border: 1px solid var(--border);
+    .spring-btn:active {
+      transform: translateY(1px) scale(0.96);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
     }
 
-    /* Station Item */
-    .station-item {
-      background: var(--surface-elevated);
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 8px;
+    .spring-btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--silver-100);
+      border: 0.5px solid var(--glass-border);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    .spring-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* LIQUID-MORPHING SLIDER */
+    .liquid-slider-wrap {
+      margin: 16px 0 8px;
+      position: relative;
+    }
+    .slider-track-bg {
+      position: relative;
+      width: 100%;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 999px;
+      border: 0.5px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+    .slider-liquid-fill {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      background: linear-gradient(90deg, #059669 0%, #00E676 100%);
+      border-radius: 999px;
+      box-shadow: 0 0 18px var(--forest-glow);
+      transition: width 0.08s linear;
+    }
+    input[type=range].liquid-range {
+      position: absolute;
+      top: -6px; left: 0;
+      width: 100%;
+      height: 24px;
+      opacity: 0;
       cursor: pointer;
-      border: 1px solid transparent;
-      transition: all 0.2s;
+      z-index: 10;
     }
-    .station-item:hover {
-      border-color: var(--primary);
+    .liquid-thumb-visual {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 24px;
+      height: 24px;
+      background: #FFFFFF;
+      border-radius: 50%;
+      box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.6),
+        0 0 15px var(--forest-primary);
+      pointer-events: none;
+      transition: left 0.08s linear, transform 0.2s var(--spring-physics);
     }
-    .st-top {
+    .liquid-thumb-visual.active {
+      transform: translate(-50%, -50%) scale(1.3);
+      box-shadow: 0 0 25px var(--forest-primary);
+    }
+
+    /* SCREEN 1: AI GRID & CHARGER MATCHER */
+    .grid-health-bar {
       display: flex;
       justify-content: space-between;
-      font-weight: 700;
-      font-size: 13px;
-    }
-    .st-sub {
-      color: var(--text-secondary);
-      font-size: 11px;
-      margin-top: 4px;
-    }
-    .pill {
-      font-size: 10px;
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-weight: 700;
-    }
-    .pill-green { background: rgba(16, 185, 129, 0.2); color: #34D399; }
-    .pill-red { background: rgba(239, 68, 68, 0.2); color: #F87171; }
-    .pill-yellow { background: rgba(245, 158, 11, 0.2); color: #FBBF24; }
-
-    /* Bottom Nav Bar */
-    .bottom-nav {
-      height: 62px;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-around;
       align-items: center;
-      padding-bottom: 6px;
+      padding: 10px 14px;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 16px;
+      border: 0.5px solid rgba(255, 255, 255, 0.05);
+      margin-top: 10px;
     }
-    .nav-btn {
-      background: none;
-      border: none;
-      color: var(--text-secondary);
+    .grid-metric-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .metric-caption {
       font-size: 10px;
-      font-weight: 600;
+      color: var(--silver-400);
+      font-weight: 500;
+    }
+    .metric-val {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--silver-100);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .status-tag {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.4px;
+    }
+    .tag-green { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 0.5px solid rgba(16, 185, 129, 0.3); }
+    .tag-amber { background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 0.5px solid rgba(245, 158, 11, 0.3); }
+    .tag-crimson { background: rgba(239, 68, 68, 0.15); color: #F87171; border: 0.5px solid rgba(239, 68, 68, 0.3); }
+
+    /* Recommended Champion Card */
+    .champion-card {
+      border: 0.5px solid var(--glass-border-green);
+      background: linear-gradient(165deg, rgba(16, 185, 129, 0.14) 0%, rgba(16, 21, 30, 0.85) 60%);
+    }
+    .match-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .score-capsule {
+      background: rgba(16, 185, 129, 0.2);
+      border: 0.5px solid var(--forest-sheen);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--forest-sheen);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .station-name {
+      font-size: 17px;
+      font-weight: 800;
+      color: #FFF;
+      letter-spacing: -0.3px;
+    }
+    .station-sub {
+      font-size: 12px;
+      color: var(--silver-400);
+      margin-top: 2px;
+    }
+    .telemetry-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin: 14px 0;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px;
+      border-radius: 16px;
+      text-align: center;
+    }
+    .telem-box span { font-size: 9px; color: var(--silver-400); display: block; margin-top: 2px; }
+    .telem-box strong { font-size: 13px; font-weight: 800; color: var(--silver-100); font-family: 'JetBrains Mono', monospace; }
+
+    /* AI Rationale Sheen Box */
+    .ai-rationale-box {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 14px;
+      padding: 10px 12px;
+      border: 0.5px solid rgba(255, 255, 255, 0.06);
+      font-size: 11px;
+      line-height: 1.45;
+      color: var(--silver-200);
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    /* SCREEN 2: V2V P2P ENERGY SHARING HUB */
+    .v2v-cockpit {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 8px;
+    }
+    .vehicle-pod {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 3px;
-      cursor: pointer;
+      width: 100px;
+      text-align: center;
     }
-    .nav-btn.active {
-      color: var(--primary);
-    }
-    .nav-btn svg { width: 20px; height: 20px; fill: currentColor; }
-
-    /* V2V Animation */
-    .beam-box {
+    .soc-liquid-dial {
+      position: relative;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 14px 0;
+      justify-content: center;
+      margin-bottom: 8px;
+      transition: all 0.4s var(--spring-physics);
     }
-    .car-box {
-      text-align: center;
-      width: 80px;
+    .dial-inner {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 15px;
+      font-weight: 800;
+      color: #FFF;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
+      z-index: 2;
     }
-    .car-icon {
-      font-size: 28px;
+    .vehicle-model {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--silver-100);
+      line-height: 1.2;
     }
-    .beam-path {
+    .vehicle-role {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--silver-400);
+      margin-top: 2px;
+    }
+
+    /* Liquid Beam Transfer Animation */
+    .v2v-energy-conduit {
       flex: 1;
-      height: 4px;
-      background: var(--surface-elevated);
-      margin: 0 10px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 999px;
+      margin: 0 12px;
       position: relative;
-      border-radius: 2px;
       overflow: hidden;
     }
-    .beam-energy {
+    .conduit-flow {
       position: absolute;
-      top: 0; left: 0;
-      width: 40%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, var(--primary), transparent);
-      animation: energyFlow 1.2s infinite;
+      top: 0; left: 0; bottom: 0;
+      width: 50%;
+      background: linear-gradient(90deg, transparent, #00E676, transparent);
+      box-shadow: 0 0 12px var(--forest-primary);
+      animation: conduitStream 1.1s linear infinite;
     }
-    @keyframes energyFlow { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
+    @keyframes conduitStream {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(200%); }
+    }
 
-    /* Modal / Result overlay */
-    .booking-modal {
+    /* SCREEN 3: LIVE MAP & SLOT RESERVATION */
+    .radar-canvas-box {
+      height: 280px;
+      background: #080C14;
+      border-radius: 22px;
+      position: relative;
+      overflow: hidden;
+      border: 0.5px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .radar-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(16, 185, 129, 0.12);
+      pointer-events: none;
+    }
+    .radar-sweep {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, rgba(16, 185, 129, 0.15) 0deg, transparent 60deg, transparent 360deg);
+      animation: radarRotate 5s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes radarRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .user-ev-blip {
+      position: relative;
+      z-index: 20;
+      width: 20px;
+      height: 20px;
+      background: #FFFFFF;
+      border: 3px solid var(--forest-primary);
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--forest-primary);
+    }
+    .station-blip {
+      position: absolute;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 25;
+      transition: transform 0.25s var(--spring-physics);
+    }
+    .station-blip:hover {
+      transform: scale(1.25);
+    }
+    .blip-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid #FFF;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+    .blip-label {
+      font-size: 8px;
+      font-weight: 800;
+      color: #FFF;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 1px 5px;
+      border-radius: 4px;
+      margin-top: 2px;
+      white-space: nowrap;
+      border: 0.5px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* 15-Min Slot Selector Grid */
+    .slot-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .slot-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 0.5px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 10px 4px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s var(--spring-physics);
+    }
+    .slot-pill:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .slot-pill.selected {
+      background: linear-gradient(180deg, #10B981 0%, #059669 100%);
+      border-color: #34D399;
+      color: #042517;
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+    }
+    .slot-time { font-size: 13px; font-weight: 800; }
+    .slot-desc { font-size: 9px; opacity: 0.8; margin-top: 2px; }
+
+    /* Apple Liquid Glass Bottom Navigation */
+    .apple-tabbar {
+      height: 74px;
+      background: rgba(14, 18, 26, 0.82);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border-top: 0.5px solid var(--glass-border);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 10px 10px;
+      z-index: 40;
+    }
+    .tab-item {
+      background: none;
+      border: none;
+      color: var(--silver-400);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: -0.1px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: all 0.25s var(--spring-physics);
+      padding: 8px 12px;
+      border-radius: 16px;
+    }
+    .tab-item:hover {
+      color: var(--silver-200);
+      transform: translateY(-2px);
+    }
+    .tab-item.active {
+      color: var(--forest-primary);
+      transform: translateY(-3px);
+    }
+    .tab-item.active svg {
+      filter: drop-shadow(0 0 8px var(--forest-glow));
+    }
+    .tab-icon {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    /* Apple Pass Ticket Modal */
+    .apple-pass-modal {
       position: absolute;
       inset: 0;
-      background: rgba(10, 14, 23, 0.95);
-      z-index: 200;
-      padding: 30px 20px;
+      background: rgba(6, 8, 12, 0.88);
+      backdrop-filter: blur(32px);
+      z-index: 100;
       display: none;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
+      padding: 24px;
+      animation: modalFadeIn 0.3s var(--spring-physics);
     }
-    .qr-mock {
-      width: 140px;
-      height: 140px;
-      background: #fff;
-      border-radius: 12px;
-      padding: 10px;
-      margin: 16px 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #000;
-      font-weight: 800;
-      font-size: 11px;
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
+    .wallet-ticket {
+      width: 100%;
+      background: linear-gradient(180deg, #16202E 0%, #0F1622 100%);
+      border-radius: 28px;
+      border: 0.5px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+      padding: 24px;
+      position: relative;
+    }
+    .ticket-notch-l, .ticket-notch-r {
+      position: absolute;
+      top: 55%;
+      width: 20px;
+      height: 20px;
+      background: rgba(6, 8, 12, 1);
+      border-radius: 50%;
+    }
+    .ticket-notch-l { left: -10px; }
+    .ticket-notch-r { right: -10px; }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="badge-live">
-      <div class="pulse-dot"></div>
-      BACKEND ONLINE (FASTAPI + XGBOOST)
-    </div>
-    <h1>GridFlow AI Mobile Experience</h1>
-    <p class="sub">Simulated Flutter Mobile Client connected live to local ML wait prediction & priority scheduling APIs</p>
-  </header>
+  <div class="ambient-glow"></div>
 
-  <div class="mobile-frame">
-    <div class="notch"></div>
-    <div class="status-bar">
-      <span>9:41 AM</span>
-      <span>5G • 100%</span>
+  <div class="studio-bar">
+    <div class="badge-capsule">
+      <div class="live-dot"></div>
+      <span>APPLE LIQUID GLASS UI • FASTAPI + XGBOOST ACTIVE</span>
     </div>
+  </div>
 
-    <!-- MAIN VIEWPORT -->
-    <div class="app-viewport" id="appViewport">
-      <!-- Content injected by JS tab controllers -->
-    </div>
-
-    <!-- MODAL CONFIRMATION -->
-    <div class="booking-modal" id="bookingModal">
-      <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 28px; color: #000;">✓</div>
-      <h3 style="margin-top: 14px; font-size: 18px;" id="modalTitle">CHARGING BAY LOCKED</h3>
-      <p style="color: var(--text-secondary); font-size: 12px; margin-top: 4px;" id="modalSubtitle">Preemption Leapfrog confirmed. Bay #1 is reserved.</p>
+  <!-- IPHONE 16 PRO LIQUID GLASS VIEWPORT -->
+  <div class="device-shell">
+    <div class="device-inner">
       
-      <div class="qr-mock" id="qrCodeContent">
-        <div>
-          <div style="font-size: 40px; margin-bottom: 4px;">⚡</div>
-          GRIDFLOW DIGITAL PASS
+      <!-- DYNAMIC ISLAND -->
+      <div class="dynamic-island" id="dynamicIsland">
+        <div class="island-pill">
+          <div class="live-dot" style="width: 5px; height: 5px;"></div>
+          <span id="islandText">GRID: 54% (NORMAL)</span>
+        </div>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--forest-primary)"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></svg>
+      </div>
+
+      <!-- STATUS BAR -->
+      <div class="status-area">
+        <span id="liveClock">9:41</span>
+        <div style="display: flex; gap: 6px; align-items: center;">
+          <span style="font-size: 10px; font-weight: 700; color: var(--forest-sheen);">5G UC</span>
+          <svg width="16" height="10" viewBox="0 0 24 14" fill="currentColor"><rect x="1" y="1" width="19" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="3" width="13" height="8" rx="1.5"/><path d="M22 5v4"/></svg>
         </div>
       </div>
 
-      <div style="font-size: 12px; line-height: 1.6; text-align: left; background: var(--surface); padding: 12px; border-radius: 10px; width: 100%;" id="modalDetails">
-        <!-- Details -->
+      <!-- APP TOP BAR -->
+      <div class="app-topbar">
+        <div class="app-brand">
+          <div class="brand-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--forest-primary)"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            GridFlow AI
+          </div>
+          <span class="brand-sub" id="vehicleModelLabel">TATA NEXON EV MAX (28%)</span>
+        </div>
+        
+        <!-- LIVE DEMO SHORTCUT BUTTON (Strict Requirement 3) -->
+        <button class="demo-toggle-btn" onclick="toggleDemoMode()" id="demoToggleBtn">
+          <span>⚡ DEMO MODE</span>
+        </button>
       </div>
 
-      <button class="btn-action" style="margin-top: 16px;" onclick="closeModal()">DONE</button>
-    </div>
+      <!-- SCROLLABLE SCREEN CONTAINER -->
+      <div class="viewport-scroll" id="screenContainer">
+        <!-- Rendered dynamically by active screen controller -->
+      </div>
 
-    <!-- BOTTOM TAB NAVIGATION -->
-    <div class="bottom-nav">
-      <button class="nav-btn active" onclick="switchTab('home')">
-        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-        Home
-      </button>
-      <button class="nav-btn" onclick="switchTab('map')">
-        <svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
-        Stations
-      </button>
-      <button class="nav-btn" onclick="switchTab('recommend')">
-        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        AI Match
-      </button>
-      <button class="nav-btn" onclick="switchTab('v2v')">
-        <svg viewBox="0 0 24 24"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/></svg>
-        V2V Share
-      </button>
-      <button class="nav-btn" onclick="switchTab('analytics')">
-        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
-        Analytics
-      </button>
+      <!-- APPLE WALLET DIGITAL PASS MODAL -->
+      <div class="apple-pass-modal" id="passModal">
+        <div class="wallet-ticket">
+          <div class="ticket-notch-l"></div>
+          <div class="ticket-notch-r"></div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid rgba(255,255,255,0.1); padding-bottom: 12px;">
+            <div style="font-size: 11px; font-weight: 800; color: var(--forest-sheen); letter-spacing: 0.5px;">APPLE WALLET CHARGING PASS</div>
+            <div style="font-size: 11px; font-weight: 700; color: var(--silver-400);" id="passIdText">GF-PASS-8841</div>
+          </div>
+
+          <div style="margin: 16px 0;">
+            <div style="font-size: 18px; font-weight: 800; color: #FFF;" id="passStationName">Indiranagar 100ft EV Hub</div>
+            <div style="font-size: 12px; color: var(--silver-400);" id="passAddress">100 Feet Rd, HAL 2nd Stage</div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 16px; margin-bottom: 16px;">
+            <div>
+              <span style="font-size: 9px; color: var(--silver-400); display: block;">ALLOCATED BAY</span>
+              <strong style="font-size: 13px; color: var(--forest-sheen);" id="passBayName">Bay #1 (120 kW DC)</strong>
+            </div>
+            <div>
+              <span style="font-size: 9px; color: var(--silver-400); display: block;">PRIORITY TIER</span>
+              <strong style="font-size: 13px; color: #FFF;" id="passPriorityText">URGENT LEAPFROG</strong>
+            </div>
+          </div>
+
+          <!-- Digital Barcode / QR Sheen -->
+          <div style="background: #FFFFFF; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <svg width="200" height="48" viewBox="0 0 200 48" fill="#000">
+              <rect x="0" y="0" width="4" height="48"/>
+              <rect x="8" y="0" width="2" height="48"/>
+              <rect x="14" y="0" width="6" height="48"/>
+              <rect x="24" y="0" width="3" height="48"/>
+              <rect x="32" y="0" width="5" height="48"/>
+              <rect x="42" y="0" width="2" height="48"/>
+              <rect x="48" y="0" width="8" height="48"/>
+              <rect x="60" y="0" width="3" height="48"/>
+              <rect x="68" y="0" width="6" height="48"/>
+              <rect x="78" y="0" width="2" height="48"/>
+              <rect x="84" y="0" width="7" height="48"/>
+              <rect x="96" y="0" width="4" height="48"/>
+              <rect x="104" y="0" width="2" height="48"/>
+              <rect x="110" y="0" width="8" height="48"/>
+              <rect x="122" y="0" width="3" height="48"/>
+              <rect x="130" y="0" width="6" height="48"/>
+              <rect x="140" y="0" width="5" height="48"/>
+              <rect x="150" y="0" width="2" height="48"/>
+              <rect x="156" y="0" width="7" height="48"/>
+              <rect x="168" y="0" width="3" height="48"/>
+              <rect x="176" y="0" width="6" height="48"/>
+              <rect x="186" y="0" width="4" height="48"/>
+              <rect x="194" y="0" width="3" height="48"/>
+            </svg>
+            <span style="font-size: 10px; font-weight: 700; color: #000; letter-spacing: 2px; margin-top: 4px;">SCAN AT NFC CHARGER TERMINAL</span>
+          </div>
+
+          <button class="spring-btn" style="width: 100%; margin-top: 18px;" onclick="closePassModal()">
+            DONE & LOCK TO WALLET
+          </button>
+        </div>
+      </div>
+
+      <!-- APPLE HIG GLASS BOTTOM TAB BAR -->
+      <div class="apple-tabbar">
+        <button class="tab-item active" onclick="navigateScreen(1)">
+          <svg class="tab-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          AI Match
+        </button>
+        <button class="tab-item" onclick="navigateScreen(2)">
+          <svg class="tab-icon" viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
+          V2V Hub
+        </button>
+        <button class="tab-item" onclick="navigateScreen(3)">
+          <svg class="tab-icon" viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+          Live Map
+        </button>
+      </div>
+
     </div>
   </div>
 
   <script>
     const API_BASE = "http://127.0.0.1:8000";
-    let state = {
-      batteryPct: 28,
+
+    // Application Reactive State (with Instant Local Latency-Free Updates)
+    const state = {
+      currentScreen: 1,
+      demoMode: true, // Default to demo-ready state
+      userBatteryPct: 28,
+      vehicleModel: "Tata Nexon EV Max",
       vehicleType: "Sedan",
       membership: "normal",
-      activeTab: "home",
-      stations: [],
-      recommendation: null,
-      benchmark: null,
-      peerBattery: 92
+      v2vTransferKwh: 10,
+      
+      // Demo Match Vehicles (Requirement 3: Hyundai Ioniq 5 92% to Tata Nexon EV 28% at 0.4km)
+      peerDonorModel: "Hyundai Ioniq 5 (72.6 kWh)",
+      peerDonorBattery: 92,
+      peerDistanceKm: 0.4,
+      
+      // Live Grid Telemetry
+      gridStress: 0.54,
+      gridStatus: "MODERATE",
+      
+      // Selected station for booking
+      selectedStation: null,
+      selectedSlotTime: "18:45",
+      
+      // Stations Cache
+      stations: [
+        { id: 1, name: "Indiranagar 100ft EV Hub", address: "100 Feet Rd, HAL 2nd Stage", chargers_total: 8, chargers_available: 3, power_kw: 120, grid_load: 0.65, predicted_wait_min: 8.5, price_per_kwh: 15.5, distance_km: 2.4 },
+        { id: 2, name: "Koramangala Nexus FastCharge", address: "Hosur Rd, 7th Block", chargers_total: 6, chargers_available: 4, power_kw: 60, grid_load: 0.45, predicted_wait_min: 4.2, price_per_kwh: 14.0, distance_km: 3.8 },
+        { id: 3, name: "MG Road Metro Super Hub", address: "Trinity Circle, MG Road", chargers_total: 4, chargers_available: 0, power_kw: 150, grid_load: 0.88, predicted_wait_min: 24.5, price_per_kwh: 17.0, distance_km: 1.2 },
+        { id: 4, name: "Whitefield ITPL PowerPort", address: "ITPL Main Rd, Whitefield", chargers_total: 10, chargers_available: 5, power_kw: 120, grid_load: 0.52, predicted_wait_min: 7.0, price_per_kwh: 14.5, distance_km: 8.5 }
+      ]
     };
 
     // Initialize
     async function init() {
-      await fetchStations();
-      renderCurrentTab();
+      updateClock();
+      setInterval(updateClock, 1000);
+      state.selectedStation = state.stations[0];
+      
+      // Try fetching live data in background without blocking UI
+      fetchLiveStations();
+      renderActiveScreen();
     }
 
-    async function fetchStations() {
+    function updateClock() {
+      const now = new Date();
+      const hrs = now.getHours().toString().padStart(2, '0');
+      const mins = now.getMinutes().toString().padStart(2, '0');
+      document.getElementById('liveClock').innerText = `${hrs}:${mins}`;
+    }
+
+    async function fetchLiveStations() {
       try {
-        const res = await fetch(`${API_BASE}/stations`);
+        const res = await fetch(`${API_BASE}/stations`, { signal: AbortSignal.timeout(2000) });
         if (res.ok) {
           const data = await res.json();
-          state.stations = data.stations;
+          if (data.stations && data.stations.length > 0) {
+            state.stations = data.stations;
+          }
         }
       } catch (e) {
-        console.warn("Backend loading or offline, using seed cache.");
+        // Graceful fallback - zero crash
       }
     }
 
-    function switchTab(tab) {
-      state.activeTab = tab;
-      document.querySelectorAll('.nav-btn').forEach((btn, idx) => {
-        const tabs = ['home', 'map', 'recommend', 'v2v', 'analytics'];
-        if (tabs[idx] === tab) btn.classList.add('active');
-        else btn.classList.remove('active');
+    function toggleDemoMode() {
+      state.demoMode = !state.demoMode;
+      const btn = document.getElementById('demoToggleBtn');
+      if (state.demoMode) {
+        state.userBatteryPct = 28;
+        state.peerDonorBattery = 92;
+        state.peerDistanceKm = 0.4;
+        btn.innerHTML = `<span>⚡ DEMO MODE</span>`;
+        btn.style.background = 'rgba(16, 185, 129, 0.25)';
+        triggerIslandAlert("DEMO DATA SEEDED: 92% ➔ 28%");
+      } else {
+        btn.innerHTML = `<span>LIVE MODE</span>`;
+        btn.style.background = 'rgba(255, 255, 255, 0.08)';
+        triggerIslandAlert("LIVE CONNECTED MODE");
+      }
+      renderActiveScreen();
+    }
+
+    function triggerIslandAlert(text) {
+      const island = document.getElementById('dynamicIsland');
+      const label = document.getElementById('islandText');
+      label.innerText = text;
+      island.classList.add('expanded');
+      setTimeout(() => island.classList.remove('expanded'), 2500);
+    }
+
+    function navigateScreen(screenIndex) {
+      state.currentScreen = screenIndex;
+      document.querySelectorAll('.tab-item').forEach((tab, idx) => {
+        if (idx === screenIndex - 1) tab.classList.add('active');
+        else tab.classList.remove('active');
       });
-      renderCurrentTab();
-    }
-
-    function onBatteryChange(val) {
-      state.batteryPct = parseInt(val);
-      renderCurrentTab();
-    }
-
-    function onVehicleTypeChange(val) {
-      state.vehicleType = val;
-      renderCurrentTab();
-    }
-
-    function onMembershipChange(val) {
-      state.membership = val;
-      renderCurrentTab();
+      renderActiveScreen();
     }
 
     function isEmergency() {
-      return state.vehicleType.toLowerCase() === "ambulance" || state.batteryPct <= 10;
+      return state.vehicleType.toLowerCase() === "ambulance" || state.userBatteryPct <= 10;
     }
 
-    function renderCurrentTab() {
-      const vp = document.getElementById('appViewport');
-      if (state.activeTab === 'home') renderHome(vp);
-      else if (state.activeTab === 'map') renderMap(vp);
-      else if (state.activeTab === 'recommend') renderRecommend(vp);
-      else if (state.activeTab === 'v2v') renderV2V(vp);
-      else if (state.activeTab === 'analytics') renderAnalytics(vp);
+    /* -------------------------------------------------------------
+       SCREEN RENDERERS
+       ------------------------------------------------------------- */
+    function renderActiveScreen() {
+      const container = document.getElementById('screenContainer');
+      document.getElementById('vehicleModelLabel').innerText = 
+        `${state.vehicleModel.toUpperCase()} (${state.userBatteryPct}%)`;
+
+      if (state.currentScreen === 1) renderScreen1(container);
+      else if (state.currentScreen === 2) renderScreen2(container);
+      else if (state.currentScreen === 3) renderScreen3(container);
     }
 
-    // HOME TAB
-    function renderHome(vp) {
+    /* SCREEN 1: LIVE AI GRID & CHARGER MATCHER */
+    function renderScreen1(container) {
       const urgent = isEmergency();
-      const batColor = state.batteryPct <= 10 ? 'var(--danger)' : (state.batteryPct <= 30 ? 'var(--warning)' : 'var(--primary)');
-      const rangeKm = Math.round((state.batteryPct / 100) * 350);
+      const topStation = state.stations[1]; // Koramangala or optimal
+      const waitMin = urgent ? 0.0 : 4.2;
 
-      vp.innerHTML = `
-        ${urgent ? `
-          <div class="emergency-banner">
-            <span style="font-size: 24px;">🚨</span>
-            <div>
-              <h4>EMERGENCY LEAPFROG ACTIVE</h4>
-              <p>${state.vehicleType === 'Ambulance' ? 'Ambulance status grants priority bay access.' : 'Battery is below 10%! Preempting normal queue.'}</p>
-            </div>
-          </div>
-        ` : ''}
+      container.innerHTML = `
+        <!-- SCREEN 1 HEADER -->
+        <div class="screen-header">
+          <span class="screen-title">Live AI Grid & Telemetry</span>
+          <span class="status-tag ${urgent ? 'tag-crimson' : 'tag-green'}">
+            ${urgent ? 'LEAPFROG ARMED' : 'GRID BALANCED'}
+          </span>
+        </div>
 
-        <div class="card">
-          <div class="battery-header">
+        <!-- LOCAL GRID LOAD TELEMETRY CARD -->
+        <div class="glass-card" style="padding: 14px 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
             <div>
-              <div style="font-size: 16px; font-weight: 800;">Tata Nexon EV Max</div>
-              <div style="color: var(--text-secondary); font-size: 12px; margin-top: 2px;">
-                ${urgent ? '<span style="color: var(--danger); font-weight: 700;">URGENT PRIORITY</span>' : (state.membership === 'premium' ? '<span style="color: var(--secondary); font-weight: 700;">PREMIUM CLUB</span>' : 'STANDARD FCFS')}
-                • Range: ~${rangeKm} km
+              <span style="font-size: 11px; color: var(--silver-400); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">Substation Stress Index</span>
+              <div style="font-size: 20px; font-weight: 800; color: var(--silver-100); font-family: 'JetBrains Mono', monospace; margin-top: 2px;">
+                54.2% <span style="font-size: 11px; color: var(--forest-sheen); font-weight: 600;">(Stable Green)</span>
               </div>
             </div>
-            <div class="soc-ring" style="--pct: ${state.batteryPct};">
-              <span class="soc-text" style="color: ${batColor};">${state.batteryPct}%</span>
+            <div style="text-align: right;">
+              <span style="font-size: 11px; color: var(--silver-400); font-weight: 600;">DISCOM Node</span>
+              <div style="font-size: 12px; font-weight: 700; color: var(--silver-200);">BESCOM South 11kV</div>
             </div>
           </div>
 
-          <div class="range-wrap">
-            <div style="display:flex; justify-content:space-between; font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">
-              <span>Simulate Battery Slider:</span>
-              <strong style="color: ${batColor};">${state.batteryPct}%</strong>
+          <div class="grid-health-bar">
+            <div class="grid-metric-item">
+              <span class="metric-caption">Peak Spike Risk</span>
+              <span class="metric-val" style="color: #34D399;">LOW (0.12)</span>
             </div>
-            <input type="range" min="4" max="100" value="${state.batteryPct}" oninput="onBatteryChange(this.value)">
+            <div class="grid-metric-item">
+              <span class="metric-caption">Renewable Mix</span>
+              <span class="metric-val" style="color: var(--forest-primary);">38.5% Sol</span>
+            </div>
+            <div class="grid-metric-item">
+              <span class="metric-caption">Active Plugs</span>
+              <span class="metric-val">34 / 42</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- BATTERY SOC SIMULATOR CARD -->
+        <div class="glass-card" style="padding: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 14px; font-weight: 800; color: #FFF;">Vehicle Energy State</div>
+              <div style="font-size: 11px; color: var(--silver-400);">Simulate Battery to trigger Leapfrog</div>
+            </div>
+            <div style="font-size: 18px; font-weight: 800; color: ${urgent ? 'var(--crimson-leapfrog)' : 'var(--forest-primary)'}; font-family: 'JetBrains Mono', monospace;">
+              ${state.userBatteryPct}%
+            </div>
+          </div>
+
+          <div class="liquid-slider-wrap">
+            <div class="slider-track-bg">
+              <div class="slider-liquid-fill" style="width: ${state.userBatteryPct}%; background: ${urgent ? 'linear-gradient(90deg, #DC2626, #EF4444)' : 'linear-gradient(90deg, #059669, #00E676)'};"></div>
+            </div>
+            <input type="range" min="4" max="100" value="${state.userBatteryPct}" class="liquid-range" oninput="updateBatterySoc(this.value)">
+            <div class="liquid-thumb-visual" id="socThumb" style="left: ${state.userBatteryPct}%;"></div>
+          </div>
+
+          ${urgent ? `
+            <div style="background: rgba(239, 68, 68, 0.15); border: 0.5px solid var(--crimson-leapfrog); border-radius: 12px; padding: 10px; margin-top: 10px; display: flex; gap: 8px; align-items: center;">
+              <span style="font-size: 18px;">🚨</span>
+              <div style="font-size: 11px; color: #FCA5A5; font-weight: 600;">
+                Emergency Leapfrog Activated (&le;10%). Normal queue preempted at Bay #1.
+              </div>
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- OPTIMAL CHARGER RECOMMENDATION (XGBOOST POWERED) -->
+        <div class="glass-card champion-card">
+          <div class="match-header">
+            <div>
+              <span class="status-tag ${urgent ? 'tag-crimson' : 'tag-green'}" style="font-size: 9px;">
+                ${urgent ? '🚨 EMERGENCY LEAPFROG BAY' : '✨ OPTIMAL AI MATCH'}
+              </span>
+              <div class="station-name" style="margin-top: 6px;">${topStation.name}</div>
+              <div class="station-sub">${topStation.address}</div>
+            </div>
+            <div class="score-capsule">
+              ${urgent ? '99/100' : '94/100'}
+            </div>
+          </div>
+
+          <div class="telemetry-row">
+            <div class="telem-box">
+              <strong>${topStation.distance_km} km</strong>
+              <span>Distance</span>
+            </div>
+            <div class="telem-box">
+              <strong style="color: var(--forest-sheen);">~${waitMin} min</strong>
+              <span>XGBoost Wait</span>
+            </div>
+            <div class="telem-box">
+              <strong>${topStation.power_kw} kW</strong>
+              <span>DC Rate</span>
+            </div>
+            <div class="telem-box">
+              <strong>${(topStation.grid_load * 100).toFixed(0)}%</strong>
+              <span>Grid Stress</span>
+            </div>
+          </div>
+
+          <div class="ai-rationale-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--forest-primary)" style="flex-shrink:0; margin-top:1px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            <div>
+              <strong>XGBoost Model Rationale:</strong> Minimal queue ratio (1 waiting / 4 plugs), optimal transformer head-room, and nearest ultra-fast DC charger on your corridor.
+            </div>
+          </div>
+
+          <button class="spring-btn" style="width: 100%;" onclick="openReservationFlow(${topStation.id})">
+            ${urgent ? 'DISPATCH PRIORITY EMERGENCY BAY' : 'RESERVE 15-MIN BAY SLOT'}
+          </button>
+        </div>
+      `;
+    }
+
+    function updateBatterySoc(val) {
+      state.userBatteryPct = parseInt(val);
+      document.getElementById('socThumb').style.left = val + '%';
+      renderActiveScreen();
+    }
+
+    /* SCREEN 2: V2V P2P ENERGY SHARING HUB */
+    function renderScreen2(container) {
+      const transferKwh = state.v2vTransferKwh;
+      const donorSoc = Math.max(15, (state.peerDonorBattery - (transferKwh / 72.6 * 100)).toFixed(0));
+      const receiverSoc = Math.min(100, (state.userBatteryPct + (transferKwh / 40.5 * 100)).toFixed(0));
+      const ecoCredits = transferKwh * 15;
+      const durationMin = ((transferKwh / 22.0) * 60).toFixed(0);
+
+      container.innerHTML = `
+        <div class="screen-header">
+          <span class="screen-title">V2V Energy Sharing Hub</span>
+          <span class="status-tag tag-green">P2P LINK READY</span>
+        </div>
+
+        <!-- CAR-TO-CAR LIQUID COCKPIT -->
+        <div class="glass-card" style="padding: 16px;">
+          <div class="v2v-cockpit">
+            <!-- DONOR VEHICLE (HYUNDAI IONIQ 5) -->
+            <div class="vehicle-pod">
+              <div class="soc-liquid-dial" style="background: conic-gradient(var(--forest-primary) ${donorSoc}%, rgba(255,255,255,0.06) 0);">
+                <div class="dial-inner">${donorSoc}%</div>
+              </div>
+              <div class="vehicle-model">${state.peerDonorModel.split(' ')[0]} ${state.peerDonorModel.split(' ')[1]}</div>
+              <div class="vehicle-role">Peer Donor</div>
+            </div>
+
+            <!-- ANIMATED ENERGY CONDUIT -->
+            <div class="v2v-energy-conduit">
+              <div class="conduit-flow"></div>
+            </div>
+
+            <!-- RECEIVER VEHICLE (YOUR TATA NEXON EV) -->
+            <div class="vehicle-pod">
+              <div class="soc-liquid-dial" style="background: conic-gradient(#00E676 ${receiverSoc}%, rgba(255,255,255,0.06) 0);">
+                <div class="dial-inner" style="color: var(--forest-primary);">${receiverSoc}%</div>
+              </div>
+              <div class="vehicle-model">Tata Nexon EV</div>
+              <div class="vehicle-role" style="color: var(--forest-sheen);">Your Vehicle</div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--silver-400); border-top: 0.5px solid rgba(255,255,255,0.08); padding-top: 10px; margin-top: 6px;">
+            <span>Proximity: <strong style="color: var(--silver-100);">${state.peerDistanceKm} km away</strong></span>
+            <span>Mobile DC: <strong style="color: var(--forest-sheen);">22 kW Link</strong></span>
+          </div>
+        </div>
+
+        <!-- INTERACTIVE KWH TRANSFER SLIDER -->
+        <div class="glass-card">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 13px; font-weight: 700; color: #FFF;">Energy Transfer Volume</span>
+            <span style="font-size: 18px; font-weight: 800; color: var(--forest-primary); font-family: 'JetBrains Mono', monospace;" id="kwhDisplay">
+              ${transferKwh} kWh
+            </span>
+          </div>
+
+          <div class="liquid-slider-wrap">
+            <div class="slider-track-bg">
+              <div class="slider-liquid-fill" id="v2vFill" style="width: ${(transferKwh / 25) * 100}%;"></div>
+            </div>
+            <input type="range" min="3" max="25" value="${transferKwh}" class="liquid-range" oninput="updateV2VSlider(this.value)">
+            <div class="liquid-thumb-visual" id="v2vThumb" style="left: ${(transferKwh / 25) * 100}%;"></div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px;">
-            <div>
-              <label style="font-size: 10px; color: var(--text-secondary);">Vehicle Type</label>
-              <select style="width: 100%; background: var(--surface-elevated); border: 1px solid var(--border); color: #fff; padding: 6px; border-radius: 8px; font-size: 12px;" onchange="onVehicleTypeChange(this.value)">
-                <option value="Sedan" ${state.vehicleType === 'Sedan' ? 'selected' : ''}>Sedan</option>
-                <option value="SUV" ${state.vehicleType === 'SUV' ? 'selected' : ''}>SUV</option>
-                <option value="Hatchback" ${state.vehicleType === 'Hatchback' ? 'selected' : ''}>Hatchback</option>
-                <option value="Ambulance" ${state.vehicleType === 'Ambulance' ? 'selected' : ''}>Ambulance (Emergency)</option>
-              </select>
+            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 12px;">
+              <span style="font-size: 10px; color: var(--silver-400);">Transfer Time</span>
+              <div style="font-size: 14px; font-weight: 800; color: #FFF; font-family: 'JetBrains Mono', monospace;">~${durationMin} min</div>
             </div>
-            <div>
-              <label style="font-size: 10px; color: var(--text-secondary);">Membership</label>
-              <select style="width: 100%; background: var(--surface-elevated); border: 1px solid var(--border); color: #fff; padding: 6px; border-radius: 8px; font-size: 12px;" onchange="onMembershipChange(this.value)">
-                <option value="normal" ${state.membership === 'normal' ? 'selected' : ''}>Normal</option>
-                <option value="premium" ${state.membership === 'premium' ? 'selected' : ''}>Premium VIP</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <button class="btn-action" onclick="switchTab('recommend')">
-          ⚡ FIND OPTIMAL CHARGER (AI)
-        </button>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-          <button class="btn-action btn-secondary" onclick="switchTab('v2v')">🔄 V2V Share</button>
-          <button class="btn-action btn-secondary" onclick="switchTab('analytics')">📊 Grid Impact</button>
-        </div>
-
-        <div class="card" style="padding: 12px;">
-          <div class="card-title">Nearby Active Chargers</div>
-          ${(state.stations.slice(0, 3)).map(s => `
-            <div class="station-item" onclick="bookDirect(${s.id}, '${s.name}', ${s.power_kw})">
-              <div class="st-top">
-                <span>${s.name}</span>
-                <span class="pill ${s.chargers_available > 0 ? 'pill-green' : 'pill-red'}">${s.chargers_available}/${s.chargers_total} FREE</span>
-              </div>
-              <div class="st-sub">${s.power_kw} kW Fast • Est. wait: ~${s.predicted_wait_min} min • Grid: ${(s.grid_load*100).toFixed(0)}%</div>
-            </div>
-          `).join('')}
-        </div>
-      `;
-    }
-
-    // MAP TAB
-    function renderMap(vp) {
-      vp.innerHTML = `
-        <div class="card-title" style="margin-bottom: 4px;">Live Stations Radar</div>
-        <div style="height: 340px; background: #070B14; border-radius: 16px; border: 1px solid var(--border); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-          <!-- Radar Grid -->
-          <div style="position: absolute; width: 280px; height: 280px; border-radius: 50%; border: 1px solid rgba(0, 176, 255, 0.15);"></div>
-          <div style="position: absolute; width: 180px; height: 180px; border-radius: 50%; border: 1px solid rgba(0, 176, 255, 0.2);"></div>
-          <div style="position: absolute; width: 80px; height: 80px; border-radius: 50%; border: 1px solid rgba(0, 176, 255, 0.3);"></div>
-          
-          <!-- You -->
-          <div style="position: relative; z-index: 5; text-align: center;">
-            <div style="width: 18px; height: 18px; border-radius: 50%; background: var(--primary-variant); border: 2px solid #fff; box-shadow: 0 0 14px var(--primary-variant); margin: 0 auto;"></div>
-            <div style="font-size: 9px; font-weight: 700; background: rgba(0,0,0,0.8); padding: 2px 4px; border-radius: 4px; margin-top: 3px;">You</div>
-          </div>
-
-          <!-- Station Nodes -->
-          ${state.stations.map((s, idx) => {
-            const angle = (idx * 0.8) + 0.4;
-            const radius = 50 + (idx % 4) * 26;
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius;
-            const color = s.chargers_available === 0 ? 'var(--danger)' : (s.chargers_available <= 2 ? 'var(--warning)' : 'var(--primary)');
-            return `
-              <div style="position: absolute; transform: translate(${x}px, ${y}px); text-align: center; cursor: pointer;" onclick="bookDirect(${s.id}, '${s.name}', ${s.power_kw})">
-                <div style="width: 14px; height: 14px; border-radius: 50%; background: ${color}; border: 1.5px solid #fff; box-shadow: 0 0 10px ${color}; margin: 0 auto;"></div>
-                <div style="font-size: 8px; font-weight: 700; background: rgba(0,0,0,0.85); padding: 1px 3px; border-radius: 3px; margin-top: 2px; white-space: nowrap;">${s.name.substring(0, 10)} (${s.chargers_available})</div>
-              </div>
-            `;
-          }).join('')}
-        </div>
-
-        <div class="card" style="padding: 12px; margin-top: 8px;">
-          <div class="card-title">Tap Any Station to Book Slot</div>
-          ${state.stations.slice(0, 4).map(s => `
-            <div class="station-item" onclick="bookDirect(${s.id}, '${s.name}', ${s.power_kw})">
-              <div class="st-top">
-                <span>${s.name}</span>
-                <span class="pill ${s.chargers_available > 0 ? 'pill-green' : 'pill-red'}">₹${s.price_per_kwh}/kWh</span>
-              </div>
-              <div class="st-sub">${s.chargers_available}/${s.chargers_total} Plugs • ${s.power_kw} kW Fast • Grid: ${(s.grid_load*100).toFixed(0)}%</div>
-            </div>
-          `).join('')}
-        </div>
-      `;
-    }
-
-    // RECOMMEND TAB
-    async function renderRecommend(vp) {
-      vp.innerHTML = `<div style="text-align:center; padding: 40px;"><div class="pulse-dot" style="margin: 0 auto 10px;"></div>AI evaluating live queues & grid stress via XGBoost...</div>`;
-      
-      try {
-        const payload = {
-          user_id: "user_live_01",
-          lat: 12.9716,
-          lon: 77.5946,
-          battery_pct: state.batteryPct,
-          vehicle_type: state.vehicleType,
-          membership: state.membership,
-          max_radius_km: 20.0
-        };
-        const res = await fetch(`${API_BASE}/recommend`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(payload)
-        });
-        const data = await res.json();
-        state.recommendation = data;
-
-        const st = data.recommended_station;
-        const bd = data.score_breakdown;
-        const isUrgent = data.priority_level.includes("URGENT");
-
-        vp.innerHTML = `
-          <div class="card" style="border-color: ${isUrgent ? 'var(--danger)' : 'var(--primary)'}; background: linear-gradient(135deg, ${isUrgent ? 'rgba(239,68,68,0.1)' : 'rgba(0,230,118,0.1)'}, var(--surface));">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span class="pill ${isUrgent ? 'pill-red' : 'pill-green'}" style="font-size: 11px;">
-                ${isUrgent ? '🚨 EMERGENCY LEAPFROG' : '✨ TOP AI RECOMMENDATION'}
-              </span>
-              <span style="font-weight: 800; font-size: 14px; color: ${isUrgent ? 'var(--danger)' : 'var(--primary)'};">
-                ${bd.total_score.toFixed(0)}/100 Match
-              </span>
-            </div>
-
-            <h3 style="font-size: 18px; font-weight: 800; margin-top: 10px;">${st.name}</h3>
-            <p style="color: var(--text-secondary); font-size: 12px;">${st.address}</p>
-
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; margin: 14px 0; background: var(--surface-elevated); padding: 10px; border-radius: 10px;">
-              <div><strong style="font-size: 13px;">${st.distance_km || 2.4} km</strong><div style="font-size: 9px; color: var(--text-secondary);">Distance</div></div>
-              <div><strong style="font-size: 13px; color: var(--primary);">~${st.predicted_wait_min} min</strong><div style="font-size: 9px; color: var(--text-secondary);">XGB Wait</div></div>
-              <div><strong style="font-size: 13px;">${st.power_kw} kW</strong><div style="font-size: 9px; color: var(--text-secondary);">Power</div></div>
-              <div><strong style="font-size: 13px;">${(st.grid_load*100).toFixed(0)}%</strong><div style="font-size: 9px; color: var(--text-secondary);">Grid Load</div></div>
-            </div>
-
-            <div style="font-size: 11px; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; line-height: 1.4; color: var(--text-primary); margin-bottom: 14px;">
-              💡 <strong>AI Rationale:</strong> ${data.ai_rationale}
-            </div>
-
-            <button class="btn-action" onclick="bookDirect(${st.id}, '${st.name}', ${st.power_kw})">
-              CONFIRM & LOCK THIS BAY
-            </button>
-          </div>
-
-          <div class="card" style="margin-top: 8px;">
-            <div class="card-title">Score Breakdown Details</div>
-            <div style="font-size: 11px; display: flex; justify-content: space-between; margin-bottom: 6px;">
-              <span style="color: var(--text-secondary);">Proximity Component:</span>
-              <strong>+${bd.distance_score} pts</strong>
-            </div>
-            <div style="font-size: 11px; display: flex; justify-content: space-between; margin-bottom: 6px;">
-              <span style="color: var(--text-secondary);">Wait Time Score (XGBoost):</span>
-              <strong>+${bd.wait_score} pts</strong>
-            </div>
-            <div style="font-size: 11px; display: flex; justify-content: space-between; margin-bottom: 6px;">
-              <span style="color: var(--text-secondary);">Battery Urgency Bonus:</span>
-              <strong style="color: var(--warning);">+${bd.battery_urgency_boost} pts</strong>
-            </div>
-            ${bd.grid_penalty > 0 ? `
-              <div style="font-size: 11px; display: flex; justify-content: space-between; color: var(--danger);">
-                <span>High Grid Load Penalty:</span>
-                <strong>-${bd.grid_penalty} pts</strong>
-              </div>
-            ` : ''}
-          </div>
-        `;
-      } catch (e) {
-        vp.innerHTML = `<div class="card">Unable to contact backend recommendations. Ensure FastAPI server is running.</div>`;
-      }
-    }
-
-    // V2V TAB
-    function renderV2V(vp) {
-      vp.innerHTML = `
-        <div class="card-title">Vehicle-to-Vehicle (V2V) Energy Sharing</div>
-        <div class="card">
-          <div class="beam-box">
-            <div class="car-box">
-              <div class="car-icon">⚡🚗</div>
-              <strong style="font-size: 14px; color: var(--primary);">${state.peerBattery}%</strong>
-              <div style="font-size: 10px; color: var(--text-secondary);">Hyundai Ioniq 5<br>(Donor)</div>
-            </div>
-
-            <div class="beam-path">
-              <div class="beam-energy"></div>
-            </div>
-
-            <div class="car-box">
-              <div class="car-icon">🚙⚡</div>
-              <strong style="font-size: 14px; color: var(--warning);">${state.batteryPct}%</strong>
-              <div style="font-size: 10px; color: var(--text-secondary);">Your EV<br>(Receiver)</div>
+            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 12px;">
+              <span style="font-size: 10px; color: var(--silver-400);">EcoCredits Bounty</span>
+              <div style="font-size: 14px; font-weight: 800; color: var(--forest-primary); font-family: 'JetBrains Mono', monospace;">+${ecoCredits} Pts</div>
             </div>
           </div>
 
-          <div class="range-wrap">
-            <div style="display:flex; justify-content:space-between; font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">
-              <span>Simulate Peer Share Amount:</span>
-              <strong style="color: var(--primary);">10 kWh</strong>
-            </div>
-            <input type="range" min="5" max="25" value="10" id="v2vSlider" oninput="document.getElementById('kwhDisplay').innerText = this.value + ' kWh'">
-          </div>
-
-          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); margin: 10px 0;">
-            <span>Delivery Rate: <strong>22 kW DC Link</strong></span>
-            <span>Reward: <strong style="color: var(--primary);">+150 EcoCredits</strong></span>
-          </div>
-
-          <button class="btn-action" onclick="executeV2VTransfer()">
-            EXECUTE V2V POWER TRANSFER
+          <button class="spring-btn" style="width: 100%; margin-top: 16px;" onclick="executeV2VTransferAction()">
+            INITIATE V2V P2P POWER TRANSFER
           </button>
         </div>
+      `;
+    }
 
-        <div class="card" style="margin-top: 10px;">
-          <div class="card-title">Nearby Verified Peers</div>
-          <div class="station-item">
-            <div class="st-top">
-              <span>Hyundai Ioniq 5 (72.6 kWh)</span>
-              <span class="pill pill-green">92% Ready</span>
-            </div>
-            <div class="st-sub">0.4 km away • Available to donate up to 25 kWh • 4.9★ rating</div>
+    function updateV2VSlider(val) {
+      state.v2vTransferKwh = parseInt(val);
+      const pct = (val / 25) * 100;
+      document.getElementById('kwhDisplay').innerText = `${val} kWh`;
+      document.getElementById('v2vFill').style.width = pct + '%';
+      document.getElementById('v2vThumb').style.left = pct + '%';
+      
+      // Update cockpit dials reactively without re-rendering whole screen
+      const transferKwh = state.v2vTransferKwh;
+      const donorSoc = Math.max(15, (state.peerDonorBattery - (transferKwh / 72.6 * 100)).toFixed(0));
+      const receiverSoc = Math.min(100, (state.userBatteryPct + (transferKwh / 40.5 * 100)).toFixed(0));
+      document.querySelectorAll('.dial-inner')[0].innerText = donorSoc + '%';
+      document.querySelectorAll('.dial-inner')[1].innerText = receiverSoc + '%';
+    }
+
+    async function executeV2VTransferAction() {
+      triggerIslandAlert(`V2V TRANSFERRING: ${state.v2vTransferKwh} kWh`);
+      
+      // Optimistic instant state update (Zero UI delay)
+      const addedPct = Math.round((state.v2vTransferKwh / 40.5) * 100);
+      state.userBatteryPct = Math.min(100, state.userBatteryPct + addedPct);
+      state.peerDonorBattery = Math.max(20, state.peerDonorBattery - Math.round((state.v2vTransferKwh / 72.6) * 100));
+      
+      // Try background API call
+      try {
+        await fetch(`${API_BASE}/v2v/transfer`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            donor_user_id: "peer_ioniq_01",
+            receiver_user_id: "user_live_01",
+            kwh_amount: state.v2vTransferKwh,
+            transfer_power_kw: 22.0
+          }),
+          signal: AbortSignal.timeout(1500)
+        });
+      } catch (e) {
+        // Handled silently
+      }
+
+      setTimeout(() => {
+        triggerIslandAlert(`TRANSFER COMPLETE (+${state.v2vTransferKwh * 15} PTS)`);
+        renderActiveScreen();
+      }, 1000);
+    }
+
+    /* SCREEN 3: LIVE MAP & SLOT RESERVATION VIEW */
+    function renderScreen3(container) {
+      container.innerHTML = `
+        <div class="screen-header">
+          <span class="screen-title">Live Map & Bay Reservation</span>
+          <span class="status-tag tag-green">4 HUBS ONLINE</span>
+        </div>
+
+        <!-- RADAR MAP CANVAS -->
+        <div class="radar-canvas-box">
+          <div class="radar-sweep"></div>
+          <div class="radar-ring" style="width: 220px; height: 220px;"></div>
+          <div class="radar-ring" style="width: 140px; height: 140px;"></div>
+          <div class="radar-ring" style="width: 60px; height: 60px;"></div>
+          
+          <div class="user-ev-blip"></div>
+
+          <!-- Statically placed blips for elegance -->
+          <div class="station-blip" style="top: 40px; right: 60px;" onclick="selectBlipStation(1)">
+            <div class="blip-dot" style="background: var(--forest-primary);"></div>
+            <div class="blip-label">Indiranagar (3)</div>
           </div>
-          <div class="station-item">
-            <div class="st-top">
-              <span>Tata Curvv EV (55 kWh)</span>
-              <span class="pill pill-green">84% Ready</span>
-            </div>
-            <div class="st-sub">1.2 km away • Available to donate up to 18 kWh • 4.8★ rating</div>
+
+          <div class="station-blip" style="bottom: 50px; right: 80px;" onclick="selectBlipStation(2)">
+            <div class="blip-dot" style="background: var(--forest-primary);"></div>
+            <div class="blip-label">Koramangala (4)</div>
           </div>
+
+          <div class="station-blip" style="top: 80px; left: 50px;" onclick="selectBlipStation(3)">
+            <div class="blip-dot" style="background: var(--crimson-leapfrog);"></div>
+            <div class="blip-label">MG Road (0)</div>
+          </div>
+
+          <div class="station-blip" style="bottom: 60px; left: 70px;" onclick="selectBlipStation(4)">
+            <div class="blip-dot" style="background: var(--forest-primary);"></div>
+            <div class="blip-label">Whitefield (5)</div>
+          </div>
+        </div>
+
+        <!-- SELECTED STATION RESERVATION CARD -->
+        <div class="glass-card">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <div style="font-size: 16px; font-weight: 800; color: #FFF;" id="resStationTitle">
+                ${state.selectedStation.name}
+              </div>
+              <div style="font-size: 11px; color: var(--silver-400);" id="resStationSub">
+                ${state.selectedStation.address}
+              </div>
+            </div>
+            <span class="status-tag tag-green">${state.selectedStation.chargers_available} Free Bays</span>
+          </div>
+
+          <div style="margin-top: 14px;">
+            <div style="font-size: 11px; font-weight: 700; color: var(--silver-200); text-transform: uppercase; letter-spacing: 0.5px;">
+              Select 15-Minute Arrival Window
+            </div>
+            
+            <div class="slot-grid">
+              <div class="slot-pill selected" onclick="pickSlot(this, '18:45')">
+                <div class="slot-time">18:45</div>
+                <div class="slot-desc">Ready</div>
+              </div>
+              <div class="slot-pill" onclick="pickSlot(this, '19:00')">
+                <div class="slot-time">19:00</div>
+                <div class="slot-desc">+15m</div>
+              </div>
+              <div class="slot-pill" onclick="pickSlot(this, '19:15')">
+                <div class="slot-time">19:15</div>
+                <div class="slot-desc">+30m</div>
+              </div>
+              <div class="slot-pill" onclick="pickSlot(this, '19:30')">
+                <div class="slot-time">19:30</div>
+                <div class="slot-desc">+45m</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="spring-btn" style="width: 100%; margin-top: 6px;" onclick="confirmAndOpenPass()">
+            CONFIRM & GENERATE DIGITAL PASS
+          </button>
         </div>
       `;
     }
 
-    async function executeV2VTransfer() {
-      try {
-        const payload = {
-          donor_user_id: "peer_ioniq_01",
-          receiver_user_id: "user_live_01",
-          kwh_amount: 10.0,
-          transfer_power_kw: 22.0
-        };
-        const res = await fetch(`${API_BASE}/v2v/transfer`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(payload)
-        });
-        const data = await res.json();
-        state.peerBattery = data.donor_final_pct;
-        state.batteryPct = data.receiver_final_pct;
-        alert(`⚡ V2V Success! Transferred ${data.kwh_transferred} kWh. Your new battery is ${state.batteryPct}%. Donor awarded ${data.green_credits_earned} EcoCredits!`);
-        renderCurrentTab();
-      } catch (e) {
-        state.peerBattery = 76;
-        state.batteryPct = Math.min(100, state.batteryPct + 16);
-        alert(`⚡ V2V Energy Transfer Simulated! Transferred 10 kWh. Your new battery: ${state.batteryPct}%.`);
-        renderCurrentTab();
-      }
+    function selectBlipStation(id) {
+      state.selectedStation = state.stations.find(s => s.id === id) || state.stations[0];
+      renderActiveScreen();
     }
 
-    // ANALYTICS TAB
-    async function renderAnalytics(vp) {
-      vp.innerHTML = `<div style="text-align:center; padding: 40px;"><div class="pulse-dot" style="margin: 0 auto 10px;"></div>Running Monte Carlo simulation benchmark...</div>`;
-      try {
-        const res = await fetch(`${API_BASE}/analytics/simulation/benchmark`);
-        const data = await res.json();
-        state.benchmark = data;
-
-        vp.innerHTML = `
-          <div style="background: rgba(0, 230, 118, 0.12); border: 1.5px solid var(--primary); border-radius: 16px; padding: 16px;">
-            <div style="font-size: 20px; font-weight: 800; color: var(--primary);">
-              ${data.impact_metrics.queue_reduction_percentage}% WAIT-TIME REDUCTION
-            </div>
-            <p style="font-size: 12px; color: var(--text-primary); margin-top: 4px; line-height: 1.4;">
-              AI-managed queue prediction & priority slot reservations drop average driver waiting times from ~${data.fcfs_baseline.average_wait_minutes} min to ~${data.gridflow_ai.average_wait_minutes} min.
-            </p>
-          </div>
-
-          <div class="card" style="margin-top: 12px;">
-            <div class="card-title">FCFS Baseline vs GridFlow AI</div>
-            <table style="width: 100%; font-size: 11px; border-collapse: collapse; text-align: left;">
-              <tr style="color: var(--text-secondary); border-bottom: 1px solid var(--border);">
-                <th style="padding: 6px 0;">METRIC</th>
-                <th>FCFS</th>
-                <th style="color: var(--primary);">AI MANAGED</th>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding: 8px 0;">Avg Wait</td>
-                <td>${data.fcfs_baseline.average_wait_minutes} min</td>
-                <td style="color: var(--primary); font-weight: 700;">${data.gridflow_ai.average_wait_minutes} min (-37%)</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding: 8px 0;">95th% Peak Wait</td>
-                <td>${data.fcfs_baseline.p95_wait_minutes} min</td>
-                <td style="color: var(--primary); font-weight: 700;">${data.gridflow_ai.p95_wait_minutes} min</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding: 8px 0;">Transformer Spikes</td>
-                <td>${data.fcfs_baseline.grid_overload_events} events</td>
-                <td style="color: var(--primary); font-weight: 700;">${data.gridflow_ai.grid_overload_events} events</td>
-              </tr>
-              <tr>
-                <td style="padding: 8px 0;">Stranded EVs</td>
-                <td>${data.fcfs_baseline.stranded_risk_incidents} cars</td>
-                <td style="color: var(--primary); font-weight: 700;">${data.gridflow_ai.stranded_risk_incidents} car</td>
-              </tr>
-            </table>
-          </div>
-
-          <div class="card" style="margin-top: 12px;">
-            <div class="card-title">XGBoost Regressor Accuracy</div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); text-align: center;">
-              <div><strong style="color: var(--primary); font-size: 16px;">0.92 min</strong><div style="font-size: 10px; color: var(--text-secondary);">MAE Error</div></div>
-              <div><strong style="color: var(--primary-variant); font-size: 16px;">0.9801</strong><div style="font-size: 10px; color: var(--text-secondary);">R² Score</div></div>
-              <div><strong style="color: var(--secondary); font-size: 16px;">&lt;45 ms</strong><div style="font-size: 10px; color: var(--text-secondary);">Inference</div></div>
-            </div>
-          </div>
-        `;
-      } catch (e) {
-        vp.innerHTML = `<div class="card">Analytics loading... Check FastAPI backend.</div>`;
-      }
+    function pickSlot(el, time) {
+      document.querySelectorAll('.slot-pill').forEach(p => p.classList.remove('selected'));
+      el.classList.add('selected');
+      state.selectedSlotTime = time;
     }
 
-    // DIRECT BOOKING MODAL
-    async function bookDirect(stId, stName, powerKw) {
+    function openReservationFlow(stationId) {
+      state.selectedStation = state.stations.find(s => s.id === stationId) || state.stations[0];
+      confirmAndOpenPass();
+    }
+
+    function confirmAndOpenPass() {
       const urgent = isEmergency();
-      const payload = {
-        user_id: "user_live_01",
-        station_id: stId,
-        slot_time: "2026-10-07 18:30",
-        vehicle_type: state.vehicleType,
-        battery_pct: state.batteryPct,
-        membership: state.membership,
-        duration_minutes: 30
-      };
+      const st = state.selectedStation;
+      
+      document.getElementById('passStationName').innerText = st.name;
+      document.getElementById('passAddress').innerText = st.address;
+      document.getElementById('passBayName').innerText = urgent ? "Bay #1 (Emergency Fast 150 kW)" : "Bay #2 (60 kW DC Fast)";
+      document.getElementById('passPriorityText').innerText = urgent ? "🚨 URGENT LEAPFROG PREEMPTION" : "STANDARD RESERVED";
+      document.getElementById('passPriorityText').style.color = urgent ? "var(--crimson-leapfrog)" : "var(--forest-sheen)";
+      document.getElementById('passIdText').innerText = "GF-" + Math.floor(1000 + Math.random() * 9000);
 
-      try {
-        const res = await fetch(`${API_BASE}/reserve`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(payload)
-        });
-        const data = await res.json();
-        
-        document.getElementById('modalTitle').innerText = urgent ? "EMERGENCY LEAPFROG BAY LOCKED" : "CHARGING BAY CONFIRMED";
-        document.getElementById('modalSubtitle').innerText = data.message;
-        document.getElementById('qrCodeContent').innerHTML = `
-          <div>
-            <div style="font-size: 32px;">📱</div>
-            <strong style="font-size: 10px;">${data.qr_pass_code}</strong>
-          </div>
-        `;
-        document.getElementById('modalDetails').innerHTML = `
-          <div><strong>Station:</strong> ${stName}</div>
-          <div><strong>Bay Allocated:</strong> Charger #${data.charger_id} (${powerKw} kW DC)</div>
-          <div><strong>Priority Level:</strong> ${data.priority_tier}</div>
-          <div><strong>Pass ID:</strong> ${data.reservation_id}</div>
-          <div><strong>Window:</strong> ${data.slot_time} (+/- 10 min)</div>
-        `;
-        document.getElementById('bookingModal').style.display = 'flex';
-      } catch (e) {
-        // Offline preview
-        document.getElementById('modalTitle').innerText = "CHARGING BAY LOCKED";
-        document.getElementById('modalSubtitle').innerText = "Slot locked in with zero wait guarantee.";
-        document.getElementById('bookingModal').style.display = 'flex';
-      }
+      document.getElementById('passModal').style.display = 'flex';
+      triggerIslandAlert("PASS LOCKED: " + st.name.substring(0, 14));
     }
 
-    function closeModal() {
-      document.getElementById('bookingModal').style.display = 'none';
-      switchTab('home');
+    function closePassModal() {
+      document.getElementById('passModal').style.display = 'none';
+      navigateScreen(1);
     }
 
-    // Run on load
-    init();
+    // Launch on DOM Ready
+    window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
