@@ -1,0 +1,35 @@
+{
+  "algorithm": "XGBoost Regressor",
+  "mae_minutes": 0.92,
+  "rmse_minutes": 1.25,
+  "r2_score": 0.9801,
+  "feature_importances": {
+    "queue_ratio": 0.3987962305545807,
+    "power_kw": 0.36488908529281616,
+    "queue_len": 0.14542637765407562,
+    "chargers_total": 0.06840430200099945,
+    "is_raining": 0.00898643210530281,
+    "grid_stress_flag": 0.003850191831588745,
+    "grid_load": 0.0030982650350779295,
+    "hour": 0.0016524092061445117,
+    "sin_hour": 0.00149328273255378,
+    "weather_temp_c": 0.0010312775848433375,
+    "day_of_week": 0.0009121610783040524,
+    "cos_hour": 0.00082997145364061,
+    "is_weekend": 0.0006299072410911322
+  },
+  "comparisons": {
+    "Linear Regression": {
+      "mae": 2.24,
+      "r2": 0.8761
+    },
+    "Random Forest": {
+      "mae": 1.03,
+      "r2": 0.9733
+    },
+    "XGBoost": {
+      "mae": 0.92,
+      "r2": 0.9801
+    }
+  }
+}
