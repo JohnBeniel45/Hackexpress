@@ -1,0 +1,25 @@
+{
+  "name": "GridFlow AI — Intelligent EV Network",
+  "short_name": "GridFlow AI",
+  "description": "AI-powered EV charging network, real-time wait predictions, and V2V power sharing.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#E0F2FE",
+  "theme_color": "#0284C7",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
