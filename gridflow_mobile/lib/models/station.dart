@@ -61,4 +61,31 @@ class Station {
       distanceKm: (json['distance_km'] as num?)?.toDouble(),
     );
   }
+
+  Station copyWith({
+    double? distanceKm,
+    int? chargersAvailable,
+    int? queueLength,
+    double? predictedWaitMin,
+  }) {
+    return Station(
+      id: id,
+      name: name,
+      address: address,
+      city: city,
+      lat: lat,
+      lon: lon,
+      chargersTotal: chargersTotal,
+      chargersAvailable: chargersAvailable ?? this.chargersAvailable,
+      status: status,
+      gridLoad: gridLoad,
+      powerKw: powerKw,
+      connectorTypes: connectorTypes,
+      pricePerKwh: pricePerKwh,
+      queueLength: queueLength ?? this.queueLength,
+      predictedWaitMin: predictedWaitMin ?? this.predictedWaitMin,
+      operator: operator,
+      distanceKm: distanceKm ?? this.distanceKm,
+    );
+  }
 }

@@ -4,6 +4,7 @@ import '../components/liquid_glass_card.dart';
 import '../animations/spring_physics.dart';
 import '../models/station.dart';
 import '../models/user_profile.dart';
+import '../services/location_service.dart';
 
 class Screen3LiveMapReservation extends StatefulWidget {
   final UserProfile profile;
@@ -24,73 +25,114 @@ class _Screen3LiveMapReservationState extends State<Screen3LiveMapReservation> {
   int _selectedSlotIdx = 0;
   final List<String> _slots = ["18:45", "19:00", "19:15", "19:30"];
 
-  final List<Station> _stations = [
-    Station(
-      id: 2,
-      name: "Koramangala FastCharge",
-      address: "Hosur Rd, 7th Block",
-      lat: 12.9352,
-      lon: 77.6146,
-      chargersTotal: 6,
-      chargersAvailable: 4,
-      status: "active",
-      gridLoad: 0.45,
-      powerKw: 60.0,
-      connectorTypes: ["CCS2", "Type 2 AC"],
-      predictedWaitMin: 4.2,
-      distanceKm: 3.8,
-    ),
-    Station(
-      id: 1,
-      name: "Indiranagar 100ft Hub",
-      address: "100 Feet Rd, HAL 2nd Stage",
-      lat: 12.9716,
-      lon: 77.6412,
-      chargersTotal: 8,
-      chargersAvailable: 3,
-      status: "active",
-      gridLoad: 0.65,
-      powerKw: 120.0,
-      connectorTypes: ["CCS2", "Type 2 AC"],
-      predictedWaitMin: 8.5,
-      distanceKm: 2.4,
-    ),
-    Station(
-      id: 3,
-      name: "MG Road Metro Super Hub",
-      address: "Trinity Circle, MG Road",
-      lat: 12.9756,
-      lon: 77.6066,
-      chargersTotal: 4,
-      chargersAvailable: 0,
-      status: "busy",
-      gridLoad: 0.88,
-      powerKw: 150.0,
-      connectorTypes: ["CCS2", "CHAdeMO"],
-      predictedWaitMin: 24.5,
-      distanceKm: 1.2,
-    ),
-    Station(
-      id: 4,
-      name: "Whitefield ITPL PowerPort",
-      address: "ITPL Main Rd, Whitefield",
-      lat: 12.9863,
-      lon: 77.7305,
-      chargersTotal: 10,
-      chargersAvailable: 5,
-      status: "active",
-      gridLoad: 0.52,
-      powerKw: 120.0,
-      connectorTypes: ["CCS2", "Type 2 AC"],
-      predictedWaitMin: 7.0,
-      distanceKm: 8.5,
-    ),
-  ];
+  late List<Station> _stations;
+  bool _isLocating = false;
+  String? _gpsStatus;
 
   @override
   void initState() {
     super.initState();
+    final defaultStations = [
+      Station(
+        id: 2,
+        name: "Koramangala FastCharge",
+        address: "Hosur Rd, 7th Block",
+        lat: 12.9352,
+        lon: 77.6146,
+        chargersTotal: 6,
+        chargersAvailable: 4,
+        status: "active",
+        gridLoad: 0.45,
+        powerKw: 60.0,
+        connectorTypes: ["CCS2", "Type 2 AC"],
+        predictedWaitMin: 4.2,
+        distanceKm: 3.8,
+      ),
+      Station(
+        id: 1,
+        name: "Indiranagar 100ft Hub",
+        address: "100 Feet Rd, HAL 2nd Stage",
+        lat: 12.9716,
+        lon: 77.6412,
+        chargersTotal: 8,
+        chargersAvailable: 3,
+        status: "active",
+        gridLoad: 0.65,
+        powerKw: 120.0,
+        connectorTypes: ["CCS2", "Type 2 AC"],
+        predictedWaitMin: 8.5,
+        distanceKm: 2.4,
+      ),
+      Station(
+        id: 3,
+        name: "MG Road Metro Super Hub",
+        address: "Trinity Circle, MG Road",
+        lat: 12.9756,
+        lon: 77.6066,
+        chargersTotal: 4,
+        chargersAvailable: 0,
+        status: "busy",
+        gridLoad: 0.88,
+        powerKw: 150.0,
+        connectorTypes: ["CCS2", "CHAdeMO"],
+        predictedWaitMin: 24.5,
+        distanceKm: 1.2,
+      ),
+      Station(
+        id: 4,
+        name: "Whitefield ITPL PowerPort",
+        address: "ITPL Main Rd, Whitefield",
+        lat: 12.9863,
+        lon: 77.7305,
+        chargersTotal: 10,
+        chargersAvailable: 5,
+        status: "active",
+        gridLoad: 0.52,
+        powerKw: 120.0,
+        connectorTypes: ["CCS2", "Type 2 AC"],
+        predictedWaitMin: 7.0,
+        distanceKm: 8.5,
+      ),
+    ];
+    _stations = LocationService.updateStationDistances(
+      defaultStations,
+      widget.profile.lat,
+      widget.profile.lon,
+    );
     _selectedStation = widget.preselectedStation ?? _stations[0];
+  }
+
+  Future<void> _refreshGpsLocation() async {
+    setState(() => _isLocating = true);
+    final pos = await LocationService.requestAndGetLocation();
+    if (mounted) {
+      if (pos != null) {
+        setState(() {
+          widget.profile.lat = pos.latitude;
+          widget.profile.lon = pos.longitude;
+          _gpsStatus = "${pos.latitude.toStringAsFixed(3)}, ${pos.longitude.toStringAsFixed(3)}";
+          _stations = LocationService.updateStationDistances(_stations, pos.latitude, pos.longitude);
+          _selectedStation = _stations.firstWhere(
+            (s) => s.id == _selectedStation.id,
+            orElse: () => _stations[0],
+          );
+          _isLocating = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.white,
+            content: Text(
+              "📍 Live GPS Locked: ${pos.latitude.toStringAsFixed(4)}, ${pos.longitude.toStringAsFixed(4)} (Distances updated)",
+              style: const TextStyle(color: AppleLiquidColors.natureEmerald, fontWeight: FontWeight.bold, fontSize: 12),
+            ),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          ),
+        );
+      } else {
+        setState(() => _isLocating = false);
+      }
+    }
   }
 
   void _showApplePassModal() {
@@ -202,16 +244,47 @@ class _Screen3LiveMapReservationState extends State<Screen3LiveMapReservation> {
                   ),
                 ],
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: AppleLiquidColors.skyAura,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: const Color(0x4D0284C7), width: 0.5),
-                ),
-                child: const Text(
-                  "4 HUBS LIVE",
-                  style: TextStyle(fontSize: 9.5, fontWeight: FontWeight.w800, color: AppleLiquidColors.skyVibrant),
+              GestureDetector(
+                onTap: _refreshGpsLocation,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: _gpsStatus != null
+                        ? AppleLiquidColors.natureEmerald.withOpacity(0.12)
+                        : AppleLiquidColors.skyAura,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: _gpsStatus != null
+                          ? AppleLiquidColors.natureEmerald
+                          : const Color(0x4D0284C7),
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.my_location,
+                        size: 11,
+                        color: _gpsStatus != null
+                            ? AppleLiquidColors.natureEmerald
+                            : AppleLiquidColors.skyVibrant,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        _isLocating
+                            ? "Locating..."
+                            : (_gpsStatus != null ? "GPS Active" : "Detect Location"),
+                        style: TextStyle(
+                          fontSize: 9.5,
+                          fontWeight: FontWeight.w800,
+                          color: _gpsStatus != null
+                              ? AppleLiquidColors.natureEmerald
+                              : AppleLiquidColors.skyVibrant,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

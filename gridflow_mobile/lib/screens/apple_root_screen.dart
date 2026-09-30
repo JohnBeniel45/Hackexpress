@@ -7,6 +7,7 @@ import 'screen1_ai_grid_matcher.dart';
 import 'screen2_v2v_hub.dart';
 import 'screen3_live_map_reservation.dart';
 import 'main_navigation_screen.dart';
+import '../services/location_service.dart';
 
 class AppleRootScreen extends StatefulWidget {
   const AppleRootScreen({Key? key}) : super(key: key);
@@ -20,6 +21,46 @@ class _AppleRootScreenState extends State<AppleRootScreen> {
   final UserProfile _userProfile = UserProfile();
   bool _demoMode = true; // Ready for hackathon judging demo!
   Station? _preselectedStation;
+  bool _isLocating = false;
+  String? _gpsStatus;
+
+  @override
+  void initState() {
+    super.initState();
+    _requestLiveLocation();
+  }
+
+  Future<void> _requestLiveLocation() async {
+    setState(() => _isLocating = true);
+    final pos = await LocationService.requestAndGetLocation();
+    if (mounted) {
+      if (pos != null) {
+        setState(() {
+          _userProfile.lat = pos.latitude;
+          _userProfile.lon = pos.longitude;
+          _gpsStatus = "${pos.latitude.toStringAsFixed(3)}, ${pos.longitude.toStringAsFixed(3)}";
+          _isLocating = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.white,
+            content: Text(
+              "📍 Live GPS Locked: ${_userProfile.lat.toStringAsFixed(4)}, ${_userProfile.lon.toStringAsFixed(4)}",
+              style: const TextStyle(color: AppleLiquidColors.natureEmerald, fontWeight: FontWeight.bold, fontSize: 12),
+            ),
+            behavior: SnackBarBehavior.floating,
+            duration: const Duration(seconds: 2),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          ),
+        );
+      } else {
+        setState(() {
+          _gpsStatus = "Corridor (Default)";
+          _isLocating = false;
+        });
+      }
+    }
+  }
 
   void _toggleDemoMode() {
     setState(() {
@@ -103,6 +144,51 @@ class _AppleRootScreenState extends State<AppleRootScreen> {
           ],
         ),
         actions: [
+          // Live GPS permission / location trigger button
+          GestureDetector(
+            onTap: _requestLiveLocation,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: _gpsStatus != null && _gpsStatus != "Corridor (Default)"
+                    ? AppleLiquidColors.natureEmerald.withOpacity(0.12)
+                    : AppleLiquidColors.skyAura,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                  color: _gpsStatus != null && _gpsStatus != "Corridor (Default)"
+                      ? AppleLiquidColors.natureEmerald
+                      : AppleLiquidColors.skySoft,
+                  width: 0.6,
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.my_location,
+                    size: 13,
+                    color: _gpsStatus != null && _gpsStatus != "Corridor (Default)"
+                        ? AppleLiquidColors.natureEmerald
+                        : AppleLiquidColors.skyVibrant,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    _isLocating
+                        ? "Locating..."
+                        : (_gpsStatus ?? "Live GPS"),
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      color: _gpsStatus != null && _gpsStatus != "Corridor (Default)"
+                          ? AppleLiquidColors.natureEmerald
+                          : AppleLiquidColors.skyVibrant,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(width: 6),
           IconButton(
             tooltip: "Switch to Enterprise 5-Tab Dashboard",
             icon: const Icon(Icons.dashboard_customize_outlined, color: AppleLiquidColors.natureEmerald, size: 22),

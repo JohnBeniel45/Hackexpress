@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleName</key>
+	<string>GridFlow AI</string>
+	<key>CFBundleDisplayName</key>
+	<string>GridFlow AI</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.gridflow.gridflowMobile</string>
+	<key>CFBundleVersion</key>
+	<string>1.0.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>GridFlow AI requires your location to recommend the closest charging stations and calculate accurate queue wait times.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>GridFlow AI requires continuous location to alert you when arriving at reserved charging bays.</string>
+</dict>
+</plist>

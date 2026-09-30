@@ -39,6 +39,16 @@ class StationRecommender:
                     stations_copy.append(st)
             else:
                 stations_copy.append(st)
+        
+        # If user is outside radius (e.g. testing from another city), return all stations sorted by distance
+        if lat is not None and lon is not None:
+            if not stations_copy:
+                for s in self.stations:
+                    st = dict(s)
+                    st["distance_km"] = haversine_distance_km(lat, lon, st["lat"], st["lon"])
+                    stations_copy.append(st)
+            stations_copy.sort(key=lambda x: x.get("distance_km", 0))
+
         return stations_copy
 
     def score_station(
@@ -171,7 +181,9 @@ class StationRecommender:
         
         if not scored_stations:
             # Fallback to closest station
-            closest = min(self.stations, key=lambda s: haversine_distance_km(user_lat, user_lon, s["lat"], s["lon"]))
+            closest_raw = min(self.stations, key=lambda s: haversine_distance_km(user_lat, user_lon, s["lat"], s["lon"]))
+            dist = haversine_distance_km(user_lat, user_lon, closest_raw["lat"], closest_raw["lon"])
+            closest = dict(closest_raw, distance_km=dist)
             return {
                 "recommended_station": closest,
                 "score_breakdown": {

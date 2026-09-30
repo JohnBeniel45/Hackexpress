@@ -663,9 +663,87 @@
       padding: 22px;
       position: relative;
     }
+
+    /* REAL USER GPS PILL & LOCATION BUTTONS */
+    .gps-location-pill {
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(16px);
+      border: 0.8px solid rgba(0, 163, 255, 0.45);
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--sky-vibrant);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: all 0.25s ease;
+    }
+    .gps-location-pill:hover {
+      background: #FFFFFF;
+      border-color: var(--sky-electric);
+      transform: scale(1.04);
+    }
+    .gps-location-pill.active {
+      color: var(--nature-emerald);
+      border-color: rgba(16, 185, 129, 0.6);
+      background: #F0FDF4;
+    }
+
+    .gps-locate-btn {
+      background: rgba(255, 255, 255, 0.92);
+      border: 0.8px solid rgba(0, 163, 255, 0.45);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--sky-vibrant);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: transform 0.2s var(--spring-bouncy), background 0.2s ease;
+    }
+    .gps-locate-btn:hover {
+      background: #FFFFFF;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 163, 255, 0.2);
+    }
+
+    /* Floating Toast Notification */
+    .glass-toast {
+      position: fixed;
+      top: 72px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-25px);
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 1);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.18);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-headline);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.35s var(--spring-bouncy);
+      white-space: nowrap;
+    }
+    .glass-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
   </style>
 </head>
 <body>
+
+  <!-- FLOATING REAL-TIME GLASS TOAST -->
+  <div class="glass-toast" id="liveToast"></div>
 
   <!-- CLEAN RESPONSIVE APP CANVAS -->
   <div class="app-container">
@@ -679,9 +757,19 @@
         </h2>
         <p id="vehicleSubtext">TATA NEXON EV MAX (28%)</p>
       </div>
-      <div class="header-live-badge">
-        <div class="pulsing-emerald"></div>
-        <span>LIVE GRID SYNC</span>
+
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <button id="gpsLocationBtn" class="gps-location-pill" onclick="requestUserLocation()" title="Detect real GPS location">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+          </svg>
+          <span id="gpsPillLabel">📍 Live GPS</span>
+        </button>
+
+        <div class="header-live-badge">
+          <div class="pulsing-emerald"></div>
+          <span>GRID SYNC</span>
+        </div>
       </div>
     </header>
 
@@ -769,6 +857,11 @@
       selectedStation: null,
       selectedSlot: "18:45",
 
+      userLat: 12.955,
+      userLon: 77.635,
+      locationAccuracy: null,
+      gpsLocked: false,
+
       stations: [
         { id: 1, name: "Indiranagar 100ft Hub", address: "100 Feet Rd, HAL 2nd Stage", lat: 12.9716, lon: 77.6412, chargers_total: 8, chargers_available: 3, power_kw: 120, grid_load: 0.65, predicted_wait_min: 8.5, price_per_kwh: 15.5, distance_km: 2.4, queue_length: 2 },
         { id: 2, name: "Koramangala FastCharge", address: "Hosur Rd, 7th Block", lat: 12.9352, lon: 77.6146, chargers_total: 6, chargers_available: 4, power_kw: 60, grid_load: 0.45, predicted_wait_min: 4.2, price_per_kwh: 14.0, distance_km: 3.8, queue_length: 1 },
@@ -779,24 +872,136 @@
 
     let mapboxInstance = null;
     let stationMarkers = [];
+    let userPuckMarker = null;
+
+    function showToast(msg, duration = 3200) {
+      const toast = document.getElementById('liveToast');
+      if (!toast) return;
+      toast.innerHTML = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, duration);
+    }
+
+    function haversineDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371; // Earth's radius in km
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return Math.round(R * c * 10) / 10;
+    }
+
+    function recalculateDistances() {
+      state.stations.forEach(s => {
+        s.distance_km = haversineDistance(state.userLat, state.userLon, s.lat, s.lon);
+      });
+      state.stations.sort((a, b) => a.distance_km - b.distance_km);
+      if (!state.selectedStation || !state.stations.some(s => s.id === state.selectedStation.id)) {
+        state.selectedStation = state.stations[0];
+      }
+    }
+
+    function requestUserLocation() {
+      if (!navigator.geolocation) {
+        showToast("⚠️ Geolocation is not supported by your browser.");
+        return;
+      }
+      showToast("📍 Requesting GPS location permission...");
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          state.userLat = pos.coords.latitude;
+          state.userLon = pos.coords.longitude;
+          state.locationAccuracy = Math.round(pos.coords.accuracy);
+          state.gpsLocked = true;
+
+          const pill = document.getElementById('gpsLocationBtn');
+          const lbl = document.getElementById('gpsPillLabel');
+          if (pill && lbl) {
+            pill.classList.add('active');
+            lbl.innerText = `📍 ${state.userLat.toFixed(2)}, ${state.userLon.toFixed(2)}`;
+          }
+
+          recalculateDistances();
+
+          if (mapboxInstance) {
+            if (userPuckMarker) {
+              userPuckMarker.setLngLat([state.userLon, state.userLat]);
+            }
+            mapboxInstance.flyTo({
+              center: [state.userLon, state.userLat],
+              zoom: 12.8,
+              essential: true
+            });
+            updateMapboxMarkers();
+          }
+
+          renderView();
+          showToast(`📍 Live GPS Locked: ${state.userLat.toFixed(4)}, ${state.userLon.toFixed(4)} (±${state.locationAccuracy}m)`);
+        },
+        (err) => {
+          console.warn("Geolocation permission error:", err);
+          showToast("📍 Location permission prompt shown. Please click Allow.");
+        },
+        { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+      );
+    }
 
     function init() {
       state.selectedStation = state.stations[0];
+      recalculateDistances();
       renderView();
+
+      // Automatically request user GPS permission on startup
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            state.userLat = pos.coords.latitude;
+            state.userLon = pos.coords.longitude;
+            state.locationAccuracy = Math.round(pos.coords.accuracy);
+            state.gpsLocked = true;
+
+            const pill = document.getElementById('gpsLocationBtn');
+            const lbl = document.getElementById('gpsPillLabel');
+            if (pill && lbl) {
+              pill.classList.add('active');
+              lbl.innerText = `📍 ${state.userLat.toFixed(2)}, ${state.userLon.toFixed(2)}`;
+            }
+
+            recalculateDistances();
+
+            if (mapboxInstance && userPuckMarker) {
+              userPuckMarker.setLngLat([state.userLon, state.userLat]);
+              mapboxInstance.flyTo({ center: [state.userLon, state.userLat], zoom: 12.5 });
+              updateMapboxMarkers();
+            }
+
+            renderView();
+            showToast(`📍 Live GPS Active: ${state.userLat.toFixed(4)}, ${state.userLon.toFixed(4)}`);
+          },
+          (err) => {
+            console.log("Initial geolocation note:", err.message);
+          },
+          { enableHighAccuracy: true, timeout: 6000 }
+        );
+      }
 
       // Fetch live stations from backend if online
       fetch(`${API_BASE}/stations`)
         .then(res => res.json())
         .then(data => {
           if (data && data.stations && data.stations.length > 0) {
-            state.stations = data.stations.slice(0, 4).map((s, idx) => ({
+            state.stations = data.stations.map((s) => ({
               ...s,
-              distance_km: (2.4 + idx * 1.5).toFixed(1),
-              queue_length: s.queue_length !== undefined ? s.queue_length : (idx === 2 ? 4 : idx + 1)
+              distance_km: haversineDistance(state.userLat, state.userLon, s.lat, s.lon),
+              queue_length: s.queue_length !== undefined ? s.queue_length : 1
             }));
-            state.selectedStation = state.stations[0];
+            recalculateDistances();
+            renderView();
             if (state.activeTab === 2) {
-              renderScreen3(document.getElementById('scrollContainer'));
               updateMapboxMarkers();
             }
           }
@@ -1145,6 +1350,9 @@
       const added = Math.round((state.v2vTransferKwh / 40.5) * 100);
       state.userBattery = Math.min(100, state.userBattery + added);
       state.donorBattery = Math.max(20, state.donorBattery - Math.round((state.v2vTransferKwh / 72.6) * 100));
+      const eco = state.v2vTransferKwh * 15;
+
+      showToast(`⚡ V2V Complete: +${state.v2vTransferKwh} kWh transferred. +${eco} EcoCredits awarded!`);
 
       fetch(`${API_BASE}/v2v/transfer`, {
         method: 'POST',
@@ -1168,12 +1376,19 @@
 
       body.innerHTML = `
         <div class="view-content">
-          <div style="display: flex; justify-content: space-between; align-items: baseline;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
             <div>
               <div class="view-title">Charging Network Map</div>
-              <div class="view-caption">Live Mapbox GL stations & corridor wait times</div>
+              <div class="view-caption" id="locationStatusCaption">
+                ${state.gpsLocked ? `📍 Live GPS: ${state.userLat.toFixed(3)}, ${state.userLon.toFixed(3)}` : 'Live Mapbox GL stations & corridor wait times'}
+              </div>
             </div>
-            <span class="hero-stat-tag tag-sky">4 HUBS LIVE</span>
+            <button class="gps-locate-btn" onclick="requestUserLocation()" title="Request real user GPS location">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+              </svg>
+              <span>${state.gpsLocked ? 'GPS Active' : 'Locate Me'}</span>
+            </button>
           </div>
 
           <!-- LIVE MAPBOX GL CONTAINER -->
@@ -1275,8 +1490,8 @@
         mapboxInstance = new mapboxgl.Map({
           container: 'mapboxMap',
           style: 'mapbox://styles/mapbox/light-v11',
-          center: [state.selectedStation ? state.selectedStation.lon : 77.625, state.selectedStation ? state.selectedStation.lat : 12.960],
-          zoom: 11.4,
+          center: [state.userLon, state.userLat],
+          zoom: 11.5,
           pitch: 20,
           attributionControl: false
         });
@@ -1290,10 +1505,10 @@
           userEl.innerHTML = `
             <div class="gps-pulse"></div>
             <div class="gps-dot"></div>
-            <div class="gps-badge">You (Nexon EV)</div>
+            <div class="gps-badge">You (${state.gpsLocked ? 'Live GPS' : 'Nexon EV'})</div>
           `;
-          new mapboxgl.Marker({ element: userEl, anchor: 'center' })
-            .setLngLat([77.635, 12.955])
+          userPuckMarker = new mapboxgl.Marker({ element: userEl, anchor: 'center' })
+            .setLngLat([state.userLon, state.userLat])
             .addTo(mapboxInstance);
 
           updateMapboxMarkers();
