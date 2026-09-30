@@ -44,6 +44,7 @@ class PredictWaitRequest(BaseModel):
 class PredictWaitResponse(BaseModel):
     station_id: int
     predicted_wait_min: float
+    predicted_wait: Optional[float] = None
     confidence_interval: List[float]
     model_used: str = "XGBoost Regressor v2.1"
     features_used: dict

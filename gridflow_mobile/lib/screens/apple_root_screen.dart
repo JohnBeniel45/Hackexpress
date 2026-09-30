@@ -6,6 +6,7 @@ import '../models/station.dart';
 import 'screen1_ai_grid_matcher.dart';
 import 'screen2_v2v_hub.dart';
 import 'screen3_live_map_reservation.dart';
+import 'main_navigation_screen.dart';
 
 class AppleRootScreen extends StatefulWidget {
   const AppleRootScreen({Key? key}) : super(key: key);
@@ -101,8 +102,17 @@ class _AppleRootScreenState extends State<AppleRootScreen> {
             ),
           ],
         ),
-        actions: const [
-          SizedBox(width: 16),
+        actions: [
+          IconButton(
+            tooltip: "Switch to Enterprise 5-Tab Dashboard",
+            icon: const Icon(Icons.dashboard_customize_outlined, color: AppleLiquidColors.natureEmerald, size: 22),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const MainNavigationScreen()),
+              );
+            },
+          ),
+          const SizedBox(width: 8),
         ],
       ),
       body: Stack(

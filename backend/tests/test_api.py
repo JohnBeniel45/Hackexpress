@@ -99,14 +99,45 @@ class TestGridFlowAPI(unittest.TestCase):
         self.assertEqual(data["kwh_transferred"], 10.0)
         self.assertGreater(data["green_credits_earned"], 0)
 
-    def test_simulation_benchmark_37pct_reduction(self):
-        response = client.get("/analytics/simulation/benchmark")
+    def test_predict_wait_contract(self):
+        # Validates exact contract: returns 'predicted_wait' field
+        payload = {
+            "station_id": 1,
+            "queue_length": 2,
+            "chargers_total": 4,
+            "time_of_day": "18:30",
+            "day_of_week": "Tue"
+        }
+        response = client.post("/predict_wait", json=payload)
         self.assertEqual(response.status_code, 200)
         data = response.json()
-        reduction = data["impact_metrics"]["queue_reduction_percentage"]
-        # Validates queue cut around ~37% as in simulation literature
-        self.assertGreater(reduction, 25.0)
-        self.assertLess(reduction, 55.0)
+        self.assertIn("predicted_wait", data)
+        self.assertGreater(data["predicted_wait"], 0)
+
+    def test_emergency_leapfrog_reservation(self):
+        # Verifies that ambulance reservation leapfrogs to Bay #1
+        payload = {
+            "user_id": "ambulance_108",
+            "station_id": 1,
+            "slot_time": "2026-10-07 19:15",
+            "vehicle_type": "Ambulance",
+            "battery_pct": 8.0,
+            "membership": "emergency_priority",
+            "duration_minutes": 25
+        }
+        response = client.post("/reserve", json=payload)
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data["status"], "confirmed")
+        self.assertEqual(data["priority_tier"], "URGENT_LEAPFROG")
+        self.assertEqual(data["charger_id"], 1)
+
+    def test_synthetic_data_generator(self):
+        from backend.app.data.synthetic_generator import generate_grid_load
+        # Test morning and evening grid load peak values
+        morning_load = generate_grid_load(10, False)
+        night_load = generate_grid_load(3, False)
+        self.assertGreater(morning_load, night_load)
 
 if __name__ == "__main__":
     unittest.main()

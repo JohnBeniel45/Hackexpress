@@ -22,6 +22,7 @@ def predict_wait_time(req: PredictWaitRequest):
     return PredictWaitResponse(
         station_id=req.station_id,
         predicted_wait_min=res["predicted_wait_min"],
+        predicted_wait=res["predicted_wait_min"],
         confidence_interval=res["confidence_interval"],
         model_used=res["model_used"],
         features_used=res["features_used"]
